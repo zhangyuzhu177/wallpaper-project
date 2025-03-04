@@ -1,0 +1,75 @@
+:root {
+  // 重写 quasar 默认颜色
+  --q-primary: var(--primary-1);
+  --q-success: var(--alerts-success-1);
+  --q-positive: var(--alerts-success-1);
+  --q-error: var(--alerts-error-1);
+  --q-negative: var(--alerts-error-1);
+  --q-warning: var(--alerts-warning-1);
+
+  // 重写 quasar 默认尺寸
+  --q-size-xs: var(--xs);
+  --q-size-sm: var(--sm);
+  --q-size-md: var(--md);
+  --q-size-lg: var(--lg);
+  --q-size-xl: var(--xl);
+}
+
+/** 主题色 */
+@for $i from 1 through 4 {
+  .text-primary-#{$i} {
+    color: var(--primary-#{$i}) !important;
+  }
+
+  .bg-primary-#{$i} {
+    background: var(--primary-#{$i}) !important;
+  }
+}
+
+/** 中性色 */
+@for $i from 1 through 9 {
+  .text-grey-#{$i} {
+    color: var(--grey-#{$i}) !important;
+  }
+
+  .bg-grey-#{$i} {
+    background: var(--grey-#{$i}) !important;
+  }
+}
+
+/** 透明白色 */
+@for $i from 0 through 10 {
+  .text-white-#{$i} {
+    color: var(--white-#{$i}) !important;
+  }
+
+  .bg-white-#{$i} {
+    background: var(--white-#{$i}) !important;
+  }
+}
+
+/** 透明黑色 */
+@for $i from 0 through 10 {
+  .text-black-#{$i} {
+    color: var(--black-#{$i}) !important;
+  }
+
+  .bg-black-#{$i} {
+    background: var(--black-#{$i}) !important;
+  }
+}
+
+/** 通知色 */
+$alerts: success, error, warning;
+
+@each $alert in $alerts {
+  @for $i from 1 through 3 {
+    .text-alerts-#{$alert}-#{$i} {
+      color: var(--alerts-#{$alert}-#{$i}) !important;
+    }
+
+    .bg-alerts-#{$alert}-#{$i} {
+      background: var(--alerts-#{$alert}-#{$i}) !important;
+    }
+  }
+}

@@ -1,0 +1,39 @@
+/** 重写 menu 样式 */
+.q-menu {
+  &.context-menu {
+    border-radius: 6px;
+    background-color: var(--grey-1);
+    border: 1px solid var(--grey-3);
+    padding: 4px 0;
+    box-shadow: 0px 5px 3px -2px #00000005, 0px 3px 2px -2px #0000000F;
+
+    > .q-list {
+      font-size: 14px;
+      line-height: 20px;
+
+      > .q-item {
+        padding: 8px 12px;
+        min-height: 36px;
+
+        > .q-focus-helper {
+          display: none;
+        }
+
+        > .q-item__section {
+          flex-direction: row;
+          gap: 8px;
+
+          > div:first-child {
+            width: 20px;
+            height: 20px;
+            color: var(--grey-6);
+          }
+        }
+
+        &:hover {
+          background-color: var(--grey-2);
+        }
+      }
+    }
+  }
+}

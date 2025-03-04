@@ -1,0 +1,35 @@
+# compiled output
+dist
+dist-ssr
+node_modules
+
+# Logs
+logs
+*.log
+
+# OS
+.DS_Store
+
+# IDEs and editors
+.idea/
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# environments
+.env
+.env.*
+!.env.example
+
+# docker
+.docker-vol
+docker-compose.yaml
+docker-compose.yml
+
+# vite-ssg
+.vite-ssg-dist
+.vite-ssg-temp

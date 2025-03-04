@@ -1,0 +1,29 @@
+/** 隐藏滚动条 */
+.hide-scrollbar {
+  overflow: auto;
+}
+
+/** 滚动条 */
+::-webkit-scrollbar {
+  height: 8px;
+  width: 10px;
+  background: transparent;
+  overflow: visible;
+}
+
+::-webkit-scrollbar-thumb {
+  width: 10px;
+  background-color: var(--grey-4);
+  border-radius: 10px;
+  border: 2px solid rgba(0, 0, 0, 0);
+  background-clip: padding-box;
+  -webkit-transition: background-color .28s ease-in-out;
+  transition: background-color .28s ease-in-out;
+  margin: 4px;
+  min-height: 32px;
+  min-width: 32px;
+
+  &:hover {
+    background: var(--grey-5);
+  }
+}

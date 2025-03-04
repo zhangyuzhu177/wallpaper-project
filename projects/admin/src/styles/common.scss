@@ -1,0 +1,21 @@
+/** 选择字段筛选输入框 */
+.filter-select-input {
+  > div:first-child {
+    position: relative;
+    left: 1px;
+
+    .q-field__control {
+      border-radius: 6px 0 0 6px;
+    }
+
+    &:hover, &:focus-within {
+      z-index: 1;
+    }
+  }
+
+  > div:last-child {
+    .q-field__control, .dp__input {
+      border-radius: 0 6px 6px 0;
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "shared",
+  "type": "module",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {},
+  "dependencies": {
+    "@quasar/extras": "^1.16.5",
+    "@vueuse/core": "^10.2.1",
+    "@vueuse/head": "^2.0.0",
+    "axios": "^1.4.0",
+    "lodash": "^4.17.21",
+    "quasar": "2.14.6",
+    "utils": "workspace:^",
+    "vue": "^3.3.4",
+    "vue-router": "^4.3.2"
+  },
+  "devDependencies": {
+    "@iconify-json/material-symbols": "^1.1.81",
+    "@iconify-json/mingcute": "^1.1.7",
+    "unocss": "^0.58.5"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "name": "vue3-nestjs-template",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "pnpm@8.14.1",
+  "description": "全栈项目模版",
+  "author": {
+    "name": "ZhangYuzhu",
+    "email": "zhangyuzhu0177@163.com",
+    "url": "https://github.com/zhangyuzhu177"
+  },
+  "license": "ISC",
+  "scripts": {
+    "dev:types": "pnpm --filter types dev",
+    "dev:utils": "pnpm --filter utils dev",
+    "dev:admin": "pnpm --filter admin dev",
+    "dev:server": "pnpm --filter server dev",
+    "build:types": "pnpm --filter types build",
+    "build:utils": "pnpm --filter utils build",
+    "build:packages": "pnpm run build:utils && pnpm run build:types",
+    "build:admin": "pnpm --filter admin build",
+    "build:server": "pnpm --filter server build"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^0.39.5",
+    "chalk": "^5.3.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-vue": "^9.18.1",
+    "execa": "^7.1.1",
+    "prettier": "^3.2.5",
+    "prompts": "^2.4.2",
+    "shx": "^0.3.4"
+  }
+}

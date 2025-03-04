@@ -1,0 +1,51 @@
+@font-face {
+  font-family: 'PingFang';
+  src: local('PingFang'),
+    url('../assets/fonts/PingFang_100.woff2') format('woff2');
+  font-weight: 100;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PingFang';
+  src: local('PingFang'),
+    url('../assets/fonts/PingFang_200.woff2') format('woff2');
+  font-weight: 200;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PingFang';
+  src: local('PingFang'),
+    url('../assets/fonts/PingFang_300.woff2') format('woff2');
+  font-weight: 300;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PingFang';
+  src: local('PingFang'),
+    url('../assets/fonts/PingFang_400.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PingFang';
+  src: local('PingFang'),
+    url('../assets/fonts/PingFang_500.woff2') format('woff2');
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PingFang';
+  src: local('PingFang'),
+    url('../assets/fonts/PingFang_600.woff2') format('woff2');
+  font-weight: 600;
+  font-display: swap;
+}
+
+.font-pingfang {
+  font-family: 'PingFang';
+}

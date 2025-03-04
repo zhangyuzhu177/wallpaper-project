@@ -1,0 +1,26 @@
+/** 重写 notify 样式 */
+#q-notify {
+  .q-notification {
+    min-height: 42px;
+
+    .q-notification__icon,
+    .q-notification__spinner {
+      font-size: 18px;
+      margin-right: 12px;
+    }
+
+    .q-notification__message {
+      font-weight: 500;
+
+      .q-notification__caption {
+        font-size: 12px;
+        font-weight: 400;
+        opacity: 0.8;
+      }
+    }
+
+    .q-notification__badge {
+      padding: 2px 6px;
+    }
+  }
+}

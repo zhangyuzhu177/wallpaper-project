@@ -1,0 +1,7 @@
+@import 'shared/styles/base.css';
+@import 'shared/styles/fonts.css';
+@import 'shared/styles/variables.css';
+@import "shared/styles/common.scss";
+@import "shared/styles/quasar/index.scss";
+
+@import "./common.scss";
