@@ -1,9 +1,9 @@
 ## 描述
-Nodejs全栈项目模版
+uni-app 全栈项目
 
 前端：Vue3+Typescript+Quasar
 
-后端：Nest.js+TypeScript+TypeORM+MySQL+Redis
+后端：Nest.js+TypeScript+TypeORM
 
 ## 快速开始
 1. 安装依赖

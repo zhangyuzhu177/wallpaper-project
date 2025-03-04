@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "packageManager": "pnpm@8.14.1",
-  "description": "全栈项目模版",
+  "description": "uni-app 全栈项目",
   "author": {
     "name": "ZhangYuzhu",
     "email": "zhangyuzhu0177@163.com",
@@ -14,11 +14,15 @@
     "dev:types": "pnpm --filter types dev",
     "dev:utils": "pnpm --filter utils dev",
     "dev:admin": "pnpm --filter admin dev",
+    "dev:app-h5": "pnpm --filter app dev:h5",
+    "dev:app-mp-weixin": "pnpm --filter app dev:mp-weixin",
     "dev:server": "pnpm --filter server dev",
     "build:types": "pnpm --filter types build",
     "build:utils": "pnpm --filter utils build",
     "build:packages": "pnpm run build:utils && pnpm run build:types",
     "build:admin": "pnpm --filter admin build",
+    "build:app-h5": "pnpm --filter app build:h5",
+    "build:app-mp-weixin": "pnpm --filter build dev:mp-weixin",
     "build:server": "pnpm --filter server build"
   },
   "devDependencies": {
