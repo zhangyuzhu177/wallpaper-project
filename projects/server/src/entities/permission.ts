@@ -3,7 +3,7 @@ import type { IPermission } from 'types'
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
 import { Column, Entity, ManyToMany, PrimaryColumn } from 'typeorm'
 
-import { Role } from './role'
+import { AdminRole } from './admin-role'
 
 @Entity()
 export class Permission implements IPermission {
@@ -25,9 +25,9 @@ export class Permission implements IPermission {
     description: '使用了当前权限的角色列表',
   })
   @ManyToMany(
-    () => Role,
-    role => role.permissions,
+    () => AdminRole,
+    adminRole => adminRole.permissions,
     { onDelete: 'CASCADE' },
   )
-  roles?: Role[]
+  adminRoles?: AdminRole[]
 }

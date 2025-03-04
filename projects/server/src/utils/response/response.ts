@@ -1,6 +1,6 @@
 import { ErrorCode } from 'types'
-import type { IBasicResponse } from 'types'
 import { ApiResponse } from '@nestjs/swagger'
+import type { IBasicResponse } from 'types'
 import { HttpException, applyDecorators } from '@nestjs/common'
 
 import { errorMessages } from './error'
@@ -40,14 +40,18 @@ export function responseSuccess<T>(data: T) {
 
 /**
  * Swagger Api 响应错误修饰器
+ * @param codes
+ * @returns
  */
 export function ApiErrorResponse(...codes: ErrorCode[]) {
   return applyDecorators(
     ...codes.map((code) => {
-      const { httpStatus, message } = getErrorMessage(code)
+      const errorMessage
+        = errorMessages[code]
+        || errorMessages[ErrorCode.COMMON_ERROR_CODE_NOT_DEFINED]
       return ApiResponse({
-        status: httpStatus,
-        description: message,
+        status: code as any,
+        description: errorMessage.message,
       })
     }),
   )

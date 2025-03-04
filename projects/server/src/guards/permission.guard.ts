@@ -1,78 +1,74 @@
-import { ErrorCode } from 'types'
 import { Reflector } from '@nestjs/core'
 import type { PermissionType } from 'types'
+import { ErrorCode, UserType } from 'types'
+import { ApiBearerAuth } from '@nestjs/swagger'
 import type { CanActivate, ExecutionContext } from '@nestjs/common'
 import { Injectable, SetMetadata, UseGuards, applyDecorators } from '@nestjs/common'
 
-import { RoleService } from 'src/modules/role/role.service'
-import { ApiErrorResponse, getReflectorValue, responseError } from 'src/utils'
-import { IsLoginApis, LoginGuard } from './login.guard'
+import { getReflectorValue, responseError } from 'src/utils'
+import { AdminService } from 'src/modules/admin/admin.service'
+
+import { LoginGuard } from './login.guard'
 
 type PermissionRelation = 'OR' | 'AND'
 
 @Injectable()
 export class PermissionGuard extends LoginGuard implements CanActivate {
   constructor(
-    public readonly reflector: Reflector,
-    public readonly roleSrv: RoleService,
+    protected readonly _reflector: Reflector,
+    protected readonly _adminSrv: AdminService,
   ) {
-    super(reflector)
+    super(_reflector)
   }
 
-  async canActivate(context: ExecutionContext): Promise<boolean> {
+  async canActivate(context: ExecutionContext) {
+    await super.canActivate(context)
+
     const req: FastifyRequest = context.switchToHttp().getRequest()
-    const loginRequired = getReflectorValue<boolean>(
-      this.reflector,
-      context,
-      'loginRequired',
-      true,
-    )
 
-    const login = await super.canActivate(context)
-
-    if (!login && loginRequired)
-      responseError(ErrorCode.AUTH_LOGIN_REQUIRED)
-
-    const requiredPermissions = getReflectorValue<PermissionType[]>(
-      this.reflector,
+    const permissions = getReflectorValue<PermissionType[]>(
+      this._reflector,
       context,
       'permissions',
-      [],
     )
-    const permissionsRelation = getReflectorValue<PermissionRelation>(
-      this.reflector,
+    const relation = getReflectorValue<PermissionRelation>(
+      this._reflector,
       context,
       'relation',
-      'OR',
     )
 
-    return await this.validatePermission(req, requiredPermissions, permissionsRelation)
+    return this._validatePermission(req, permissions, relation)
   }
 
-  async validatePermission(
+  private async _validatePermission(
     req: FastifyRequest,
-    requiredPermissions: PermissionType[],
-    permissionsRelation: PermissionRelation,
+    permissions: PermissionType[],
+    relation: PermissionRelation,
   ) {
-    const user = req.raw.user
+    const { adminRoleId } = req.raw.admin
 
-    const role = user?.roleId
-      ? await this.roleSrv.repo().findOne({
-        where: { id: user.roleId },
-        relations: { permissions: true },
+    const adminRole = adminRoleId
+      ? await this._adminSrv.roleRepo().findOne({
+        where: {
+          id: adminRoleId,
+        },
+        relations: {
+          permissions: true,
+        },
       })
-      : null
+      : undefined
 
-    // save roles
-    req.raw.user && (req.raw.user.role = role)
+    // 保存企研管理员角色信息
+    req.raw.admin.adminRole = adminRole
 
-    if (!requiredPermissions.length)
+    if (!permissions.length)
       return true
 
-    // check
-    const hasPermission = role?.permissions?.length
-      ? requiredPermissions[permissionsRelation === 'OR' ? 'some' : 'every'](
-        permission => role.permissions.some(p => p.name === permission),
+    // 检查企研管理员权限
+    const adminPermission = adminRole?.permissions?.map(({ name }) => name)
+    const hasPermission = adminPermission?.length
+      ? permissions[relation === 'OR' ? 'some' : 'every'](
+        permission => adminPermission.includes(permission),
       )
       : false
 
@@ -90,16 +86,15 @@ export class PermissionGuard extends LoginGuard implements CanActivate {
 export function HasPermission(
   permissions: PermissionType[] | PermissionType = [],
   relation: PermissionRelation = 'OR',
-  loginRequired = true,
 ) {
   if (!Array.isArray(permissions))
     permissions = [permissions]
+
   return applyDecorators(
-    IsLoginApis(),
     UseGuards(PermissionGuard),
+    ApiBearerAuth(),
+    SetMetadata('userType', [UserType.ADMIN]),
     SetMetadata('permissions', permissions),
     SetMetadata('relation', relation),
-    SetMetadata('loginRequired', loginRequired),
-    ApiErrorResponse(ErrorCode.PERMISSION_DENIED),
   )
 }

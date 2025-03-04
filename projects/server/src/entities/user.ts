@@ -1,11 +1,16 @@
-import { EMAIL_MAX_LENGTH } from 'utils'
-import { ID_EXAMPLE, type IUser } from 'types'
+import { ID_EXAMPLE } from 'types'
+import type { IUser } from 'types'
+import { EMAIL_MAX_LENGTH, PHONE_NUMBER_MAX_LENGTH } from 'utils'
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
+import {
+  Column,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm'
 
-import { Login } from './login'
+import { LoginUser } from './login-user'
 import { BaseTimeStamp } from './_timestamp'
-import { Role } from './role'
 
 @Entity()
 export class User extends BaseTimeStamp implements IUser {
@@ -17,13 +22,13 @@ export class User extends BaseTimeStamp implements IUser {
   id: string
 
   @ApiProperty({
-    description: '账号',
+    description: '姓名',
     example: 'account',
   })
   @Column({
     unique: true,
   })
-  account: string
+  name: string
 
   @ApiPropertyOptional({
     description: '用户密码',
@@ -49,17 +54,19 @@ export class User extends BaseTimeStamp implements IUser {
     example: '18888888888',
   })
   @Column({
-    nullable: true,
+    unique: true,
+    length: PHONE_NUMBER_MAX_LENGTH,
   })
-  phone?: string
+  phone: string
 
-  @ApiProperty({
-    description: '是否是系统管理员',
+  @ApiPropertyOptional({
+    description: '头像',
+    example: '18888888888',
   })
   @Column({
-    default: false,
+    nullable: true,
   })
-  sysAdmin: boolean
+  avatar?: string
 
   @ApiProperty({
     description: '状态（true：正常，false：禁用）',
@@ -69,25 +76,13 @@ export class User extends BaseTimeStamp implements IUser {
   })
   status: boolean
 
-  @ManyToOne(() => Role, role => role.users)
-  @JoinColumn()
-  role?: Role
-
-  @ApiPropertyOptional({
-    description: '分配的角色 id',
-  })
-  @Column({
-    nullable: true,
-  })
-  roleId?: Role['id']
-
   @ApiPropertyOptional({
     description: '登录信息',
   })
   @OneToMany(
-    () => Login,
-    login => login.user,
+    () => LoginUser,
+    loginUser => loginUser.user,
     { cascade: true },
   )
-  logins?: Login[]
+  loginUsers?: LoginUser[]
 }

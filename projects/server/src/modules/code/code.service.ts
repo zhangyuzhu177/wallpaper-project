@@ -1,8 +1,9 @@
-import { type CodeAction, ErrorCode } from 'types'
+import { ErrorCode } from 'types'
+import { responseError } from 'src/utils'
 import { Injectable } from '@nestjs/common'
 import { randomString } from '@catsjuice/utils'
+import type { EmailCodeAction, PhoneCodeAction } from 'types'
 
-import { responseError } from 'src/utils/response'
 import { RedisService } from '../redis/redis.service'
 
 @Injectable()
@@ -13,25 +14,20 @@ export class CodeService {
 
   /**
    * 创建一个验证码并存入 redis
-   * @param platformId
-   * @param action
-   * @param expireInMinutes
-   * @returns
    */
   public async createCode(
-    platformId: string,
-    action: CodeAction,
-    expireInMinutes = 5,
+    id: string,
+    action: EmailCodeAction | PhoneCodeAction,
+    code?: string,
   ) {
-    let code: string
     while (!code || code.startsWith('0'))
       code = Math.random().toString().slice(-6)
     const bizId = randomString(24, 24, '') + Date.now().toString(36)
-    // save code to redis
-    const client = await this._redisSrv.getClient(RedisType.CODE)
 
-    await client.setEx(bizId, expireInMinutes * 60, JSON.stringify([
-      platformId,
+    // 将验证码保存到 redis
+    const client = this._redisSrv.getClient(RedisType.CODE)
+    await client.setEx(bizId, 5 * 60, JSON.stringify([
+      id,
       action,
       code,
     ]))
@@ -39,78 +35,29 @@ export class CodeService {
   }
 
   /**
-   * 将验证码存入 redis
-   * @param ip
-   * @param code
-   * @param expireInMinutes
-   * @returns
-   */
-  public async createCaptcha(
-    ip: string,
-    code: string,
-      expireInMinutes = 5,
-  ) {
-    const bizId = randomString(24, 24, '') + Date.now().toString(36)
-    // save code to redis
-    const client = await this._redisSrv.getClient(RedisType.CODE)
-
-    await client.setEx(bizId, expireInMinutes * 60, JSON.stringify([
-      ip,
-      code,
-    ]))
-    return { bizId }
-  }
-
-  /**
-   * 校验一个验证码是否正确
-   * @param bizId
-   * @param compareInfo
-   * @param deleteAfterVerify
+   * 校验邮件/短信验证码是否正确
    */
   public async verifyCode(
     bizId: string,
-    compareInfo: [string, CodeAction, string],
-    deleteAfterVerify = true,
+    compareInfo: [string, EmailCodeAction | PhoneCodeAction, string],
+      deleteAfterVerify = true,
   ) {
-    const client = await this._redisSrv.getClient(RedisType.CODE)
+    const client = this._redisSrv.getClient(RedisType.CODE)
     const codeInfo = await client.get(bizId)
-    if (!codeInfo)
-      return false
-    const codeInfoArr = JSON.parse(codeInfo) as [string, CodeAction, string]
-    if (codeInfoArr.some((v, i) => v !== compareInfo[i]))
-      return false
-    if (deleteAfterVerify)
-      client.del(bizId)
-    return true
-  }
 
-  /**
-   * 校验一个验证码是否正确
-   * @param bizId
-   * @param compareInfo
-   * @param deleteAfterVerify
-   */
-  public async verifyCaptcha(
-    bizId: string,
-    compareInfo: [string, string],
-    deleteAfterVerify = true,
-  ) {
-    const client = await this._redisSrv.getClient(RedisType.CODE)
-    const codeInfo = await client.get(bizId)
-    if (!codeInfo)
-      return false
-    const codeInfoArr = JSON.parse(codeInfo) as [string, string]
-    if (codeInfoArr.some((v, i) => v.toLowerCase() !== compareInfo[i].toLowerCase()))
-      return false
-    if (deleteAfterVerify)
-      client.del(bizId)
-    return true
-  }
-
-  public async verifyWithError(...args: Parameters<typeof this.verifyCode>) {
-    const res = await this.verifyCode(...args)
-    if (!res)
+    try {
+      if (
+        codeInfo
+          && (JSON.parse(codeInfo) as string[]).every((v, i) => v === compareInfo[i])
+      ) {
+        if (deleteAfterVerify)
+          client.del(bizId)
+        return true
+      }
+      throw new Error('验证码校验失败')
+    }
+    catch (_) {
       responseError(ErrorCode.AUTH_CODE_NOT_MATCHED)
-    return res
+    }
   }
 }

@@ -16,7 +16,7 @@ export interface IAdminRole
   INameDto,
   IDescOptionalDto {
   /** 管理员角色的唯一标识 */
-  id: IAdminRoleIdDto['roleId']
+  id: IAdminRoleIdDto['adminRoleId']
 
   /** 权限列表 */
   permissions?: IPermission[]

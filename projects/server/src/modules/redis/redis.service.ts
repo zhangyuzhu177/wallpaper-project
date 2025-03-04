@@ -2,6 +2,7 @@ import { createClient } from 'redis'
 import type { RedisClientType } from 'redis'
 import { ConfigService } from '@nestjs/config'
 import { Injectable, Logger } from '@nestjs/common'
+import type { RedisConfig } from 'src/config/_redis.config'
 
 @Injectable()
 export class RedisService {
@@ -17,7 +18,7 @@ export class RedisService {
    * 获取 Redis 客户端
    */
   public getClient(redisType: RedisType) {
-    const { key, url } = this._cfgSrv.get<Record<string, any>>(`redis.${redisType}`) || {}
+    const { key, url } = this._cfgSrv.get<RedisConfig>('redis')[redisType]
     if (!key || !url)
       return
 

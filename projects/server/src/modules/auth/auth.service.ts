@@ -1,36 +1,36 @@
+import { Cron } from '@nestjs/schedule'
+import { LoginUser } from 'src/entities'
 import { LessThan, Repository } from 'typeorm'
 import { InjectRepository } from '@nestjs/typeorm'
-import { Inject, Injectable, forwardRef } from '@nestjs/common'
-
-import { Login } from 'src/entities'
-
-import { Cron } from '@nestjs/schedule'
-import { CodeService } from '../code/code.service'
-import { UserService } from '../user/user.service'
-import { JwtAuthService } from '../jwt/jwt.service'
+import { Injectable, Logger } from '@nestjs/common'
 
 @Injectable()
 export class AuthService {
+  private readonly _logger = new Logger(AuthService.name)
+
   constructor(
-    private readonly _codeSrv: CodeService,
-
-    @InjectRepository(Login)
-    private readonly _loginRepo: Repository<Login>,
-
-    @Inject(forwardRef(() => UserService))
-    private readonly _userSrv: UserService,
-
-    private readonly _jwtAuthSrv: JwtAuthService,
+    @InjectRepository(LoginUser)
+    private readonly _userRepo: Repository<LoginUser>,
   ) { }
 
-  @Cron('*/30 * * * * *')
+  /**
+   * 定时任务
+   * 每日0点清除过期的登录信息
+   */
+  @Cron('0 0 0 * * *')
   public async clearExpiredLogin() {
-    await this._loginRepo.delete({
+    this._logger.verbose('定时任务：清除过期的登录信息')
+
+    await this._userRepo.delete({
       expireAt: LessThan(new Date()),
     })
   }
 
+  public qb(alias = 'lu') {
+    return this._userRepo.createQueryBuilder(alias)
+  }
+
   public repo() {
-    return this._loginRepo
+    return this._userRepo
   }
 }

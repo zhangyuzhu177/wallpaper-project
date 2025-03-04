@@ -1,90 +1,84 @@
-import type { CanActivate, ExecutionContext } from '@nestjs/common'
-import { Injectable, SetMetadata, UseGuards, applyDecorators } from '@nestjs/common'
 import { Reflector } from '@nestjs/core'
-
 import { UserService } from 'src/modules/user/user.service'
-import { ApiErrorResponse, getReflectorValue, responseError } from 'src/utils'
-
-import { responseParamsError } from 'src/utils/response/validate-exception-factory'
-import { CodeAction, ErrorCode, codeActionDescriptions } from 'types'
+import { AdminService } from 'src/modules/admin/admin.service'
+import type { CanActivate, ExecutionContext } from '@nestjs/common'
+import { getReflectorValue, responseError, responseParamsError } from 'src/utils'
+import { Injectable, SetMetadata, UseGuards, applyDecorators } from '@nestjs/common'
+import { EmailCodeAction, ErrorCode, emailCodeActionDescriptions } from 'types'
 
 @Injectable()
-export class EmailCodeSendableGuard implements CanActivate {
+class EmailCodeSendableGuard implements CanActivate {
   constructor(
-    public readonly reflector: Reflector,
-    public readonly userSrv: UserService,
+    private readonly _reflector: Reflector,
+    private readonly _userSrv: UserService,
+    private readonly _adminSrv: AdminService,
   ) {}
 
-  public async canActivate(context: ExecutionContext): Promise<boolean> {
-    const req: FakeTimersConfig = context.switchToHttp().getRequest()
+  public async canActivate(context: ExecutionContext) {
+    const req: FastifyRequest = context.switchToHttp().getRequest()
 
+    /** 邮箱已注册，且账号状态正常 */
     const registerRequiredActions = [
-      CodeAction.LOGIN,
-      CodeAction.CHANGE_PASSWORD,
-      CodeAction.UNBIND_EMAIL,
+      EmailCodeAction.USER_LOGIN,
+      EmailCodeAction.USER_CHANGE_PASSWORD,
+      EmailCodeAction.USER_BIND_WEIXIN,
+      EmailCodeAction.ADMIN_LOGIN,
+      EmailCodeAction.ADMIN_CHANGE_PASSWORD,
+      EmailCodeAction.ADMIN_BIND_WEIXIN,
     ]
 
+    /** 邮箱未被注册 */
     const notRegisterRequiredActions = [
-      CodeAction.REGISTER,
-      CodeAction.BIND_EMAIL,
+      EmailCodeAction.USER_BIND_EMAIL,
     ]
 
-    const emailExistsRequiredActions = [
-      CodeAction.UNBIND_EMAIL,
-    ]
+    const actionIn = getReflectorValue(this._reflector, context, 'actionIn', 'body')
+    const actionKey = getReflectorValue(this._reflector, context, 'actionKey', 'action')
+    const emailIn = getReflectorValue(this._reflector, context, 'emailIn', 'body')
+    const emailKey = getReflectorValue(this._reflector, context, 'emailKey', 'email')
 
-    const emailNotExistsRequiredActions = [
-      // 目前，允许用户在存在邮箱的情况下，绑定新邮箱，但是不允许用户在不存在邮箱的情况下，解绑邮箱
-    ]
-
-    const actionIn = getReflectorValue(this.reflector, context, 'actionIn', 'body')
-    const actionKey = getReflectorValue(this.reflector, context, 'actionKey', 'action')
-    const emailIn = getReflectorValue(this.reflector, context, 'emailIn', 'body')
-    const emailKey = getReflectorValue(this.reflector, context, 'emailKey', 'email')
-
-    const email = req?.[emailIn]?.[emailKey]
-    const action = req?.[actionIn]?.[actionKey]
+    const email = req?.[emailIn]?.[emailKey] as string
+    const action = req?.[actionIn]?.[actionKey] as EmailCodeAction
 
     if (!action) {
       responseParamsError([{
         property: actionKey,
-        constraints: { [actionKey]: 'action is required' },
+        constraints: {
+          [actionKey]: `${actionKey} 参数是必须的`,
+        },
       }])
     }
-
     if (!email) {
       responseParamsError([{
         property: emailKey,
-        constraints: { [emailKey]: 'email is required' },
+        constraints: {
+          [emailKey]: `${emailKey} 参数是必须的`,
+        },
       }])
     }
-
-    if (!codeActionDescriptions[action]) {
+    if (!emailCodeActionDescriptions[action]) {
       responseParamsError([{
         property: actionKey,
-        constraints: { [actionKey]: 'action is invalid' },
+        constraints: {
+          [actionKey]: `无效的 ${actionKey} 参数`,
+        },
       }])
     }
 
-    const user = await this.userSrv.repo().findOne({ where: { email } })
+    const repo = action.startsWith('user')
+      ? this._userSrv.repo()
+      : this._adminSrv.repo()
+    const user = await repo.findOneBy({ email })
 
-    if (registerRequiredActions.includes(action) && !user)
-      responseError(ErrorCode.USER_EMAIL_NOT_REGISTERED)
-
-    if (registerRequiredActions.includes(action) && user && user.status)
-      responseError(ErrorCode.USER_ACCOUNT_IS_DELETED)
+    if (registerRequiredActions.includes(action)) {
+      if (!user)
+        responseError(ErrorCode.AUTH_EMAIL_NOT_REGISTERED)
+      else if (!user.status)
+        responseError(ErrorCode.AUTH_ACCOUNT_IS_DISABLE)
+    }
 
     if (notRegisterRequiredActions.includes(action) && user)
-      responseError(ErrorCode.USER_EMAIL_REGISTERED)
-
-    if (user && emailExistsRequiredActions.includes(action) && !user.email)
-      responseError(ErrorCode.USER_EMAIL_NOT_EXISTS)
-
-    if (user && emailNotExistsRequiredActions.includes(action) && user.email)
-      responseError(ErrorCode.USER_EMAIL_EXISTS)
-
-    if (action === CodeAction.UNBIND_EMAIL && user?.email !== email)
-      responseError(ErrorCode.USER_EMAIL_NOT_MATCHED)
+      responseError(ErrorCode.AUTH_EMAIL_REGISTERED)
 
     return true
   }
@@ -92,7 +86,6 @@ export class EmailCodeSendableGuard implements CanActivate {
 
 /**
  * 发送邮件验证码路由守卫
- *
  * 确保 email + action 组合有效
  */
 export function EmailCodeSendable(
@@ -105,13 +98,5 @@ export function EmailCodeSendable(
     SetMetadata('actionKey', action?.key),
     SetMetadata('emailIn', email?.in),
     SetMetadata('emailKey', email?.key),
-    ApiErrorResponse(
-      ErrorCode.USER_EMAIL_NOT_REGISTERED,
-      ErrorCode.USER_ACCOUNT_IS_DELETED,
-      ErrorCode.USER_EMAIL_REGISTERED,
-      ErrorCode.USER_EMAIL_NOT_EXISTS,
-      ErrorCode.USER_EMAIL_EXISTS,
-      ErrorCode.USER_EMAIL_NOT_MATCHED,
-    ),
   )
 }

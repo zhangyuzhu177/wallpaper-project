@@ -1,13 +1,19 @@
 import { registerAs } from '@nestjs/config'
 
-export interface SysAdmin {
-  account: string
-  password: string
+export interface SysConfig {
+  /** 预置系统管理员 */
+  admin: {
+    name: string
+    password: string
+  }[]
 }
-// SYS_ADMIN = 'admin@admin123!!!'
-export default registerAs('sa', () => ({
-  list: (process.env.SYS_ADMIN || '').replace(/\s+/g, '').split(',').map((item) => {
-    const [account, password] = item.trim().split('@')
-    return { account, password } as SysAdmin
-  }),
-}))
+
+export default registerAs('sa', (): SysConfig => {
+  const { SYS_ADMIN } = process.env
+  return {
+    admin: SYS_ADMIN.replace(/\s+/g, '').split(',').map((item) => {
+      const [name, password] = item.trim().split('@')
+      return { name, password }
+    }),
+  }
+})

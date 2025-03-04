@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "crypto-js": "^4.2.0",
+    "dayjs": "^1.11.12",
     "jsencrypt": "^3.3.2"
   },
   "devDependencies": {

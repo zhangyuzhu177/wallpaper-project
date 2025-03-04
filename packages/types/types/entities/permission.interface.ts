@@ -1,7 +1,7 @@
 import type { PermissionType } from '../enum/permission.enum'
 import type { IDescOptionalDto } from '../dto/desc.interface'
 
-import type { IRole } from './admin-role.interface'
+import type { IAdminRole } from './admin-role.interface'
 
 /**
  * 权限列表
@@ -14,5 +14,5 @@ export interface IPermission
   name: PermissionType
 
   /** 使用了当前权限的管理员角色列表 */
-  userRoles?: IRole[]
+  adminRoles?: IAdminRole[]
 }

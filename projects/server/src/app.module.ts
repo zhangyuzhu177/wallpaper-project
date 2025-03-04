@@ -15,24 +15,32 @@ import allConfig from './config'
 import { LogModule } from './modules/log/log.module'
 import { AuthModule } from './modules/auth/auth.module'
 import { UserModule } from './modules/user/user.module'
-import { RoleModule } from './modules/role/role.module'
 import { CodeModule } from './modules/code/code.module'
 import { IpMiddleware } from './middleware/ip.middleware'
 import { RedisModule } from './modules/redis/redis.module'
+import { AdminModule } from './modules/admin/admin.module'
 import { AuthMiddleware } from './middleware/auth.middleware'
+import { NoticeModule } from './modules/notice/notice.module'
 import { AccessMiddleware } from './middleware/access.middleware'
+import { WallpaperModule } from './modules/wallpaper/wallpaper.module'
+import { SysConfigModule } from './modules/sys-config/sys-config.module'
 import { ResponseInterceptor } from './interceptors/response.interceptor'
 import { ThrottlerExceptionFilter } from './filter/throttler-exception.filter'
+import { JwtAuthModule } from './modules/jwt/jwt.module'
 
 @Module({
   imports: [
     // Internal Modules
     LogModule,
     UserModule,
-    RoleModule,
     CodeModule,
     AuthModule,
+    AdminModule,
     RedisModule,
+    NoticeModule,
+    JwtAuthModule,
+    SysConfigModule,
+    WallpaperModule,
 
     // 定时任务
     ScheduleModule.forRoot(),

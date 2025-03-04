@@ -23,17 +23,9 @@ const _authErrors: ErrorMessageCollection = {
     httpStatus: HttpStatus.FORBIDDEN,
     message: '密码错误',
   },
-  [ErrorCode.AUTH_PASSWORD_UNQUALIFIED]: {
-    httpStatus: HttpStatus.FORBIDDEN,
-    message: '账号密码不符合要求',
-  },
   [ErrorCode.AUTH_CODE_NOT_MATCHED]: {
     httpStatus: HttpStatus.FORBIDDEN,
     message: '验证码错误',
-  },
-  [ErrorCode.AUTH_IP_NOT_MATCHED]: {
-    httpStatus: HttpStatus.FORBIDDEN,
-    message: 'ip 地址不匹配',
   },
 
   [ErrorCode.AUTH_ACCOUNT_NOT_REGISTERED]: {
@@ -98,6 +90,7 @@ const _authErrors: ErrorMessageCollection = {
     httpStatus: HttpStatus.FORBIDDEN,
     message: '邮箱不匹配',
   },
+
 }
 
 export default _authErrors

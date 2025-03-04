@@ -4,6 +4,11 @@ interface ExtendRequest extends Request {
 
   /** 当前登录的个人用户信息 */
   user?: import('src/entities').User
+  /** 当前登录的管理员信息 */
+  admin?: import('src/entities').Admin
+
+  /** 当前登入的用户类型 */
+  userType?: import('types').UserType
 
   /** 当前登录用户的 token 凭证 */
   token?: string

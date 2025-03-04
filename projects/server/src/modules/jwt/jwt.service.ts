@@ -28,7 +28,7 @@ export class JwtAuthService {
     const expiresIn = this._cfgSrv.get<number>('jwt.loginAuthExpireInSeconds')
     const secret = this._cfgSrv.get<string>('jwt.loginAuthSecret')
     const signObj = {
-      ...objectPick(user, 'id', 'account', 'email'),
+      ...objectPick(user, 'id', 'name', 'email'),
       timestamp: Date.now(),
     }
     const access_token = this._jwtSrv.sign(signObj, { secret, expiresIn })

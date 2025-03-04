@@ -17,22 +17,32 @@ export enum PermissionType {
   ADMIN_ROLE_UPDATE = 'admin-role:update',
   /** 删除管理员角色 */
   ADMIN_ROLE_DELETE = 'admin-role:delete',
-  /** 查询管理角色分配列表 */
-  ROLE_ASSIGN_QUERY = 'role:assign-query',
 
-  // ---------- user 用户 ----------
-  /** 查询用户 */
+  // ---------- admin 管理员 ----------
+  /** 查询管理员列表 */
+  ADMIN_QUERY = 'admin:query',
+  /** 创建管理员用户 */
+  ADMIN_CREATE = 'admin:create',
+  /** 更新管理员用户 */
+  ADMIN_UPDATE = 'admin:update',
+  /** 删除管理员用户 */
+  ADMIN_DELETE = 'admin:delete',
+  /** 修改管理员用户状态 */
+  ADMIN_CHANGE_STATUS = 'admin:change-status',
+  /** 分配管理员角色 */
+  ADMIN_ASSIGN_ROLE = 'admin:assign-role',
+
+  // ---------- user 个人用户 ----------
+  /** 查询个人用户 */
   USER_QUERY = 'user:query',
-  /** 创建用户 */
+  /** 创建个人用户 */
   USER_CREATE = 'user:create',
-  /** 删除用户 */
-  USER_DELETE = 'user:delete',
-  /** 更新用户 */
+  /** 更新个人用户 */
   USER_UPDATE = 'user:update',
-  /** 更新用户的管理角色 */
-  USER_UPDATE_ROLE = 'user:update-role',
-  /** 恢复用户 */
-  USER_RECOVER = 'user:recover',
+  /** 删除个人用户 */
+  USER_DELETE = 'user:delete',
+  /** 修改个人用户状态 */
+  USER_CHANGE_STATUS = 'user:change-status',
 }
 
 /**
@@ -43,12 +53,17 @@ export const permissionDescriptions: Record<PermissionType, string> = {
   [PermissionType.ADMIN_ROLE_CREATE]: '创建管理员角色',
   [PermissionType.ADMIN_ROLE_UPDATE]: '更新管理员角色',
   [PermissionType.ADMIN_ROLE_DELETE]: '删除管理员角色',
-  [PermissionType.ROLE_ASSIGN_QUERY]: '查询管理角色分配列表',
+
+  [PermissionType.ADMIN_QUERY]: '查询管理员列表',
+  [PermissionType.ADMIN_CREATE]: '创建管理员用户',
+  [PermissionType.ADMIN_UPDATE]: '更新管理员用户',
+  [PermissionType.ADMIN_DELETE]: '删除管理员用户',
+  [PermissionType.ADMIN_CHANGE_STATUS]: '修改管理员用户状态',
+  [PermissionType.ADMIN_ASSIGN_ROLE]: '分配管理员角色',
 
   [PermissionType.USER_QUERY]: '查询用户',
   [PermissionType.USER_CREATE]: '创建用户',
   [PermissionType.USER_DELETE]: '删除用户',
   [PermissionType.USER_UPDATE]: '更新用户',
-  [PermissionType.USER_UPDATE_ROLE]: '更新用户的管理角色',
-  [PermissionType.USER_RECOVER]: '恢复用户',
+  [PermissionType.USER_CHANGE_STATUS]: '修改个人用户状态',
 }
