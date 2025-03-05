@@ -60,4 +60,34 @@ export class CodeService {
       responseError(ErrorCode.AUTH_CODE_NOT_MATCHED)
     }
   }
+
+  /**
+   * 校验一个图形验证码是否正确
+   * @param bizId
+   * @param compareInfo
+   * @param deleteAfterVerify
+   */
+  public async verifyCaptcha(
+    bizId: string,
+    compareInfo: [string, string],
+      deleteAfterVerify = true,
+  ) {
+    const client = this._redisSrv.getClient(RedisType.CODE)
+    const codeInfo = await client.get(bizId)
+
+    try {
+      if (
+        codeInfo
+          && ((JSON.parse(codeInfo) as [string, string]).some((v, i) => v.toLowerCase() !== compareInfo[i].toLowerCase()))
+      ) {
+        if (deleteAfterVerify)
+          client.del(bizId)
+        return true
+      }
+      throw new Error('验证码校验失败')
+    }
+    catch (_) {
+      responseError(ErrorCode.AUTH_CODE_NOT_MATCHED)
+    }
+  }
 }

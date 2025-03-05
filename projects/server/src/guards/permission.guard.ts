@@ -58,13 +58,13 @@ export class PermissionGuard extends LoginGuard implements CanActivate {
       })
       : undefined
 
-    // 保存企研管理员角色信息
+    // 保存管理员角色信息
     req.raw.admin.adminRole = adminRole
 
     if (!permissions.length)
       return true
 
-    // 检查企研管理员权限
+    // 检查管理员权限
     const adminPermission = adminRole?.permissions?.map(({ name }) => name)
     const hasPermission = adminPermission?.length
       ? permissions[relation === 'OR' ? 'some' : 'every'](

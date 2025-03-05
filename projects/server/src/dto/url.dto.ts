@@ -10,7 +10,7 @@ export function UrlDecorator(optional = false, description = '链接') {
       ApiProperty({
         description,
         type: String,
-        example: 'https://www.qiyandata.com',
+        example: 'https://www.baidu.com',
       }),
       IsValidUrl(),
     ],

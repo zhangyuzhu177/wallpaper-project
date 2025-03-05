@@ -13,7 +13,7 @@ export function EmailDecorator(optional = false, description = '邮箱') {
         maxLength: EMAIL_MAX_LENGTH,
         minLength: EMAIL_MIN_LENGTH,
         type: String,
-        example: 'noreplay@qiyandata.com',
+        example: 'noreplay@163.com',
       }),
       IsValidEmail(),
     ],

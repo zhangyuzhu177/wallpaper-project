@@ -5,10 +5,12 @@ import { JwtAuthService } from 'src/modules/jwt/jwt.service'
 import { AdminService } from 'src/modules/admin/admin.service'
 import type { LoginByPasswordBodyDto } from 'src/dto/common/login'
 import { comparePassword, paramAtLeastOne, responseError } from 'src/utils'
+import { CodeService } from 'src/modules/code/code.service'
 
 @Injectable()
 export class AuthAdminService {
   constructor(
+    private readonly _codeSrv: CodeService,
     private readonly _adminSrv: AdminService,
     private readonly _jwtAuthSrv: JwtAuthService,
   ) { }
@@ -19,7 +21,9 @@ export class AuthAdminService {
   public async loginAdminByPassword(body: LoginByPasswordBodyDto, ip: string) {
     paramAtLeastOne(body, 'name', 'email', 'phone')
 
-    const { name, email, phone, password } = body
+    const { name, email, phone, password, code, bizId } = body
+
+    await this._codeSrv.verifyCaptcha(bizId, [ip, code])
 
     const qb = this._adminSrv.qb().addSelect('a.password')
     if (name)

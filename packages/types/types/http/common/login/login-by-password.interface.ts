@@ -2,6 +2,7 @@ import type { IPasswordDto } from '../../../dto/password.interface'
 import type { INameOptionalDto } from '../../../dto/name.interface'
 import type { IEmailOptionalDto } from '../../../dto/email.interface'
 import type { IPhoneOptionalDto } from '../../../dto/phone.interface'
+import type { ICodeVerifyDto } from '../../../dto/code-verify.interface'
 
 /**
  * 通过 姓名/账号/邮箱/手机号 + 密码 登录
@@ -12,4 +13,5 @@ export interface ILoginByPasswordBodyDto
   IPasswordDto,
   INameOptionalDto,
   IEmailOptionalDto,
-  IPhoneOptionalDto {}
+  IPhoneOptionalDto,
+  ICodeVerifyDto { }

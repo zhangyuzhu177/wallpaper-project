@@ -3,7 +3,7 @@ import type { IStatusDto } from '../dto/status.interface'
 import type { IPasswordOptionalDto } from '../dto/password.interface'
 import type { IPhoneOptionalDto } from '../dto/phone.interface'
 import type { IAvatarOptionalDto } from '../dto/avatar.interface'
-import type { IOpenIdDto } from '../dto/id/openid.interface'
+import type { IOpenIdOptionalDto } from '../dto/id/openid.interface'
 import type { INameDto } from '../dto/name.interface'
 import type { IUserIdDto } from './../dto/id/user.interface'
 
@@ -15,9 +15,9 @@ export interface IUser
   ICreatedAt,
   IUpdatedAt,
   IStatusDto,
-  IOpenIdDto,
   INameDto,
   IEmailOptionalDto,
+  IOpenIdOptionalDto,
   IPhoneOptionalDto,
   IPasswordOptionalDto,
   IAvatarOptionalDto {

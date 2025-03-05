@@ -43,6 +43,8 @@ export enum PermissionType {
   USER_DELETE = 'user:delete',
   /** 修改个人用户状态 */
   USER_CHANGE_STATUS = 'user:change-status',
+  /** 修改个人用户下载次数 */
+  USER_CHANGE_DOWNLOAD_LIMIT = 'user:change-download-limit',
 }
 
 /**
@@ -66,4 +68,5 @@ export const permissionDescriptions: Record<PermissionType, string> = {
   [PermissionType.USER_DELETE]: '删除用户',
   [PermissionType.USER_UPDATE]: '更新用户',
   [PermissionType.USER_CHANGE_STATUS]: '修改个人用户状态',
+  [PermissionType.USER_CHANGE_DOWNLOAD_LIMIT]: '修改个人用户下载次数',
 }

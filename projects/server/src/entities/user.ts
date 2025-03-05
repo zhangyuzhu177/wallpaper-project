@@ -27,8 +27,9 @@ export class User extends BaseTimeStamp implements IUser {
   })
   @Column({
     unique: true,
+    nullable: true,
   })
-  openid: string
+  openid?: string
 
   @ApiProperty({
     description: '姓名',

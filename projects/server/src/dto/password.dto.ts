@@ -15,7 +15,7 @@ export function PasswordDecorator(optional = false, description = '密码') {
         maxLength: PASSWORD_MAX_LENGTH,
         minLength: PASSWORD_MIN_LENGTH,
         type: String,
-        example: 'QiyanData@#!',
+        example: 'String@#!',
       }),
       IsValidPassword(),
       Transform(({ value }) => rsaDecrypt(value)),
