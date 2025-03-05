@@ -3,9 +3,17 @@
 </script>
 
 <template>
-  <div class="page_bg">
-    user
+  <div class="user_layout page_bg">
+    <navigator
+      url="/pages/auth/login"
+    >
+      <button>denglu</button>
+    </navigator>
   </div>
 </template>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.user_layout{
+  padding: 100rpx;
+}
+</style>

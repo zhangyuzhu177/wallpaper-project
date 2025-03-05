@@ -1,17 +1,15 @@
 <script setup lang="ts">
-import banner1 from '~/static/images/banner1.jpg'
-import banner2 from '~/static/images/banner2.jpg'
-import banner3 from '~/static/images/banner3.jpg'
+import cover from '~/static/images/cover.jpg'
 
 const list = [
   {
-    img: banner1,
+    img: cover,
   },
   {
-    img: banner2,
+    img: cover,
   },
   {
-    img: banner3,
+    img: cover,
   },
 ]
 </script>

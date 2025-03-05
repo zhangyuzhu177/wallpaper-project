@@ -119,6 +119,10 @@ export enum ErrorCode {
   // ---------- 壁纸相关错误码 ----------
   /** 壁纸不存在 */
   WALLPAPER_NOT_EXISTS = 120001,
+
+  // ---------- 微信相关错误码 ----------
+  /** 微信服务异常 */
+  WECHAT_SERVER_ABNORMAL = 130001,
 }
 
 export type ErrorMessageCollection = Partial<

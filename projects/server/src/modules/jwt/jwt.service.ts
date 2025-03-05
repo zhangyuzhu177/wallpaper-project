@@ -1,12 +1,12 @@
 import { ErrorCode } from 'types'
-import { objectPick } from 'utils'
 import { JwtService } from '@nestjs/jwt'
 import { Inject, Injectable, forwardRef } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 
-import type { User } from 'src/entities'
-import { md5, responseError } from 'src/utils'
+import type { Admin, User } from 'src/entities'
+import { md5, responseError, responseParamsError } from 'src/utils'
 
+import { objectOmit } from 'utils'
 import { AuthService } from '../auth/auth.service'
 import { RedisService } from '../redis/redis.service'
 
@@ -24,26 +24,63 @@ export class JwtAuthService {
   /**
    * 根据用户签发登录成功的授权token
    */
-  public async signLoginAuthToken(user: Partial<User>) {
+  public async signLoginAuthToken(
+    user: {
+      user?: User
+      admin?: Admin
+    },
+    ip: string,
+  ) {
+    const key = ['user', 'admin'].find(key => !!user[key]) as keyof typeof user
+    if (!key) {
+      responseParamsError([{
+        property: 'user',
+        constraints: {
+          user: 'user 中至少需要一个参数',
+        },
+      }])
+    }
+
+    // 将该用户其他的登录信息状态改为 false
+    await this._authSrv.repo().update(
+      {
+        [`${key}Id`]: user[key].id,
+        status: true,
+      },
+      {
+        status: false,
+      },
+    )
+
     const expiresIn = this._cfgSrv.get<number>('jwt.loginAuthExpireInSeconds')
     const secret = this._cfgSrv.get<string>('jwt.loginAuthSecret')
+
     const signObj = {
-      ...objectPick(user, 'id', 'name', 'email'),
+      id: user[key].id,
+      ip,
       timestamp: Date.now(),
     }
-    const access_token = this._jwtSrv.sign(signObj, { secret, expiresIn })
-    const client = await this._redisSrv.getClient(RedisType.AUTH_JWT)
-    client.setEx(access_token, expiresIn, `${expiresIn}`)
+    const token = this._jwtSrv.sign(signObj, { secret, expiresIn })
+    const client = this._redisSrv.getClient(RedisType.AUTH_JWT)
+    await client.setEx(token, expiresIn, `${expiresIn}`)
 
-    // 存储token
-    this._authSrv.repo().insert({
-      id: md5(access_token),
-      token: access_token,
-      userId: user.id,
+    // 存储 token
+    await this._authSrv.repo().insert({
+      id: md5(token),
+      token,
       expireAt: new Date(Date.now() + expiresIn * 1000),
+      ip,
       lastActiveAt: new Date(),
+      [`${key}Id`]: user[key].id,
     })
-    return { access_token, expireAt: Date.now() + expiresIn }
+
+    return {
+      sign: {
+        token,
+        expireAt: Date.now() + expiresIn * 1000,
+      },
+      [key]: objectOmit(user[key], 'password'),
+    }
   }
 
   /**
@@ -52,7 +89,7 @@ export class JwtAuthService {
   public async validateLoginAuthToken(token: string) {
     // 1. 检查 redis
     try {
-      const client = await this._redisSrv.getClient(RedisType.AUTH_JWT)
+      const client = this._redisSrv.getClient(RedisType.AUTH_JWT)
       const exists = await client.exists(token)
       if (!exists)
         return
@@ -71,11 +108,11 @@ export class JwtAuthService {
    * 删除指定的token
    */
   public async destroyLoginAuthToken(token: string) {
-    const client = await this._redisSrv.getClient(RedisType.AUTH_JWT)
+    const client = this._redisSrv.getClient(RedisType.AUTH_JWT)
     try {
       const exists = await client.exists(token)
       if (!exists)
-        throw new Error('AccessToken not exists in cache')
+        throw new Error('AccessToken 不在缓存中')
 
       // 删除数据库中存储的 token
       this._authSrv.repo().delete({ id: md5(token) })

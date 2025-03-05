@@ -1,9 +1,9 @@
 ## 描述
 uni-app 全栈项目
 
-前端：Vue3+Typescript+Quasar
+前端：Vue3+TS
 
-后端：Nest.js+TypeScript+TypeORM
+后端：Nest.js+TS+TypeORM
 
 ## 快速开始
 1. 安装依赖
@@ -28,8 +28,11 @@ pnpm build:packages
 # 启动后端
 pnpm dev:server
 
-# 启动客户端
-pnpm dev:client
+# 启动h5端
+pnpm dev:app-h5
+
+# 启动微信小程序端
+pnpm dev:app-mp-weixin
 
 # 启动管理后台
 pnpm dev:admin

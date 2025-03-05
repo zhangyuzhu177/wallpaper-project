@@ -163,6 +163,14 @@ declare global {
       RSA_PUBLIC_KEY?: string
       /** 解密私钥 */
       RSA_PRIVATE_KEY?: string
+
+      /** ---------- 微信小程序登录 ---------- */
+      /** 小程序 appId */
+      WECHAT_APP_ID?: string
+      /** 小程序 appSecret */
+      WECHAT_APP_SECRET?: string
+      /** 微信服务的请求接口 */
+      WEIXIN_API_URL?: string
     }
   }
 }

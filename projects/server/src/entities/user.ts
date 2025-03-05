@@ -15,11 +15,20 @@ import { BaseTimeStamp } from './_timestamp'
 @Entity()
 export class User extends BaseTimeStamp implements IUser {
   @ApiProperty({
-    description: '管理员的唯一标识',
+    description: '个人用户的唯一标识',
     example: ID_EXAMPLE,
   })
   @PrimaryGeneratedColumn('uuid')
   id: string
+
+  @ApiProperty({
+    description: '微信用户的唯一标识',
+    example: ID_EXAMPLE,
+  })
+  @Column({
+    unique: true,
+  })
+  openid: string
 
   @ApiProperty({
     description: '姓名',
@@ -36,8 +45,9 @@ export class User extends BaseTimeStamp implements IUser {
   })
   @Column({
     select: false,
+    nullable: true,
   })
-  password: string
+  password?: string
 
   @ApiProperty({
     description: '邮箱',
@@ -46,8 +56,9 @@ export class User extends BaseTimeStamp implements IUser {
   @Column({
     unique: true,
     length: EMAIL_MAX_LENGTH,
+    nullable: true,
   })
-  email: string
+  email?: string
 
   @ApiPropertyOptional({
     description: '手机号',
@@ -55,9 +66,10 @@ export class User extends BaseTimeStamp implements IUser {
   })
   @Column({
     unique: true,
+    nullable: true,
     length: PHONE_NUMBER_MAX_LENGTH,
   })
-  phone: string
+  phone?: string
 
   @ApiPropertyOptional({
     description: '头像',
@@ -65,8 +77,17 @@ export class User extends BaseTimeStamp implements IUser {
   })
   @Column({
     nullable: true,
+    default: 'https://thirdwx.qlogo.cn/mmopen/vi_32/POgEwh4mIHO4nibH0KlMECNjjGxQUq24ZEaGT4poC6icRiccVGKSyXwibcPq4BWmiaIGuG1icwxaQX6grC9VemZoJ8rg/132',
   })
   avatar?: string
+
+  @ApiProperty({
+    description: '下载次数限制',
+  })
+  @Column({
+    nullable: true,
+  })
+  downloadLimit?: number
 
   @ApiProperty({
     description: '状态（true：正常，false：禁用）',

@@ -3,6 +3,7 @@ import _authError from './_auth.error'
 import _userError from './_user.error'
 import _commonError from './_common.error'
 import _noticeError from './_notice.error'
+import _weixinError from './_weixin.error'
 import _sysConfigError from './_sys-config.error'
 
 export const errorMessages: ErrorMessageCollection = {
@@ -11,5 +12,6 @@ export const errorMessages: ErrorMessageCollection = {
   ..._userError,
   ..._commonError,
   ..._noticeError,
+  ..._weixinError,
   ..._sysConfigError,
 }

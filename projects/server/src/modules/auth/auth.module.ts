@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common'
 import { LoginUser } from 'src/entities'
+import { HttpModule } from '@nestjs/axios'
 import { TypeOrmModule } from '@nestjs/typeorm'
 
 import { AuthService } from './auth.service'
@@ -12,6 +13,7 @@ import { AuthAdminController } from './admin/auth-admin.controller'
   imports: [
     TypeOrmModule.forFeature([LoginUser]),
 
+    HttpModule,
   ],
   controllers: [
     AuthUserController,
