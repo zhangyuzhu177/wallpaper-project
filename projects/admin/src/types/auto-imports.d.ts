@@ -16,6 +16,7 @@ declare global {
   const AUTH_TOKEN_KEY: typeof import('../../../shared/constants/storage')['AUTH_TOKEN_KEY']
   const EffectScope: typeof import('vue')['EffectScope']
   const RSA_KEY: typeof import('../../../shared/constants/encrypt')['RSA_KEY']
+  const TABLE_PAGINATION: typeof import('../../../shared/constants/table')['TABLE_PAGINATION']
   const USER_AUTH_TOKEN_KEY: typeof import('../../../shared/constants/storage')['USER_AUTH_TOKEN_KEY']
   const USER_REMEMBER_LOGIN_INFO_KEY: typeof import('../../../shared/constants/storage')['USER_REMEMBER_LOGIN_INFO_KEY']
   const adminAssignRoleApi: typeof import('../../../shared/api/admin')['adminAssignRoleApi']
@@ -349,6 +350,7 @@ declare module 'vue' {
     readonly APP_URL: UnwrapRef<typeof import('../../../shared/constants/app')['APP_URL']>
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
     readonly RSA_KEY: UnwrapRef<typeof import('../../../shared/constants/encrypt')['RSA_KEY']>
+    readonly TABLE_PAGINATION: UnwrapRef<typeof import('../../../shared/constants/table')['TABLE_PAGINATION']>
     readonly USER_AUTH_TOKEN_KEY: UnwrapRef<typeof import('../../../shared/constants/storage')['USER_AUTH_TOKEN_KEY']>
     readonly USER_REMEMBER_LOGIN_INFO_KEY: UnwrapRef<typeof import('../../../shared/constants/storage')['USER_REMEMBER_LOGIN_INFO_KEY']>
     readonly adminAssignRoleApi: UnwrapRef<typeof import('../../../shared/api/admin')['adminAssignRoleApi']>
