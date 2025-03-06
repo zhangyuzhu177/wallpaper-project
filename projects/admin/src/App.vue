@@ -1,9 +1,8 @@
 <script setup lang="ts">
+// 初始化全局 router
+globalRouter.value = useRouter() as any
 </script>
 
 <template>
-  <div flex="~ center col gap2" full>
-    <img size-8 src="/favicon.svg" alt="">
-    <h1 text-grey-9 v-text="'Admin'" />
-  </div>
+  <RouterView full />
 </template>

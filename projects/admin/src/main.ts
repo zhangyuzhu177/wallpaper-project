@@ -9,6 +9,11 @@ import '@unocss/reset/tailwind.css'
 import './styles/main.css'
 import 'uno.css'
 
+// 初始化 axios
+$http.value = api
+// 初始化富文本组件
+// initRichtext()
+
 const routes = setupLayouts(generatedRoutes)
 
 // https://github.com/antfu/vite-ssg

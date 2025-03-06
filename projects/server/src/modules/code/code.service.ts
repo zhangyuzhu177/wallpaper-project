@@ -13,6 +13,25 @@ export class CodeService {
   ) { }
 
   /**
+   * 将图形验证码存入 redis
+   */
+  public async createCaptcha(
+    ip: string,
+    code: string,
+      expireInMinutes = 5,
+  ) {
+    const bizId = randomString(24, 24, '') + Date.now().toString(36)
+    // save code to redis
+    const client = this._redisSrv.getClient(RedisType.CODE)
+
+    await client.setEx(bizId, expireInMinutes * 60, JSON.stringify([
+      ip,
+      code,
+    ]))
+    return { bizId }
+  }
+
+  /**
    * 创建一个验证码并存入 redis
    */
   public async createCode(
@@ -70,7 +89,7 @@ export class CodeService {
   public async verifyCaptcha(
     bizId: string,
     compareInfo: [string, string],
-      deleteAfterVerify = true,
+    deleteAfterVerify = true,
   ) {
     const client = this._redisSrv.getClient(RedisType.CODE)
     const codeInfo = await client.get(bizId)
@@ -78,7 +97,7 @@ export class CodeService {
     try {
       if (
         codeInfo
-          && ((JSON.parse(codeInfo) as [string, string]).some((v, i) => v.toLowerCase() !== compareInfo[i].toLowerCase()))
+          && ((JSON.parse(codeInfo) as string[]).every((v, i) => v.toLowerCase() === compareInfo[i].toLowerCase()))
       ) {
         if (deleteAfterVerify)
           client.del(bizId)
@@ -86,7 +105,7 @@ export class CodeService {
       }
       throw new Error('验证码校验失败')
     }
-    catch (_) {
+    catch (e) {
       responseError(ErrorCode.AUTH_CODE_NOT_MATCHED)
     }
   }

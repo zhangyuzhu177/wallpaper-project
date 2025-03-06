@@ -15,17 +15,18 @@ import Components from 'unplugin-vue-components/vite'
 
 export default ({ mode }: any) => {
   const nodeEnv = {
-    ...loadEnv(mode, path.relative(__dirname, '../gateway'), 'APP'),
-    ...loadEnv(mode, path.relative(__dirname, '../gateway'), 'RSA_PUBLIC'),
+    ...loadEnv(mode, path.relative(__dirname, '../server'), 'APP'),
+    ...loadEnv(mode, path.relative(__dirname, '../server'), 'RSA_PUBLIC'),
   }
 
   process.env = {
     ...process.env,
     // 默认配置
     ...{
-      VITE_ADMIN_PORT: '3002',
+      VITE_ADMIN_PORT: '5002',
       VITE_ADMIN_BASE: '/',
       VITE_API_BASE: '/api',
+      VITE_PROXY_TARGET: 'http://localhost:3000/api',
     },
     // 后端服务读取的配置
     ...Object.keys(nodeEnv).reduce((newObj, key) => {
@@ -62,6 +63,8 @@ export default ({ mode }: any) => {
       },
     },
 
+    publicDir: path.resolve(__dirname, '../shared/public/'),
+
     plugins: [
       VueMacros({
         plugins: {
@@ -89,10 +92,10 @@ export default ({ mode }: any) => {
         dts: 'src/types/auto-imports.d.ts',
         dirs: [
           'src/api',
-          'src/composables',
+          'src/hooks',
           'src/constants',
           '../shared/api',
-          '../shared/composables',
+          '../shared/hooks',
           '../shared/constants',
           '../shared/utils/**',
         ],
@@ -108,7 +111,7 @@ export default ({ mode }: any) => {
         dts: 'src/types/components.d.ts',
         dirs: [
           'src/components',
-          '../../shared/components',
+          '../shared/components',
         ],
       }),
 

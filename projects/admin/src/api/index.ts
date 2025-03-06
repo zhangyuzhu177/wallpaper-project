@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { Notify } from 'quasar'
-import { authToken } from '../composables/user'
+import type { IBasicResponse } from 'types'
 
 const $http = axios.create({
   baseURL: import.meta.env.VITE_API_BASE,
@@ -12,8 +12,9 @@ const $http = axios.create({
 $http.interceptors.request.use(
   (config) => {
     const { headers, url = '' } = config
-    if (authToken.value && !headers.Authorization)
-      headers.Authorization = `Bearer ${authToken.value.trim()}`
+
+    if (adminAuthToken.value && !headers.Authorization)
+      headers.Authorization = `Bearer ${adminAuthToken.value.trim()}`
 
     const baseURLWhiteList = ['http', '//']
     if (baseURLWhiteList.some(prefix => url.startsWith(prefix)))
@@ -41,22 +42,14 @@ $http.interceptors.response.use(
     if (!response)
       return
 
-    const { detail, message } = response.data
+    const { detail, message } = response.data as IBasicResponse
     const notify = config.headers.notify !== false
 
     // 判断登录是否有效（未登录/登录过期）
-    // if (response.status === 401) {
-    //   const { logout } = useUser()
-    //   logout(true)
-    // }
-
-    // const { isAdmin } = useSysConfig()
-    // 管理后台，跳转路由
-    // if (isAdmin.value) {
-    //   // 判断登录是否有效
-    //   if (response.status === 401)
-    //     pubRouter.value?.replace({ path: '/auth/login' })
-    // }
+    if (response.status === 401) {
+      const { logout } = useAdmin(globalRouter.value)
+      logout(true)
+    }
 
     if (notify) {
       if (Array.isArray(detail)) {
@@ -78,13 +71,12 @@ $http.interceptors.response.use(
 
 /**
  * 展示错误通知
- * @param message
  */
-function showNotify(message: string) {
+function showNotify(message = '服务器异常，请稍后再试') {
   Notify.create({
     type: 'error',
     message,
   })
 }
 
-export { $http }
+export default $http

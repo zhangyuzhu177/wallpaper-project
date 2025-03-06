@@ -14,7 +14,7 @@ function initRsa() {
 /**
  * 对字符串进行 rsa 加密
  */
-export function rsaEncrypt(str: string, key = 'ZhangYuzhu') {
+export function rsaEncrypt(str: string, key = 'ZyzRsa') {
   if (!rsa)
     initRsa()
   return rsa.encrypt(
@@ -26,7 +26,7 @@ export function rsaEncrypt(str: string, key = 'ZhangYuzhu') {
 /**
  * 对密文进行 rsa 解密
  */
-export function rsaDecrypt(hash: string, key = 'ZhangYuzhu') {
+export function rsaDecrypt(hash: string, key = 'ZyzRsa') {
   if (!rsa)
     initRsa()
   try {
