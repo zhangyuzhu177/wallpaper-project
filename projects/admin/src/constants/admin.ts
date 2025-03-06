@@ -20,6 +20,64 @@ export interface PermissionItem {
  */
 export const ADMIN_MENU_LIST: PermissionItem[] = [
   {
+    name: '首页',
+    to: '/home',
+    children: [
+      {
+        name: '页面配置',
+        readonly: PermissionType.CONFIG_QUERY,
+        children: [
+          {
+            name: '更新页面配置',
+            value: PermissionType.CONFIG_UPSERT,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: '壁纸管理',
+    to: '/wallpaper',
+    children: [
+      {
+        name: '分类列表',
+        readonly: PermissionType.CATEGORY_QUERY,
+        children: [
+          {
+            name: '创建分类信息',
+            value: PermissionType.CATEGORY_CREATE,
+          },
+          {
+            name: '更新分类信息',
+            value: PermissionType.CATEGORY_UPDATE,
+          },
+          {
+            name: '删除分类信息',
+            value: PermissionType.CATEGORY_DELETE,
+          },
+        ],
+      },
+      {
+        name: '壁纸列表',
+        readonly: PermissionType.WALLPAPER_QUERY,
+        children: [
+          {
+            name: '上传壁纸',
+            value: PermissionType.WALLPAPER_CREATE,
+          },
+          {
+            name: '更新壁纸',
+            value: PermissionType.WALLPAPER_UPDATE,
+          },
+          {
+            name: '删除壁纸',
+            value: PermissionType.WALLPAPER_DELETE,
+          },
+        ],
+      },
+    ],
+  },
+  {
     name: '用户中心',
     to: '/user',
     children: [

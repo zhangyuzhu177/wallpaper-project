@@ -26,6 +26,40 @@ export function useMenu($route = useRoute()) {
   const pageMenu = computed<PageMenuItem[] | undefined>(() => {
     const role = adminPermission.value
     const menu: Record<string, PageMenuItem[]> = {
+      home: [
+        {
+          value: 'home',
+          name: '页面配置',
+          flag: arrayHasIntersection(
+            role,
+            [
+              PermissionType.CONFIG_QUERY,
+            ],
+          ),
+        },
+      ],
+      wallpaper: [
+        {
+          value: 'category',
+          name: '分类列表',
+          flag: arrayHasIntersection(
+            role,
+            [
+              PermissionType.CATEGORY_QUERY,
+            ],
+          ),
+        },
+        {
+          value: 'wallpaper',
+          name: '壁纸列表',
+          flag: arrayHasIntersection(
+            role,
+            [
+              PermissionType.WALLPAPER_QUERY,
+            ],
+          ),
+        },
+      ],
       user: [
         {
           value: 'user',

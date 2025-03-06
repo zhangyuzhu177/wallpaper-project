@@ -45,6 +45,32 @@ export enum PermissionType {
   USER_CHANGE_STATUS = 'user:change-status',
   /** 修改个人用户下载次数 */
   USER_CHANGE_DOWNLOAD_LIMIT = 'user:change-download-limit',
+
+  // ---------- categgory 分类 ----------
+  /** 查询壁纸分类 */
+  CATEGORY_QUERY = 'category:query',
+  /** 创建壁纸分类 */
+  CATEGORY_CREATE = 'category:create',
+  /** 更新壁纸分类 */
+  CATEGORY_UPDATE = 'category:update',
+  /** 删除壁纸分类 */
+  CATEGORY_DELETE = 'category:delete',
+
+  // ---------- wallpaper 壁纸 ----------
+  /** 查询壁纸 */
+  WALLPAPER_QUERY = 'wallpaper:query',
+  /** 创建壁纸 */
+  WALLPAPER_CREATE = 'wallpaper:create',
+  /** 更新壁纸 */
+  WALLPAPER_UPDATE = 'wallpaper:update',
+  /** 删除壁纸 */
+  WALLPAPER_DELETE = 'wallpaper:delete',
+
+  // ------------------ 全局配置 ---------------------
+  /** 查询应用全局配置 */
+  CONFIG_QUERY = 'config:query',
+  /** 创建/更新应用全局配置 */
+  CONFIG_UPSERT = 'config:upsert',
 }
 
 /**
@@ -69,4 +95,17 @@ export const permissionDescriptions: Record<PermissionType, string> = {
   [PermissionType.USER_UPDATE]: '更新用户',
   [PermissionType.USER_CHANGE_STATUS]: '修改个人用户状态',
   [PermissionType.USER_CHANGE_DOWNLOAD_LIMIT]: '修改个人用户下载次数',
+
+  [PermissionType.CATEGORY_QUERY]: '查询壁纸分类',
+  [PermissionType.CATEGORY_CREATE]: '创建壁纸分类',
+  [PermissionType.CATEGORY_UPDATE]: '更新壁纸分类',
+  [PermissionType.CATEGORY_DELETE]: '删除壁纸分类',
+
+  [PermissionType.WALLPAPER_QUERY]: '查询壁纸',
+  [PermissionType.WALLPAPER_CREATE]: '创建壁纸',
+  [PermissionType.WALLPAPER_UPDATE]: '更新壁纸',
+  [PermissionType.WALLPAPER_DELETE]: '删除壁纸',
+
+  [PermissionType.CONFIG_QUERY]: '查询应用全局配置',
+  [PermissionType.CONFIG_UPSERT]: '创建/更新应用全局配置',
 }
