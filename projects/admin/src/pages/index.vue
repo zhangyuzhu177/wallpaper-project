@@ -5,5 +5,5 @@
 </template>
 
 <route lang="yaml">
-redirect: /user
+redirect: /home
 </route>

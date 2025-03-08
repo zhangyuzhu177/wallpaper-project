@@ -8,5 +8,5 @@ import type { ICreateUserBodyDto } from './create-user.interface'
  */
 export interface IUpdateUserBodyDto
   extends
-  Omit<ICreateUserBodyDto, 'password'>,
+  Omit<ICreateUserBodyDto, 'password' | 'account'>,
   IPasswordOptionalDto {}

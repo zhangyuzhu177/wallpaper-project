@@ -9,6 +9,6 @@ export interface ICreateUserBodyDto
   extends
   Pick<
     IUser,
-    'name' | 'phone' | 'email' | 'password'
+    'account' | 'name' | 'phone' | 'email' | 'password'
   >,
   IStatusOptionalDto {}

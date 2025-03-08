@@ -50,9 +50,7 @@ export class UserService {
    * 创建个人用户
    */
   public async createUser(body: CreateUserBodyDto) {
-    const {
-      name, phone, email, password,
-    } = body
+    const { account, phone, email, password } = body
 
     try {
       const insertRes = await this._userRepo.insert(
@@ -68,7 +66,7 @@ export class UserService {
       const sqlError = parseSqlError(e)
       if (sqlError === SqlError.DUPLICATE_ENTRY) {
         const value = e.message.match(/Duplicate entry\s+'(.*?)'/)?.[1]
-        if (value === name)
+        if (value === account)
           responseError(ErrorCode.AUTH_ACCOUNT_REGISTERED)
         else if (value === phone)
           responseError(ErrorCode.AUTH_PHONE_REGISTERED)
@@ -83,9 +81,7 @@ export class UserService {
    * 更新指定个人用户
    */
   public async updateUser(id: string, body: UpdateUserBodyDto) {
-    const {
-      name, phone, email, password,
-    } = body
+    const { phone, email, password } = body
 
     try {
       const updateRes = await this._userRepo.update(
@@ -104,9 +100,7 @@ export class UserService {
       const sqlError = parseSqlError(e)
       if (sqlError === SqlError.DUPLICATE_ENTRY) {
         const value = e.message.match(/Duplicate entry\s+'(.*?)'/)?.[1]
-        if (value === name)
-          responseError(ErrorCode.AUTH_ACCOUNT_REGISTERED)
-        else if (value === phone)
+        if (value === phone)
           responseError(ErrorCode.AUTH_PHONE_REGISTERED)
         else if (value === email)
           responseError(ErrorCode.AUTH_EMAIL_REGISTERED)

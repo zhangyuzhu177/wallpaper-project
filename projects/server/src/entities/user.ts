@@ -32,12 +32,19 @@ export class User extends BaseTimeStamp implements IUser {
   openid?: string
 
   @ApiProperty({
-    description: '姓名',
+    description: '账号',
     example: 'account',
   })
   @Column({
     unique: true,
   })
+  account: string
+
+  @ApiProperty({
+    description: '昵称',
+    example: 'account',
+  })
+  @Column()
   name: string
 
   @ApiPropertyOptional({

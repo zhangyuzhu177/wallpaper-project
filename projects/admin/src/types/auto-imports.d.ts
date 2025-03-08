@@ -127,6 +127,8 @@ declare global {
   const shallowRef: typeof import('vue')['shallowRef']
   const syncRef: typeof import('@vueuse/core')['syncRef']
   const syncRefs: typeof import('@vueuse/core')['syncRefs']
+  const sysConfigGetApi: typeof import('../../../shared/api/sysConfig')['sysConfigGetApi']
+  const sysConfigUpsertApi: typeof import('../../../shared/api/sysConfig')['sysConfigUpsertApi']
   const templateRef: typeof import('@vueuse/core')['templateRef']
   const throttledRef: typeof import('@vueuse/core')['throttledRef']
   const throttledWatch: typeof import('@vueuse/core')['throttledWatch']
@@ -280,6 +282,7 @@ declare global {
   const useStyleTag: typeof import('@vueuse/core')['useStyleTag']
   const useSupported: typeof import('@vueuse/core')['useSupported']
   const useSwipe: typeof import('@vueuse/core')['useSwipe']
+  const useSysConfig: typeof import('../../../shared/hooks/sysConfig')['useSysConfig']
   const useTemplateRef: typeof import('vue')['useTemplateRef']
   const useTemplateRefsList: typeof import('@vueuse/core')['useTemplateRefsList']
   const useTextDirection: typeof import('@vueuse/core')['useTextDirection']
@@ -312,6 +315,14 @@ declare global {
   const useWindowFocus: typeof import('@vueuse/core')['useWindowFocus']
   const useWindowScroll: typeof import('@vueuse/core')['useWindowScroll']
   const useWindowSize: typeof import('@vueuse/core')['useWindowSize']
+  const userChangeStatusApi: typeof import('../../../shared/api/user')['userChangeStatusApi']
+  const userCreateApi: typeof import('../../../shared/api/user')['userCreateApi']
+  const userDownloadConfigApi: typeof import('../../../shared/api/user')['userDownloadConfigApi']
+  const userOwnGetProfileApi: typeof import('../../../shared/api/user')['userOwnGetProfileApi']
+  const userQueryApi: typeof import('../../../shared/api/user')['userQueryApi']
+  const userTryoutConfigApi: typeof import('../../../shared/api/user')['userTryoutConfigApi']
+  const userUpdateApi: typeof import('../../../shared/api/user')['userUpdateApi']
+  const validateDownloadLimit: typeof import('../../../shared/utils/validator/permission')['validateDownloadLimit']
   const validateName: typeof import('../../../shared/utils/validator/name')['validateName']
   const validateRoleDesc: typeof import('../../../shared/utils/validator/role')['validateRoleDesc']
   const validateRoleName: typeof import('../../../shared/utils/validator/role')['validateRoleName']
@@ -462,6 +473,8 @@ declare module 'vue' {
     readonly shallowRef: UnwrapRef<typeof import('vue')['shallowRef']>
     readonly syncRef: UnwrapRef<typeof import('@vueuse/core')['syncRef']>
     readonly syncRefs: UnwrapRef<typeof import('@vueuse/core')['syncRefs']>
+    readonly sysConfigGetApi: UnwrapRef<typeof import('../../../shared/api/sysConfig')['sysConfigGetApi']>
+    readonly sysConfigUpsertApi: UnwrapRef<typeof import('../../../shared/api/sysConfig')['sysConfigUpsertApi']>
     readonly templateRef: UnwrapRef<typeof import('@vueuse/core')['templateRef']>
     readonly throttledRef: UnwrapRef<typeof import('@vueuse/core')['throttledRef']>
     readonly throttledWatch: UnwrapRef<typeof import('@vueuse/core')['throttledWatch']>
@@ -615,6 +628,7 @@ declare module 'vue' {
     readonly useStyleTag: UnwrapRef<typeof import('@vueuse/core')['useStyleTag']>
     readonly useSupported: UnwrapRef<typeof import('@vueuse/core')['useSupported']>
     readonly useSwipe: UnwrapRef<typeof import('@vueuse/core')['useSwipe']>
+    readonly useSysConfig: UnwrapRef<typeof import('../../../shared/hooks/sysConfig')['useSysConfig']>
     readonly useTemplateRef: UnwrapRef<typeof import('vue')['useTemplateRef']>
     readonly useTemplateRefsList: UnwrapRef<typeof import('@vueuse/core')['useTemplateRefsList']>
     readonly useTextDirection: UnwrapRef<typeof import('@vueuse/core')['useTextDirection']>
@@ -647,6 +661,13 @@ declare module 'vue' {
     readonly useWindowFocus: UnwrapRef<typeof import('@vueuse/core')['useWindowFocus']>
     readonly useWindowScroll: UnwrapRef<typeof import('@vueuse/core')['useWindowScroll']>
     readonly useWindowSize: UnwrapRef<typeof import('@vueuse/core')['useWindowSize']>
+    readonly userChangeStatusApi: UnwrapRef<typeof import('../../../shared/api/user')['userChangeStatusApi']>
+    readonly userCreateApi: UnwrapRef<typeof import('../../../shared/api/user')['userCreateApi']>
+    readonly userDownloadConfigApi: UnwrapRef<typeof import('../../../shared/api/user')['userDownloadConfigApi']>
+    readonly userOwnGetProfileApi: UnwrapRef<typeof import('../../../shared/api/user')['userOwnGetProfileApi']>
+    readonly userQueryApi: UnwrapRef<typeof import('../../../shared/api/user')['userQueryApi']>
+    readonly userUpdateApi: UnwrapRef<typeof import('../../../shared/api/user')['userUpdateApi']>
+    readonly validateDownloadLimit: UnwrapRef<typeof import('../../../shared/utils/validator/permission')['validateDownloadLimit']>
     readonly validateName: UnwrapRef<typeof import('../../../shared/utils/validator/name')['validateName']>
     readonly validateRoleDesc: UnwrapRef<typeof import('../../../shared/utils/validator/role')['validateRoleDesc']>
     readonly validateRoleName: UnwrapRef<typeof import('../../../shared/utils/validator/role')['validateRoleName']>

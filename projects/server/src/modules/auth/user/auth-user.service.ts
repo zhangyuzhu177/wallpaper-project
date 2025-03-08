@@ -145,6 +145,7 @@ export class AuthUserService {
       // 不存在自动创建用户
       user = this._userSrv.repo().create({
         openid,
+        account: randomString(9, 9, ''),
         name: `微信用户${randomString(4, 4, '')}`,
       })
       await this._userSrv.repo().save(user)
@@ -158,18 +159,18 @@ export class AuthUserService {
   }
 
   /**
-   * 通过 姓名/邮箱/手机号 + 密码 登录
+   * 通过 账号/邮箱/手机号 + 密码 登录
    */
   public async loginUserByPassword(body: LoginByPasswordBodyDto, ip: string) {
-    paramAtLeastOne(body, 'name', 'email', 'phone')
+    paramAtLeastOne(body, 'account', 'email', 'phone')
 
-    const { name, email, phone, password, code, bizId } = body
+    const { account, email, phone, password, code, bizId } = body
 
     await this._codeSrv.verifyCaptcha(bizId, [ip, code])
 
     const qb = this._userSrv.qb().addSelect('u.password')
-    if (name)
-      qb.where('name = :name', { name })
+    if (account)
+      qb.where('account = :account', { account })
     else if (email)
       qb.where('email = :email', { email })
     else if (phone)
@@ -178,7 +179,7 @@ export class AuthUserService {
 
     if (!user) {
       responseError(
-        name
+        account
           ? ErrorCode.AUTH_ACCOUNT_NOT_REGISTERED
           : email
             ? ErrorCode.AUTH_EMAIL_NOT_REGISTERED
