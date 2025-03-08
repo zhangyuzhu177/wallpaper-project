@@ -1,0 +1,14 @@
+/** 重写日期选择器的样式变量 */
+:root {
+  --w-e-textarea-bg-color: var(--grey-1);
+  --w-e-textarea-color: var(--grey-9);
+  --w-e-textarea-border-color: var(--grey-3);
+  --w-e-toolbar-color: var(--grey-9);
+  --w-e-toolbar-bg-color: var(--grey-1);
+  --w-e-toolbar-active-color: var(--grey-9);
+  --w-e-toolbar-disabled-color: var(--grey-5);
+  --w-e-toolbar-active-bg-color: var(--grey-3);
+  --w-e-toolbar-border-color: var(--grey-3);
+  --w-e-modal-button-bg-color: var(--primary-1);
+  --w-e-modal-button-border-color: var(--grey-3);
+}

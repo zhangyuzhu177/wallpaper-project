@@ -1,0 +1,42 @@
+/** 重写日期选择器的样式变量 */
+.dp__theme_light {
+  --dp-background-color: var(--grey-1);
+  --dp-text-color: var(--grey-9);
+  --dp-hover-color: var(--grey-2);
+  --dp-hover-text-color: var(--grey-9);
+  --dp-hover-icon-color: var(--grey-6);
+  --dp-primary-color: var(--primary-1);
+  --dp-primary-text-color: var(--grey-1);
+  --dp-secondary-color: var(--grey-5);
+  --dp-border-color: var(--grey-3);
+  --dp-menu-border-color: var(--grey-3);
+  --dp-border-color-hover: var(--primary-1);
+  --dp-border-color-focus: var(--primary-1);
+  --dp-disabled-color: var(--grey-2);
+  --dp-scroll-bar-background: transparent;
+  --dp-scroll-bar-color: var(--grey-3);
+  --dp-success-color: var(--alerts-success-1);
+  --dp-icon-color: var(--grey-6);
+  --dp-danger-color: var(--alerts-error-1);
+  --dp-marker-color: var(--alerts-warning-1);
+  --dp-tooltip-color: var(--grey-2);
+  --dp-disabled-color-text: var(--grey-5);
+  --dp-loader: 4px solid var(--primary-1);
+  --dp-action-row-padding: 8px 12px;
+}
+
+:root {
+  --dp-menu-padding: 8px 12px;
+  --dp-font-family: 'PingFang';
+  --dp-border-radius: 6px;
+  --dp-cell-border-radius: 6px;
+  --dp-button-height: 40px;
+  --dp-month-year-row-button-size: 24px;
+  --dp-common-padding: 8px;
+  --dp-row-margin: 4px 0;
+  --dp-overlay-col-padding: 2px;
+  --dp-time-inc-dec-button-size: 28px;
+  --dp-font-size: 14px;
+  --dp-preview-font-size: 12px;
+  --dp-time-font-size: 28px;
+}

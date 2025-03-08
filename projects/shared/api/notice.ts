@@ -43,10 +43,3 @@ export function noticeDeleteApi(ids: string[]) {
 export function noticeChangeStatusApi(body: IChangeStatusBodyDto) {
   return $post<number>('/notice/status', body)
 }
-
-/**
- * 同步公告列表
- */
-export function noticeSyncApi() {
-  return $post<number>('/notice/sync')
-}
