@@ -3,6 +3,7 @@ import type { INameDto } from '../dto/name.interface'
 import type { IDescOptionalDto } from '../dto/desc.interface'
 import type { ICategoryIdDto } from '../dto/id/category.interface'
 
+import type { IOrderOptionalDto } from '../dto/order.interface'
 import type { IWallpaper } from './wallpaper.interface'
 import type { ICreatedAt, IUpdatedAt } from './_timestamp.interface'
 
@@ -15,6 +16,7 @@ export interface ICategory
   IUpdatedAt,
   INameDto,
   IUrlDto,
+  IOrderOptionalDto,
   IDescOptionalDto {
   /** 壁纸分类的唯一标识 */
   id: ICategoryIdDto['categoryId']

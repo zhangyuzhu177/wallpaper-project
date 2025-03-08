@@ -66,11 +66,21 @@ export enum PermissionType {
   /** 删除壁纸 */
   WALLPAPER_DELETE = 'wallpaper:delete',
 
-  // ------------------ 全局配置 ---------------------
+  // ------------ 全局配置 -------------
   /** 查询应用全局配置 */
   CONFIG_QUERY = 'config:query',
   /** 创建/更新应用全局配置 */
   CONFIG_UPSERT = 'config:upsert',
+
+  // ------------ 公告管理 -------------
+  /** 查询公告 */
+  NOTICE_QUERY = 'notice:query',
+  /** 创建公告 */
+  NOTICE_CREATE = 'notice:create',
+  /** 更新公告 */
+  NOTICE_UPDATE = 'notice:update',
+  /** 删除公告 */
+  NOTICE_DELETE = 'notice:delete',
 }
 
 /**
@@ -108,4 +118,13 @@ export const permissionDescriptions: Record<PermissionType, string> = {
 
   [PermissionType.CONFIG_QUERY]: '查询应用全局配置',
   [PermissionType.CONFIG_UPSERT]: '创建/更新应用全局配置',
+
+  /** 查询公告 */
+  [PermissionType.NOTICE_QUERY]: '查询公告',
+  /** 创建公告 */
+  [PermissionType.NOTICE_CREATE]: '创建公告',
+  /** 更新公告 */
+  [PermissionType.NOTICE_UPDATE]: '更新公告',
+  /** 删除公告 */
+  [PermissionType.NOTICE_DELETE]: '删除公告',
 }

@@ -12,4 +12,13 @@ export class ConfigDto implements IConfigDto {
   })
   @IsOptional()
   [Config.BANNER_CONFIG]?: IConfigDto[Config.BANNER_CONFIG]
+
+  @ApiPropertyOptional({
+    description: '轮播图配置',
+  })
+  @IsObject({
+    message: '轮播图配置必须为对象',
+  })
+  @IsOptional()
+  [Config.DOWNLOAD_LIMIT]?: IConfigDto[Config.DOWNLOAD_LIMIT]
 }

@@ -39,7 +39,15 @@ export class Category extends BaseTimeStamp implements ICategory {
   desc?: string
 
   @ApiPropertyOptional({
-    description: '登录信息',
+    description: '排序',
+  })
+  @Column({
+    nullable: true,
+  })
+  order?: number
+
+  @ApiPropertyOptional({
+    description: '壁纸',
   })
   @OneToMany(
     () => Wallpaper,

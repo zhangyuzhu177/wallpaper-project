@@ -27,6 +27,7 @@ import { SysConfigModule } from './modules/sys-config/sys-config.module'
 import { ResponseInterceptor } from './interceptors/response.interceptor'
 import { ThrottlerExceptionFilter } from './filter/throttler-exception.filter'
 import { JwtAuthModule } from './modules/jwt/jwt.module'
+import { FileModule } from './modules/file/file.module'
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { JwtAuthModule } from './modules/jwt/jwt.module'
     UserModule,
     CodeModule,
     AuthModule,
+    FileModule,
     AdminModule,
     RedisModule,
     NoticeModule,

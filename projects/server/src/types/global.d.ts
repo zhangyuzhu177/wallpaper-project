@@ -143,10 +143,6 @@ declare global {
       OSS_BUCKET_PUBLIC: string
       /** OSS private 桶名 */
       OSS_BUCKET_PRIVATE: string
-      /** OSS 数据预览桶名 */
-      OSS_BUCKET_PREVIEW: string
-      /** OSS 数据下载桶名 */
-      OSS_BUCKET_DOWNLOAD: string
 
       /** ---------- ES 配置 ---------- */
       /** ES 服务地址 */

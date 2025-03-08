@@ -12,11 +12,11 @@ export class WallpaperService {
     private readonly _categoryRepo: Repository<Category>,
   ) {}
 
-  public qb(alias = 'w') {
+  public entitiyQb(alias = 'w') {
     return this._wallpaperRepo.createQueryBuilder(alias)
   }
 
-  public repo() {
+  public entitiyRepo() {
     return this._wallpaperRepo
   }
 

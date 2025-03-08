@@ -123,6 +123,14 @@ export enum ErrorCode {
   // ---------- 微信相关错误码 ----------
   /** 微信服务异常 */
   WECHAT_SERVER_ABNORMAL = 130001,
+
+  // ---------- 文件相关错误码 ----------
+  /** 文件类型不允许 */
+  FILE_TYPE_NOT_ALLOWED = 140001,
+  /** 文件不存在 */
+  FILE_NOT_FOUND = 140002,
+  /** 文件大小超出限制 */
+  FILE_TOO_LARGE = 140003,
 }
 
 export type ErrorMessageCollection = Partial<

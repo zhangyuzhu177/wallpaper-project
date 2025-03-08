@@ -5,6 +5,8 @@ import { Category, Wallpaper } from 'src/entities'
 import { WallpaperService } from './wallpaper.service'
 import { CategoryService } from './category/category.service'
 import { WallpaperEntityService } from './wallpaper/wallpaper-entity.service'
+import { WallpaperEntityController } from './wallpaper/wallpaper-entity.controller'
+import { CategoryController } from './category/category.controller'
 
 @Global()
 @Module({
@@ -26,6 +28,8 @@ import { WallpaperEntityService } from './wallpaper/wallpaper-entity.service'
     WallpaperEntityService,
   ],
   controllers: [
+    CategoryController,
+    WallpaperEntityController,
   ],
 })
 export class WallpaperModule {}

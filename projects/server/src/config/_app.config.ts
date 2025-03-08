@@ -10,8 +10,6 @@ export interface AppConfig {
   clientUrl: string
   /** 管理后台部署地址 */
   adminUrl: string
-  /** 同步数据库环境 */
-  syncDbEnv: string
 }
 
 export default registerAs('app', (): AppConfig => {
@@ -19,7 +17,6 @@ export default registerAs('app', (): AppConfig => {
     SERVER_BASE_PATH,
     APP_NAME, APP_URL,
     VITE_CLIENT_BASE, VITE_ADMIN_BASE,
-    SYNC_DB_ENV,
   } = process.env
 
   return {
@@ -27,6 +24,5 @@ export default registerAs('app', (): AppConfig => {
     name: APP_NAME,
     clientUrl: validatePath(`${APP_URL}/${VITE_CLIENT_BASE}`),
     adminUrl: validatePath(`${APP_URL}/${VITE_ADMIN_BASE}`),
-    syncDbEnv: SYNC_DB_ENV,
   }
 })
