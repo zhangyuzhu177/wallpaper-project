@@ -96,7 +96,7 @@ export class NoticeController {
   })
   @ApiSuccessResponse(SuccessNumberDto)
   @HasPermission(
-    PermissionType.NOTICE_UPDATE,
+    PermissionType.NOTICE_CHANGE_STATUS,
   )
   @Post('status')
   public updateNoticeStatus(

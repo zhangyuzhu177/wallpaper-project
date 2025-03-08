@@ -15,6 +15,7 @@ declare module 'vue' {
     ZCascaderSelect: typeof import('./../../../shared/components/select/ZCascaderSelect.vue')['default']
     ZCheckbox: typeof import('./../../../shared/components/checkbox/ZCheckbox.vue')['default']
     ZCodeInput: typeof import('./../../../shared/components/input/ZCodeInput.vue')['default']
+    ZDate: typeof import('./../../../shared/components/date/ZDate.vue')['default']
     ZDialog: typeof import('./../../../shared/components/dialog/ZDialog.vue')['default']
     ZDragUpload: typeof import('./../../../shared/components/upload/ZDragUpload.vue')['default']
     ZEmpty: typeof import('./../../../shared/components/empty/ZEmpty.vue')['default']

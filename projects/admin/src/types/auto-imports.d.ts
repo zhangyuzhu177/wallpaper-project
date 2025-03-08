@@ -455,7 +455,6 @@ declare module 'vue' {
     readonly noticeCreateApi: UnwrapRef<typeof import('../../../shared/api/notice')['noticeCreateApi']>
     readonly noticeDeleteApi: UnwrapRef<typeof import('../../../shared/api/notice')['noticeDeleteApi']>
     readonly noticeQueryApi: UnwrapRef<typeof import('../../../shared/api/notice')['noticeQueryApi']>
-    readonly noticeSyncApi: UnwrapRef<typeof import('../../../shared/api/notice')['noticeSyncApi']>
     readonly noticeUpdateApi: UnwrapRef<typeof import('../../../shared/api/notice')['noticeUpdateApi']>
     readonly onActivated: UnwrapRef<typeof import('vue')['onActivated']>
     readonly onBeforeMount: UnwrapRef<typeof import('vue')['onBeforeMount']>

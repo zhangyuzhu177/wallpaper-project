@@ -81,6 +81,8 @@ export enum PermissionType {
   NOTICE_UPDATE = 'notice:update',
   /** 删除公告 */
   NOTICE_DELETE = 'notice:delete',
+  /** 修改公告状态 */
+  NOTICE_CHANGE_STATUS = 'notice:change-status',
 }
 
 /**
@@ -119,12 +121,9 @@ export const permissionDescriptions: Record<PermissionType, string> = {
   [PermissionType.CONFIG_QUERY]: '查询应用全局配置',
   [PermissionType.CONFIG_UPSERT]: '创建/更新应用全局配置',
 
-  /** 查询公告 */
   [PermissionType.NOTICE_QUERY]: '查询公告',
-  /** 创建公告 */
   [PermissionType.NOTICE_CREATE]: '创建公告',
-  /** 更新公告 */
   [PermissionType.NOTICE_UPDATE]: '更新公告',
-  /** 删除公告 */
   [PermissionType.NOTICE_DELETE]: '删除公告',
+  [PermissionType.NOTICE_CHANGE_STATUS]: '修改公告状态',
 }
