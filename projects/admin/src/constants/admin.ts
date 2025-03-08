@@ -33,6 +33,24 @@ export const ADMIN_MENU_LIST: PermissionItem[] = [
           },
         ],
       },
+      {
+        name: '公告管理',
+        readonly: PermissionType.NOTICE_QUERY,
+        children: [
+          {
+            name: '创建公告信息',
+            value: PermissionType.NOTICE_CREATE,
+          },
+          {
+            name: '更新公告信息',
+            value: PermissionType.NOTICE_UPDATE,
+          },
+          {
+            name: '删除公告信息',
+            value: PermissionType.NOTICE_DELETE,
+          },
+        ],
+      },
     ],
   },
   {

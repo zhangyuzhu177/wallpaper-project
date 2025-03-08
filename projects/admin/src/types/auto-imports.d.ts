@@ -40,6 +40,11 @@ declare global {
   const authAdminLogoutApi: typeof import('../../../shared/api/authAdmin')['authAdminLogoutApi']
   const authToken: typeof import('shared/hooks/user')['authToken']
   const autoResetRef: typeof import('@vueuse/core')['autoResetRef']
+  const categoryCreateApi: typeof import('../../../shared/api/category')['categoryCreateApi']
+  const categoryDeleteApi: typeof import('../../../shared/api/category')['categoryDeleteApi']
+  const categoryDeleteByIdApi: typeof import('../../../shared/api/category')['categoryDeleteByIdApi']
+  const categoryQueryApi: typeof import('../../../shared/api/category')['categoryQueryApi']
+  const categoryUpdateApi: typeof import('../../../shared/api/category')['categoryUpdateApi']
   const computed: typeof import('vue')['computed']
   const computedAsync: typeof import('@vueuse/core')['computedAsync']
   const computedEager: typeof import('@vueuse/core')['computedEager']
@@ -65,6 +70,7 @@ declare global {
   const eagerComputed: typeof import('@vueuse/core')['eagerComputed']
   const effectScope: typeof import('vue')['effectScope']
   const extendRef: typeof import('@vueuse/core')['extendRef']
+  const fileUploadPublicApi: typeof import('../../../shared/api/file')['fileUploadPublicApi']
   const getCaptchaImgApi: typeof import('../../../shared/api/code')['getCaptchaImgApi']
   const getCurrentInstance: typeof import('vue')['getCurrentInstance']
   const getCurrentScope: typeof import('vue')['getCurrentScope']
@@ -81,6 +87,12 @@ declare global {
   const makeDestructurable: typeof import('@vueuse/core')['makeDestructurable']
   const markRaw: typeof import('vue')['markRaw']
   const nextTick: typeof import('vue')['nextTick']
+  const noticeChangeStatusApi: typeof import('../../../shared/api/notice')['noticeChangeStatusApi']
+  const noticeCreateApi: typeof import('../../../shared/api/notice')['noticeCreateApi']
+  const noticeDeleteApi: typeof import('../../../shared/api/notice')['noticeDeleteApi']
+  const noticeQueryApi: typeof import('../../../shared/api/notice')['noticeQueryApi']
+  const noticeSyncApi: typeof import('../../../shared/api/notice')['noticeSyncApi']
+  const noticeUpdateApi: typeof import('../../../shared/api/notice')['noticeUpdateApi']
   const onActivated: typeof import('vue')['onActivated']
   const onBeforeMount: typeof import('vue')['onBeforeMount']
   const onBeforeRouteLeave: typeof import('vue-router')['onBeforeRouteLeave']
@@ -326,6 +338,11 @@ declare global {
   const validateName: typeof import('../../../shared/utils/validator/name')['validateName']
   const validateRoleDesc: typeof import('../../../shared/utils/validator/role')['validateRoleDesc']
   const validateRoleName: typeof import('../../../shared/utils/validator/role')['validateRoleName']
+  const wallpaperCreateApi: typeof import('../../../shared/api/wallpaper')['wallpaperCreateApi']
+  const wallpaperDeleteApi: typeof import('../../../shared/api/wallpaper')['wallpaperDeleteApi']
+  const wallpaperDeleteByIdApi: typeof import('../../../shared/api/wallpaper')['wallpaperDeleteByIdApi']
+  const wallpaperQueryApi: typeof import('../../../shared/api/wallpaper')['wallpaperQueryApi']
+  const wallpaperUpdateApi: typeof import('../../../shared/api/wallpaper')['wallpaperUpdateApi']
   const watch: typeof import('vue')['watch']
   const watchArray: typeof import('@vueuse/core')['watchArray']
   const watchAtMost: typeof import('@vueuse/core')['watchAtMost']
@@ -387,6 +404,11 @@ declare module 'vue' {
     readonly authAdminLoginByPasswordApi: UnwrapRef<typeof import('../../../shared/api/authAdmin')['authAdminLoginByPasswordApi']>
     readonly authAdminLogoutApi: UnwrapRef<typeof import('../../../shared/api/authAdmin')['authAdminLogoutApi']>
     readonly autoResetRef: UnwrapRef<typeof import('@vueuse/core')['autoResetRef']>
+    readonly categoryCreateApi: UnwrapRef<typeof import('../../../shared/api/category')['categoryCreateApi']>
+    readonly categoryDeleteApi: UnwrapRef<typeof import('../../../shared/api/category')['categoryDeleteApi']>
+    readonly categoryDeleteByIdApi: UnwrapRef<typeof import('../../../shared/api/category')['categoryDeleteByIdApi']>
+    readonly categoryQueryApi: UnwrapRef<typeof import('../../../shared/api/category')['categoryQueryApi']>
+    readonly categoryUpdateApi: UnwrapRef<typeof import('../../../shared/api/category')['categoryUpdateApi']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
     readonly computedAsync: UnwrapRef<typeof import('@vueuse/core')['computedAsync']>
     readonly computedEager: UnwrapRef<typeof import('@vueuse/core')['computedEager']>
@@ -412,6 +434,7 @@ declare module 'vue' {
     readonly eagerComputed: UnwrapRef<typeof import('@vueuse/core')['eagerComputed']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly extendRef: UnwrapRef<typeof import('@vueuse/core')['extendRef']>
+    readonly fileUploadPublicApi: UnwrapRef<typeof import('../../../shared/api/file')['fileUploadPublicApi']>
     readonly getCaptchaImgApi: UnwrapRef<typeof import('../../../shared/api/code')['getCaptchaImgApi']>
     readonly getCurrentInstance: UnwrapRef<typeof import('vue')['getCurrentInstance']>
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
@@ -428,6 +451,12 @@ declare module 'vue' {
     readonly makeDestructurable: UnwrapRef<typeof import('@vueuse/core')['makeDestructurable']>
     readonly markRaw: UnwrapRef<typeof import('vue')['markRaw']>
     readonly nextTick: UnwrapRef<typeof import('vue')['nextTick']>
+    readonly noticeChangeStatusApi: UnwrapRef<typeof import('../../../shared/api/notice')['noticeChangeStatusApi']>
+    readonly noticeCreateApi: UnwrapRef<typeof import('../../../shared/api/notice')['noticeCreateApi']>
+    readonly noticeDeleteApi: UnwrapRef<typeof import('../../../shared/api/notice')['noticeDeleteApi']>
+    readonly noticeQueryApi: UnwrapRef<typeof import('../../../shared/api/notice')['noticeQueryApi']>
+    readonly noticeSyncApi: UnwrapRef<typeof import('../../../shared/api/notice')['noticeSyncApi']>
+    readonly noticeUpdateApi: UnwrapRef<typeof import('../../../shared/api/notice')['noticeUpdateApi']>
     readonly onActivated: UnwrapRef<typeof import('vue')['onActivated']>
     readonly onBeforeMount: UnwrapRef<typeof import('vue')['onBeforeMount']>
     readonly onBeforeRouteLeave: UnwrapRef<typeof import('vue-router')['onBeforeRouteLeave']>
@@ -671,6 +700,11 @@ declare module 'vue' {
     readonly validateName: UnwrapRef<typeof import('../../../shared/utils/validator/name')['validateName']>
     readonly validateRoleDesc: UnwrapRef<typeof import('../../../shared/utils/validator/role')['validateRoleDesc']>
     readonly validateRoleName: UnwrapRef<typeof import('../../../shared/utils/validator/role')['validateRoleName']>
+    readonly wallpaperCreateApi: UnwrapRef<typeof import('../../../shared/api/wallpaper')['wallpaperCreateApi']>
+    readonly wallpaperDeleteApi: UnwrapRef<typeof import('../../../shared/api/wallpaper')['wallpaperDeleteApi']>
+    readonly wallpaperDeleteByIdApi: UnwrapRef<typeof import('../../../shared/api/wallpaper')['wallpaperDeleteByIdApi']>
+    readonly wallpaperQueryApi: UnwrapRef<typeof import('../../../shared/api/wallpaper')['wallpaperQueryApi']>
+    readonly wallpaperUpdateApi: UnwrapRef<typeof import('../../../shared/api/wallpaper')['wallpaperUpdateApi']>
     readonly watch: UnwrapRef<typeof import('vue')['watch']>
     readonly watchArray: UnwrapRef<typeof import('@vueuse/core')['watchArray']>
     readonly watchAtMost: UnwrapRef<typeof import('@vueuse/core')['watchAtMost']>

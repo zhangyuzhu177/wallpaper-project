@@ -98,7 +98,7 @@ watch(
           />
           <div
             v-if="isExpand"
-            truncate
+            truncate select-none
             style="max-width: calc(100% - 28px);"
             v-text="item.name"
           />

@@ -214,7 +214,7 @@ async function changeUserStatus() {
       <div flex-action>
         <ZInput
           v-model="filterText"
-          placeholder="搜索用户信息"
+          placeholder="搜索用户账号"
           debounce="500"
           size="small"
         >

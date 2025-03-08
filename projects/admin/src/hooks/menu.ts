@@ -28,12 +28,22 @@ export function useMenu($route = useRoute()) {
     const menu: Record<string, PageMenuItem[]> = {
       home: [
         {
-          value: 'home',
+          value: 'page',
           name: '页面配置',
           flag: arrayHasIntersection(
             role,
             [
               PermissionType.CONFIG_QUERY,
+            ],
+          ),
+        },
+        {
+          value: 'notice',
+          name: '公告管理',
+          flag: arrayHasIntersection(
+            role,
+            [
+              PermissionType.NOTICE_QUERY,
             ],
           ),
         },
