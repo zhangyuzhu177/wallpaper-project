@@ -14,6 +14,22 @@ export class Wallpaper extends BaseTimeStamp implements IWallpaper {
   id: string
 
   @ApiProperty({
+    description: '图片名称',
+  })
+  @Column({
+    unique: true,
+  })
+  name: string
+
+  @ApiProperty({
+    description: '图片大小',
+  })
+  @Column({
+    type: 'bigint',
+  })
+  size: number
+
+  @ApiProperty({
     description: '图片的url',
   })
   @Column()

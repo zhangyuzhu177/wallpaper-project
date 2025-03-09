@@ -70,6 +70,7 @@ declare global {
   const eagerComputed: typeof import('@vueuse/core')['eagerComputed']
   const effectScope: typeof import('vue')['effectScope']
   const extendRef: typeof import('@vueuse/core')['extendRef']
+  const fileUploadApi: typeof import('../../../shared/api/file')['fileUploadApi']
   const fileUploadPublicApi: typeof import('../../../shared/api/file')['fileUploadPublicApi']
   const getCaptchaImgApi: typeof import('../../../shared/api/code')['getCaptchaImgApi']
   const getCurrentInstance: typeof import('vue')['getCurrentInstance']
@@ -334,6 +335,7 @@ declare global {
   const userQueryApi: typeof import('../../../shared/api/user')['userQueryApi']
   const userTryoutConfigApi: typeof import('../../../shared/api/user')['userTryoutConfigApi']
   const userUpdateApi: typeof import('../../../shared/api/user')['userUpdateApi']
+  const validateDesc: typeof import('../../../shared/utils/validator/order')['validateDesc']
   const validateDownloadLimit: typeof import('../../../shared/utils/validator/permission')['validateDownloadLimit']
   const validateName: typeof import('../../../shared/utils/validator/name')['validateName']
   const validateRoleDesc: typeof import('../../../shared/utils/validator/role')['validateRoleDesc']
@@ -434,7 +436,7 @@ declare module 'vue' {
     readonly eagerComputed: UnwrapRef<typeof import('@vueuse/core')['eagerComputed']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly extendRef: UnwrapRef<typeof import('@vueuse/core')['extendRef']>
-    readonly fileUploadPublicApi: UnwrapRef<typeof import('../../../shared/api/file')['fileUploadPublicApi']>
+    readonly fileUploadApi: UnwrapRef<typeof import('../../../shared/api/file')['fileUploadApi']>
     readonly getCaptchaImgApi: UnwrapRef<typeof import('../../../shared/api/code')['getCaptchaImgApi']>
     readonly getCurrentInstance: UnwrapRef<typeof import('vue')['getCurrentInstance']>
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
@@ -695,6 +697,7 @@ declare module 'vue' {
     readonly userOwnGetProfileApi: UnwrapRef<typeof import('../../../shared/api/user')['userOwnGetProfileApi']>
     readonly userQueryApi: UnwrapRef<typeof import('../../../shared/api/user')['userQueryApi']>
     readonly userUpdateApi: UnwrapRef<typeof import('../../../shared/api/user')['userUpdateApi']>
+    readonly validateDesc: UnwrapRef<typeof import('../../../shared/utils/validator/order')['validateDesc']>
     readonly validateDownloadLimit: UnwrapRef<typeof import('../../../shared/utils/validator/permission')['validateDownloadLimit']>
     readonly validateName: UnwrapRef<typeof import('../../../shared/utils/validator/name')['validateName']>
     readonly validateRoleDesc: UnwrapRef<typeof import('../../../shared/utils/validator/role')['validateRoleDesc']>

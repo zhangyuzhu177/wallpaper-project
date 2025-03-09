@@ -39,7 +39,7 @@ export class FileService {
 
     const uploadRes = await this._client.put(path, file)
 
-    return uploadRes.res
+    return uploadRes.url
   }
 
   /**

@@ -7,9 +7,9 @@ const { $post } = useRequest()
 /**
  * 上传公共文件
  */
-export function fileUploadPublicApi(query: IFilePathDto, file: File) {
+export function fileUploadApi(query: IFilePathDto, file: File) {
   return $post<string>(
-    '/file/entity/public',
+    '/file/upload',
     file2FormData(file),
     { params: query },
   )

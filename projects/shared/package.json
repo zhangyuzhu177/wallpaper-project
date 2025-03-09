@@ -21,7 +21,9 @@
     "types": "workspace:^",
     "utils": "workspace:^",
     "vue": "^3.3.4",
-    "vue-router": "^4.3.2"
+    "vue-advanced-cropper": "^2.8.9",
+    "vue-router": "^4.3.2",
+    "vue3-image-preview": "^0.2.7"
   },
   "devDependencies": {
     "@iconify-json/material-symbols": "^1.1.81",

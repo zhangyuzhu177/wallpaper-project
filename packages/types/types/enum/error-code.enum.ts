@@ -131,6 +131,8 @@ export enum ErrorCode {
   FILE_NOT_FOUND = 140002,
   /** 文件大小超出限制 */
   FILE_TOO_LARGE = 140003,
+  /** 文件已存在 */
+  FILE_EXISTS = 140004,
 }
 
 export type ErrorMessageCollection = Partial<

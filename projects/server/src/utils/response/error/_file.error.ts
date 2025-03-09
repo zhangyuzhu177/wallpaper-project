@@ -14,6 +14,10 @@ const _fileErrors: ErrorMessageCollection = {
     httpStatus: HttpStatus.FORBIDDEN,
     message: '文件大小超出限制',
   },
+  [ErrorCode.FILE_EXISTS]: {
+    httpStatus: HttpStatus.BAD_REQUEST,
+    message: '文件已存在',
+  },
 }
 
 export default _fileErrors

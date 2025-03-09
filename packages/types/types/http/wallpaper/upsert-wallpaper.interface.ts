@@ -8,5 +8,5 @@ export interface IUpsertWallpaperBodyDto
   extends
   Pick<
     IWallpaper,
-    'url' | 'categoryId'
+    'name' | 'size' | 'url' | 'categoryId'
   > {}

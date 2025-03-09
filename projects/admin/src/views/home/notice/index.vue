@@ -230,13 +230,13 @@ async function deleteNotice() {
       v-model:selected="selected"
       :rows :cols :filter="filterText"
       selection="multiple"
-      no-data-label="暂无公告"
+      no-data-label="暂无公告信息"
       flex-1 h0
       fixed-first-col
       action
       @request="queryNotice"
     >
-      <!-- 账号状态 -->
+      <!-- 公告状态 -->
       <template #body-cell-status="{ value }">
         <q-td text-center>
           <ZStatus :model-value="value" />

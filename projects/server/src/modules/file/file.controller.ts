@@ -21,7 +21,7 @@ export class FileController {
   })
   @ApiSuccessResponse(SuccessStringDto)
   @ApiFormData()
-  @IsLogin(UserType.ADMIN)
+  @IsLogin(UserType.ADMIN, true)
   @Post('upload')
   public async uploadPublicFile(
     @Query() { path }: FilePathDto,

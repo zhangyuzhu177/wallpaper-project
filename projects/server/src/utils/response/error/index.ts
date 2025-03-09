@@ -8,6 +8,7 @@ import _noticeError from './_notice.error'
 import _weixinError from './_weixin.error'
 import _sysConfigError from './_sys-config.error'
 import _adminRoleErrors from './_admin-role.error'
+import _permissionErrors from './_permission.error'
 
 export const errorMessages: ErrorMessageCollection = {
   ..._smsError,
@@ -20,4 +21,5 @@ export const errorMessages: ErrorMessageCollection = {
   ..._weixinError,
   ..._sysConfigError,
   ..._adminRoleErrors,
+  ..._permissionErrors,
 }
