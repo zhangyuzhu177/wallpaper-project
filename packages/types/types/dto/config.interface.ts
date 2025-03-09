@@ -7,9 +7,9 @@ export interface IConfigDto {
   /** 轮播图配置 */
   [Config.BANNER_CONFIG]?: {
     /** 分类 */
-    categoryId: ICategoryIdDto['categoryId']
+    categoryId?: ICategoryIdDto['categoryId']
     /** 图片地址 */
-    url: string
+    url?: string
   }[]
 
   /** 壁纸下载次数限制 */
