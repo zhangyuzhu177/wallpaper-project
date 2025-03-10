@@ -48,7 +48,7 @@ export class FileService {
   public async signUrl(
     path: string,
     filename?: string,
-      expires = 10,
+    expires = 10,
   ) {
     if (!path) {
       responseParamsError([{

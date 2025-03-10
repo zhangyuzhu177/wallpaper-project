@@ -63,12 +63,8 @@ declare global {
       REDIS_AUTH_IP_DB?: string | number
       /** 验证码 Redis 数据库索引（默认值：2） */
       REDIS_CODE_DB?: string | number
-      /** 日志 Redis 数据库索引（默认值：3） */
-      REDIS_LOG_DB?: string | number
-      /** 数据 Redis 数据库索引（默认值：4） */
-      REDIS_DATA_DB?: string | number
-      /** Bull 队列 Redis 数据库索引（默认值：5） */
-      REDIS_BULL_DB?: string | number
+      /** 每日推荐（默认值：3） */
+      REDIS_RECOMMEND_DB?: string | number
 
       /** ---------- JWT 登录校验配置 ---------- */
       /** JWT 登录校验秘钥 */

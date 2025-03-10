@@ -11,6 +11,8 @@ import {
 
 import { LoginUser } from './login-user'
 import { BaseTimeStamp } from './_timestamp'
+import { DownloadRecord } from './download-record'
+import { Collection } from './collection'
 
 @Entity()
 export class User extends BaseTimeStamp implements IUser {
@@ -104,6 +106,26 @@ export class User extends BaseTimeStamp implements IUser {
     default: true,
   })
   status: boolean
+
+  @ApiPropertyOptional({
+    description: '下载的壁纸',
+  })
+  @OneToMany(
+    () => DownloadRecord,
+    down => down.user,
+    { cascade: true },
+  )
+  downloadRecords?: DownloadRecord[]
+
+  @ApiPropertyOptional({
+    description: '收藏的壁纸',
+  })
+  @OneToMany(
+    () => Collection,
+    collection => collection.user,
+    { cascade: true },
+  )
+  collections?: Collection[]
 
   @ApiPropertyOptional({
     description: '登录信息',

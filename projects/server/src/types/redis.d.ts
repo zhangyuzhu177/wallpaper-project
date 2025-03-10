@@ -6,4 +6,6 @@ const enum RedisType {
   AUTH_IP = 'auth-ip',
   /** 验证码缓存 */
   CODE = 'code',
+  /** 每日推荐 */
+  RECOMMEND = 'recommend',
 }

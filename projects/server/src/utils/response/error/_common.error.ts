@@ -12,7 +12,7 @@ const _commonErrors: ErrorMessageCollection = {
   },
   [ErrorCode.COMMON_ERROR_CODE_NOT_DEFINED]: {
     httpStatus: HttpStatus.INTERNAL_SERVER_ERROR,
-    message: '发生未知错误',
+    message: '未定义的错误码',
   },
   [ErrorCode.COMMON_NOT_IMPLEMENTED]: {
     httpStatus: HttpStatus.NOT_IMPLEMENTED,

@@ -151,7 +151,7 @@ export class AuthUserService {
       await this._userSrv.repo().save(user)
     }
 
-    if (user.status)
+    if (!user.status)
       responseError(ErrorCode.AUTH_ACCOUNT_IS_DISABLE)
 
     // 签发 token
@@ -187,7 +187,7 @@ export class AuthUserService {
       )
     }
 
-    if (user.status)
+    if (!user.status)
       responseError(ErrorCode.AUTH_ACCOUNT_IS_DISABLE)
 
     // 校验密码

@@ -1,17 +1,20 @@
-import { PermissionType } from 'types'
-import { HasPermission } from 'src/guards'
+import { PermissionType, UserType } from 'types'
+import { HasPermission, IsLogin } from 'src/guards'
 import type { Wallpaper } from 'src/entities'
 import { ApiOperation, ApiTags } from '@nestjs/swagger'
-import { ApiSuccessResponse, getQuery } from 'src/utils'
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common'
+import { ApiSuccessResponse, getQuery, getQueryPaging } from 'src/utils'
+import { Body, Controller, Delete, Get, Param, Post, Req } from '@nestjs/common'
 import {
   CategoryIdDto,
   IdsDto,
   QueryDto,
+  QueryPagination,
   QueryResDto,
+  StatusDto,
   SuccessDto,
   SuccessNumberDto,
   SuccessStringDto,
+  UserIdDto,
   WallpaperIdDto,
 } from 'src/dto'
 
@@ -19,7 +22,7 @@ import { WallpaperService } from '../wallpaper.service'
 import { WallpaperEntityService } from './wallpaper-entity.service'
 import { UpsertWallpaperBodyDto } from './dto/upsert-wallpaper.body'
 
-@ApiTags('Wallpaper | 壁纸')
+@ApiTags('Wallpaper Entity | 壁纸')
 @Controller('wallpaper/entity')
 export class WallpaperEntityController {
   constructor(
@@ -31,10 +34,170 @@ export class WallpaperEntityController {
     summary: '获取指定分类下的壁纸列表',
   })
   @ApiSuccessResponse(SuccessDto<Wallpaper>)
-  @Get(':categoryId')
-  async getWallpapersByCategoryId(
+  @Post('query:categoryId')
+  public async getWallpapersByCategoryId(
+    @Body() body: QueryPagination,
     @Param() { categoryId }: CategoryIdDto,
-  ) { }
+  ) {
+    const { total, page, pageSize } = await getQueryPaging(
+      this._wallpaperSrv.entitiyRepo(),
+      {
+        pagination: body,
+        where: { categoryId },
+      },
+    )
+    const data = await this._wallpaperSrv.entitiyRepo().find({
+      where: { categoryId },
+      ...(
+        body.pageSize !== 'all'
+          ? {
+              skip: (body.page - 1) * body.pageSize,
+              take: body.pageSize,
+            }
+          : {}
+      ),
+      order: {
+        createdAt: 'DESC',
+      },
+    })
+    return {
+      page,
+      pageSize,
+      total,
+      data,
+    }
+  }
+
+  @ApiOperation({
+    summary: '获取每日推荐',
+  })
+  @ApiSuccessResponse(QueryResDto<Wallpaper>)
+  @Get('recommend')
+  public getDailyRecommend() {
+    return this._entitySrv.getDailyRecommend()
+  }
+
+  @ApiOperation({
+    summary: '下载指定壁纸',
+  })
+  @ApiSuccessResponse(SuccessStringDto)
+  @IsLogin(UserType.USER)
+  @Get('download/:wallpaperId')
+  public downloadWallpaper(
+    @Param() { wallpaperId }: WallpaperIdDto,
+    @Req() req: FastifyRequest,
+  ) {
+    return this._entitySrv.downloadWallpaper(wallpaperId, req.raw.user)
+  }
+
+  @ApiOperation({
+    summary: '获取下载的壁纸列表',
+  })
+  @ApiSuccessResponse(QueryResDto<Wallpaper>)
+  @IsLogin(UserType.USER)
+  @Post('query/download/:userId')
+  public async queryDownloadWallpaper(
+    @Param() { userId }: UserIdDto,
+    @Body() body: QueryPagination,
+  ) {
+    const { total, page, pageSize } = await getQueryPaging(
+      this._wallpaperSrv.entitiyRepo(),
+      {
+        pagination: body,
+        where: {
+          downloadRecords: {
+            userId,
+          },
+        },
+      },
+    )
+    const data = await this._wallpaperSrv.entitiyRepo().find({
+      where: {
+        downloadRecords: {
+          userId,
+        },
+      },
+      ...(
+        body.pageSize !== 'all'
+          ? {
+              skip: (body.page - 1) * body.pageSize,
+              take: body.pageSize,
+            }
+          : {}
+      ),
+      order: {
+        createdAt: 'DESC',
+      },
+    })
+    return {
+      page,
+      pageSize,
+      total,
+      data,
+    }
+  }
+
+  @ApiOperation({
+    summary: '添加/取消收藏',
+  })
+  @ApiSuccessResponse(SuccessStringDto)
+  @IsLogin(UserType.USER)
+  @Post('collection/:wallpaperId')
+  public collectionWallpaper(
+    @Body() { status }: StatusDto,
+    @Param() { wallpaperId }: WallpaperIdDto,
+    @Req() req: FastifyRequest,
+  ) {
+    return this._entitySrv.collectionWallpaper(status, wallpaperId, req.raw.user.id)
+  }
+
+  @ApiOperation({
+    summary: '查询收藏列表',
+  })
+  @ApiSuccessResponse(QueryResDto<Wallpaper>)
+  @IsLogin(UserType.USER)
+  @Post('query/collection/:userId')
+  public async queryCollectionWallpaper(
+    @Param() { userId }: UserIdDto,
+    @Body() body: QueryPagination,
+  ) {
+    const { total, page, pageSize } = await getQueryPaging(
+      this._wallpaperSrv.entitiyRepo(),
+      {
+        pagination: body,
+        where: {
+          collections: {
+            userId,
+          },
+        },
+      },
+    )
+    const data = await this._wallpaperSrv.entitiyRepo().find({
+      where: {
+        collections: {
+          userId,
+        },
+      },
+      ...(
+        body.pageSize !== 'all'
+          ? {
+              skip: (body.page - 1) * body.pageSize,
+              take: body.pageSize,
+            }
+          : {}
+      ),
+      order: {
+        createdAt: 'DESC',
+      },
+    })
+
+    return {
+      page,
+      pageSize,
+      total,
+      data,
+    }
+  }
 
   @ApiOperation({
     summary: '查询壁纸列表',

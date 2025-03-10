@@ -119,6 +119,12 @@ export enum ErrorCode {
   // ---------- 壁纸相关错误码 ----------
   /** 壁纸不存在 */
   WALLPAPER_NOT_EXISTS = 120001,
+  /** 下载壁纸次数超出限制 */
+  WALLPAPER_DOWNLOAD_LIMIT_EXCEED = 120002,
+  /** 壁纸未收藏 */
+  WALLPAPER_COLLECTION_NOT_EXISTS = 120003,
+  /** 壁纸已收藏 */
+  WALLPAPER_COLLECTION_EXISTS = 120004,
 
   // ---------- 微信相关错误码 ----------
   /** 微信服务异常 */
@@ -133,6 +139,7 @@ export enum ErrorCode {
   FILE_TOO_LARGE = 140003,
   /** 文件已存在 */
   FILE_EXISTS = 140004,
+
 }
 
 export type ErrorMessageCollection = Partial<

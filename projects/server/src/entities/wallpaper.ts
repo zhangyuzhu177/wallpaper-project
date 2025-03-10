@@ -1,8 +1,18 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
 import { ID_EXAMPLE, type IWallpaper } from 'types'
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
-import { BaseTimeStamp } from './_timestamp'
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm'
+
 import { Category } from './category'
+import { Collection } from './collection'
+import { BaseTimeStamp } from './_timestamp'
+import { DownloadRecord } from './download-record'
 
 @Entity()
 export class Wallpaper extends BaseTimeStamp implements IWallpaper {
@@ -41,10 +51,33 @@ export class Wallpaper extends BaseTimeStamp implements IWallpaper {
   })
   categoryId: string
 
+  @ApiPropertyOptional({
+    description: '所属分类',
+  })
   @ManyToOne(
     () => Category,
     category => category.wallpapers,
   )
   @JoinColumn()
   category: Category
+
+  @ApiPropertyOptional({
+    description: '下载的壁纸',
+  })
+  @OneToMany(
+    () => DownloadRecord,
+    down => down.wallpaper,
+    { cascade: true },
+  )
+  downloadRecords?: DownloadRecord[]
+
+  @ApiPropertyOptional({
+    description: '收藏的壁纸',
+  })
+  @OneToMany(
+    () => Collection,
+    collection => collection.wallpaper,
+    { cascade: true },
+  )
+  collections?: Collection[]
 }

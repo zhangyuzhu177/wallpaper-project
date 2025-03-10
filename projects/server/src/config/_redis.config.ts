@@ -37,11 +37,13 @@ export default registerAs('redis', (): RedisConfig => {
     REDIS_AUTH_JWT_DB,
     REDIS_AUTH_IP_DB,
     REDIS_CODE_DB,
+    REDIS_RECOMMEND_DB,
   } = process.env
 
   return {
     [RedisType.AUTH_JWT]: getUrl(parseIntRaw(REDIS_AUTH_JWT_DB, 0)),
     [RedisType.AUTH_IP]: getUrl(parseIntRaw(REDIS_AUTH_IP_DB, 1)),
     [RedisType.CODE]: getUrl(parseIntRaw(REDIS_CODE_DB, 2)),
+    [RedisType.RECOMMEND]: getUrl(parseIntRaw(REDIS_RECOMMEND_DB, 3)),
   }
 })
