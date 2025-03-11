@@ -14,9 +14,13 @@ const day = computed(() => {
     </template>
     <scroll-view scroll-x :show-scrollbar="false">
       <view class="recommend_content">
-        <view v-for="item in 8" :key="item" class="recommend_item">
+        <navigator
+          v-for="item in 8" :key="item"
+          url="/pages/preview/preview"
+          class="recommend_item"
+        >
           <image src="../../static/images/cover.jpg" mode="aspectFill" />
-        </view>
+        </navigator>
       </view>
     </scroll-view>
   </Title>

@@ -22,34 +22,37 @@
       }
     },
     {
-      "path": "pages/demo/demo",
-      "style": {
-        "navigationBarTitleText": "demo",
-        "enablePullDownRefresh": true
-      }
-    },
-    {
       "path": "pages/notice/detail",
       "style": {
-        "navigationBarTitleText": "detail"
+        "navigationBarTitleText": "公告",
+        "navigationStyle": "custom"
       }
     },
     {
-      "path": "pages/classlist/classlist",
+      "path": "pages/classify/classlist",
       "style": {
-        "navigationBarTitleText": "classlist"
+        "navigationBarTitleText": "classlist",
+        "navigationStyle": "custom"
       }
     },
     {
       "path": "pages/preview/preview",
       "style": {
-        "navigationBarTitleText": "preview"
+        "navigationBarTitleText": "preview",
+        "navigationStyle": "custom"
       }
     },
     {
       "path": "pages/auth/login",
       "style": {
         "navigationBarTitleText": ""
+      }
+    },
+    {
+      "path": "pages/demo/demo",
+      "style": {
+        "navigationBarTitleText": "demo",
+        "enablePullDownRefresh": true
       }
     }
   ],

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import Classlist from '~/views/classlist/index.vue'
+import Classlist from '~/views/classify/classlist/index.vue'
 </script>
 
 <template>

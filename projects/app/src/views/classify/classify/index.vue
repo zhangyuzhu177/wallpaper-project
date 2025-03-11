@@ -4,6 +4,7 @@ import img from '~/static/images/cover.jpg'
 
 <template>
   <div class="classify_layout page_bg">
+    <Header title="分类" />
     <view class="classify_content">
       <Item
         v-for="item in 10" :key="item"
@@ -15,9 +16,14 @@ import img from '~/static/images/cover.jpg'
 
 <style lang="scss" scoped>
 .classify_layout {
-  padding: 30rpx 38rpx;
+  width: 750rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 36rpx;
+  padding-bottom: 30rpx;
 
   .classify_content {
+    padding: 0 30rpx;
     gap:15rpx;
     display: grid;
     grid-template-columns: repeat(3,1fr);

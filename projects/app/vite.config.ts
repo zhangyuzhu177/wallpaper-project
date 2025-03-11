@@ -17,6 +17,9 @@ export default defineConfig(() => {
           'uni-app',
         ],
         dts: 'src/types/auto-imports.d.ts',
+        dirs: [
+          'src/hooks',
+        ],
       }),
     ],
     resolve: {

@@ -22,7 +22,7 @@ defineProps<ItemProps>()
 
 <template>
   <view class="item">
-    <navigator v-if="!isMore" url="/pages/classlist/classlist" class="box">
+    <navigator v-if="!isMore" url="/pages/classify/classlist" class="box">
       <image class="pic" :src="url" mode="aspectFill" />
       <view class="mask" v-text="title" />
     </navigator>

@@ -7,6 +7,8 @@ import Topics from './topics.vue'
 
 <template>
   <view class="home_layout page_bg">
+    <Header title="推荐" />
+
     <!-- 轮播 -->
     <Banner />
 
@@ -29,7 +31,7 @@ import Topics from './topics.vue'
   display: flex;
   gap: 36rpx;
   flex-direction: column;
-  padding: 30rpx 0;
+  padding-bottom: 30rpx;
 
   .content {
     padding: 0 38rpx;

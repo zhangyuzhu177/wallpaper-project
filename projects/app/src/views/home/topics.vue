@@ -5,7 +5,7 @@ import img from '~/static/images/cover.jpg'
 <template>
   <Title class="topics" title="专题精选">
     <template #right>
-      <navigator class="more" v-text="'More+'" />
+      <navigator url="/page/classify/classify" class="more" v-text="'More+'" />
     </template>
 
     <view class="topics_content">

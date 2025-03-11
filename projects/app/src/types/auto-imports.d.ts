@@ -81,6 +81,7 @@ declare global {
   const useId: typeof import('vue')['useId']
   const useModel: typeof import('vue')['useModel']
   const useSlots: typeof import('vue')['useSlots']
+  const useSystem: typeof import('../hooks/system')['useSystem']
   const useTemplateRef: typeof import('vue')['useTemplateRef']
   const watch: typeof import('vue')['watch']
   const watchEffect: typeof import('vue')['watchEffect']
