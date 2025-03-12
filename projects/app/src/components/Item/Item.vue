@@ -1,6 +1,10 @@
 <script lang="ts" setup>
 interface ItemProps {
   /**
+   * 分类id
+   */
+  categoryId?: string
+  /**
    * 标题
    */
   title?: string | number
@@ -22,7 +26,11 @@ defineProps<ItemProps>()
 
 <template>
   <view class="item">
-    <navigator v-if="!isMore" url="/pages/classify/classlist" class="box">
+    <navigator
+      v-if="!isMore"
+      :url="`/pages/classify/classlist?id=${categoryId}&name=${title}`"
+      class="box"
+    >
       <image class="pic" :src="url" mode="aspectFill" />
       <view class="mask" v-text="title" />
     </navigator>

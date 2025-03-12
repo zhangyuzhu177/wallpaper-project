@@ -3,6 +3,8 @@ import { setupLayouts } from 'virtual:generated-layouts'
 
 import App from './App.vue'
 import type { UserModule } from './types'
+import { initRichtext } from './utils/richtext'
+
 import generatedRoutes from '~pages'
 
 import '@unocss/reset/tailwind.css'
@@ -12,7 +14,7 @@ import 'uno.css'
 // 初始化 axios
 $http.value = api
 // 初始化富文本组件
-// initRichtext()
+initRichtext()
 
 const routes = setupLayouts(generatedRoutes)
 

@@ -19,7 +19,7 @@ import type { UpsertWallpaperBodyDto } from './dto/upsert-wallpaper.body'
 export class WallpaperEntityService {
   private readonly _logger = new Logger(WallpaperEntityService.name)
 
-  private readonly _entitiyRepo: Repository<Wallpaper>
+  private readonly _entityRepo: Repository<Wallpaper>
 
   // Redis客户端
   private readonly _client: RedisClientType
@@ -33,18 +33,19 @@ export class WallpaperEntityService {
     private readonly _wallpaperSrv: WallpaperService,
     private readonly _sysConfigSrv: SysConfigService,
   ) {
-    this._entitiyRepo = this._wallpaperSrv.entitiyRepo()
+    this._entityRepo = this._wallpaperSrv.entityRepo()
     this._client = this._redisSrv.getClient(RedisType.RECOMMEND)
   }
 
   /**
    * 定时更新每日推荐
+   * 每日0点执行
    */
-  @Cron('0 0 * * *')
+  @Cron('0 0 0 * * *')
   public async handleDailyRecommend() {
     this._logger.verbose('定时任务：更新每日推荐')
     try {
-      const res = await this._entitiyRepo
+      const res = await this._entityRepo
         .createQueryBuilder('c')
         .orderBy('RAND()') // MySQL 的随机函数
         .limit(10)
@@ -75,7 +76,7 @@ export class WallpaperEntityService {
    * 下载指定壁纸
    */
   public async downloadWallpaper(id: string, user: User) {
-    const wallpaper = await this._entitiyRepo.findOneBy({ id })
+    const wallpaper = await this._entityRepo.findOneBy({ id })
 
     if (!wallpaper)
       responseError(ErrorCode.WALLPAPER_NOT_EXISTS)
@@ -125,7 +126,7 @@ export class WallpaperEntityService {
    * 添加/取消收藏
    */
   public async collectionWallpaper(status: boolean, id: string, userId: string) {
-    const wallpaper = await this._entitiyRepo.findOneBy({ id })
+    const wallpaper = await this._entityRepo.findOneBy({ id })
 
     if (!wallpaper)
       responseError(ErrorCode.WALLPAPER_NOT_EXISTS)
@@ -168,8 +169,8 @@ export class WallpaperEntityService {
     if (!category)
       responseError(ErrorCode.CATEGORY_NOT_EXISTS)
 
-    const insertRes = await this._entitiyRepo.insert(
-      this._entitiyRepo.create({
+    const insertRes = await this._entityRepo.insert(
+      this._entityRepo.create({
         ...body,
         category,
       }),
@@ -189,7 +190,7 @@ export class WallpaperEntityService {
     if (!category)
       responseError(ErrorCode.CATEGORY_NOT_EXISTS)
 
-    const updateRes = await this._entitiyRepo.update(
+    const updateRes = await this._entityRepo.update(
       { id },
       {
         ...body,
@@ -207,10 +208,10 @@ export class WallpaperEntityService {
    * 删除壁纸
    */
   public async deleteWallpaper(id: string) {
-    if (!(await this._entitiyRepo.existsBy({ id })))
+    if (!(await this._entityRepo.existsBy({ id })))
       responseError(ErrorCode.WALLPAPER_NOT_EXISTS)
 
-    const deleteRes = await this._entitiyRepo.delete({ id })
+    const deleteRes = await this._entityRepo.delete({ id })
     return deleteRes.affected > 0
   }
 }

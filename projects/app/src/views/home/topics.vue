@@ -1,19 +1,44 @@
 <script setup lang="ts">
-import img from '~/static/images/cover.jpg'
+import type { ICategory } from 'types'
+
+/** 分类列表 */
+const categoryList = ref<ICategory[]>()
+/** 是否展示更多 */
+const isMore = ref(false)
+
+/**
+ * 获取分类列表
+ */
+async function getCategoryList() {
+  const res = await getCategoryListApi()
+  if (res.length >= 7) {
+    isMore.value = true
+    categoryList.value = res.slice(0, 7)
+  }
+  else {
+    categoryList.value = res
+  }
+}
+
+onLoad(getCategoryList)
 </script>
 
 <template>
   <Title class="topics" title="专题精选">
     <template #right>
-      <navigator url="/page/classify/classify" class="more" v-text="'More+'" />
+      <navigator
+        class="more" open-type="switchTab"
+        url="/pages/classify/classify"
+        v-text="'More+'"
+      />
     </template>
 
     <view class="topics_content">
       <Item
-        v-for="item in 8" :key="item"
-        :title="item" :url="img"
+        v-for="{ id, name, url } in categoryList" :key="id"
+        :title="name" :url="url" :category-id="id"
       />
-      <Item is-more />
+      <Item v-if="isMore" is-more />
     </view>
   </Title>
 </template>

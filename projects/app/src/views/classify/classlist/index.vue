@@ -1,5 +1,28 @@
 <script setup lang="ts">
-import img from '~/static/images/cover.jpg'
+import type { IWallpaper } from 'types'
+
+/** 标题 */
+const title = ref()
+/** 分类ID */
+const categoryId = ref()
+/** 壁纸列表 */
+const wallpapers = ref<IWallpaper[]>()
+
+/**
+ * 获取壁纸列表
+ */
+async function getWallpapersByCategoryId(id?: string) {
+  if (!id)
+    return
+  const res = await getWallpapersByCategoryIdApi(
+    id,
+    {
+      page: 1,
+      pageSize: 10,
+    },
+  )
+  wallpapers.value = res.data
+}
 
 /**
  * 返回上一页
@@ -16,6 +39,12 @@ function jumpHome() {
     url: '/pages/home/home',
   })
 }
+
+onLoad((e) => {
+  title.value = e?.name
+  categoryId.value = e?.id
+  getWallpapersByCategoryId(e?.id)
+})
 </script>
 
 <template>
@@ -30,7 +59,7 @@ function jumpHome() {
             <uni-icons type="home" size="20" />
           </view>
         </view>
-        <text v-text="123" />
+        <text v-text="title" />
         <view class="title_icon" style="opacity: 0;">
           <view class="icon">
             <uni-icons type="arrow-left" size="20" />
@@ -43,10 +72,11 @@ function jumpHome() {
     </Header>
     <view class="content">
       <navigator
-        v-for="item in 10" :key="item"
-        url="/pages/preview/preview" class="item"
+        v-for="item in wallpapers" :key="item.id"
+        :url="`/pages/preview/preview?id=${categoryId}`"
+        class="item"
       >
-        <image :src="img" mode="aspectFill" />
+        <image :src="item.url" mode="aspectFill" />
       </navigator>
     </view>
   </view>

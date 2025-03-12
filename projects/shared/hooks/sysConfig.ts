@@ -1,12 +1,20 @@
 import { ref } from 'vue'
-import type { IConfigDto, IUpsertSysConfigBodyDto } from 'types'
+import { randomId } from 'utils'
+import { cloneDeep } from 'lodash'
+import type { IConfigDto } from 'types'
 import {
   Config,
   WALLPAPER_DOWNLOAD_LIMIT,
 } from 'types'
 
-import { cloneDeep } from 'lodash'
 import { sysConfigGetApi } from '../api/sysConfig'
+
+export interface IBannerConfigItem {
+  id: string
+  categoryId?: string
+  url?: string
+  tempImage?: File | File[]
+}
 
 /** 加载中 */
 const loading = ref(false)
@@ -14,9 +22,9 @@ const loading = ref(false)
 /** 壁纸下载次数配置 */
 const wallpaperDownload = ref<Required<IConfigDto>[Config.DOWNLOAD_LIMIT]>({})
 /** 轮播图配置 */
-const bannerConfig = ref<IUpsertSysConfigBodyDto[Config.BANNER_CONFIG]>([])
+const bannerConfig = ref<IBannerConfigItem[]>([])
 /** 轮播图原始数据 */
-const bannerData = ref<IUpsertSysConfigBodyDto[Config.BANNER_CONFIG]>([])
+const bannerData = ref<IBannerConfigItem[]>([])
 
 export function useSysConfig() {
   /**
@@ -45,10 +53,11 @@ export function useSysConfig() {
     try {
       const res = await sysConfigGetApi(Config.BANNER_CONFIG)
         ?? [{
+          id: randomId(),
           categoryId: '',
           url: '',
         }]
-      bannerData.value = res
+      bannerData.value = res as IBannerConfigItem[]
       bannerConfig.value = cloneDeep(bannerData.value)
     }
     finally {

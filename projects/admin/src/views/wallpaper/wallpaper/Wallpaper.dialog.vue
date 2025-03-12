@@ -2,7 +2,7 @@
 import { cloneDeep } from 'lodash'
 import { Notify } from 'quasar'
 import type { ICategory, IUpsertWallpaperBodyDto, IWallpaper } from 'types'
-import { formatFileSize, objectPick, pathExtName } from 'utils'
+import { formatFileSize, objectPick, pathExtName, randomString } from 'utils'
 
 interface WallpaperDialogProps {
   /**
@@ -70,6 +70,7 @@ watch(
       else if (wallpaper)
         form.value = objectPick(wallpaper, 'name', 'url', 'categoryId', 'size')
       size.value = formatFileSize(form.value.size)
+      form.value.name = randomString(24, 24, '')
     }
   },
 )
@@ -123,7 +124,7 @@ async function uploadFile(file?: File | File[]) {
 
   try {
     const url = await fileUploadApi(
-      { path: `wallpaper/${form.value.categoryId}/${form.value.name}${pathExtName(file.name)}` },
+      { path: `wallpaper/${form.value.categoryId}/${randomString(24, 24, '')}${pathExtName(file.name)}` },
       file,
     )
     if (url)
@@ -151,15 +152,6 @@ async function uploadFile(file?: File | File[]) {
     @ok="upsertWallpaper"
   >
     <div flex="~ col gap1">
-      <ZInput
-        v-model="form.name"
-        label="名称"
-        placeholder="请输入壁纸名称"
-        required :readonly
-        :rules="[
-          val => (!val && '请输入壁纸名称') || true,
-        ]"
-      />
       <ZSelect
         v-model="form.categoryId"
         label="分类"

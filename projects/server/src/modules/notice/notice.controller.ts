@@ -26,7 +26,19 @@ export class NoticeController {
       .where('n.status = :status', { status: 1 })
       .orderBy(`COALESCE(n.order, ${Number.MAX_SAFE_INTEGER})`, 'ASC')
       .addOrderBy('n.date', 'DESC')
+      .select(['n.id', 'n.title'])
       .getMany()
+  }
+
+  @ApiOperation({
+    summary: '获取指定公告详情',
+  })
+  @ApiSuccessResponse(SuccessDto<Notice[]>)
+  @Get(':noticeId')
+  public getNoticesById(
+    @Param() { noticeId }: NoticeIdDto,
+  ) {
+    return this._noticeSrv.repo().findOneBy({ id: noticeId })
   }
 
   @ApiOperation({
@@ -58,7 +70,7 @@ export class NoticeController {
     @Body() body: UpsertNoticeBodyDto,
     @Req() req: FastifyRequest,
   ) {
-    return this._noticeSrv.createNotice(body, req.raw.ip)
+    return this._noticeSrv.createNotice(body, req.raw.admin?.name)
   }
 
   @ApiOperation({

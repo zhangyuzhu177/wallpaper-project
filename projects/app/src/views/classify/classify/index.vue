@@ -1,5 +1,25 @@
 <script setup lang="ts">
-import img from '~/static/images/cover.jpg'
+import type { ICategory } from 'types'
+
+/** 分类列表 */
+const categoryList = ref<ICategory[]>()
+
+/**
+ * 获取分类列表
+ */
+async function getCategoryList() {
+  uni.showLoading({
+    title: '加载中',
+  })
+  try {
+    categoryList.value = await getCategoryListApi()
+  }
+  finally {
+    uni.hideLoading()
+  }
+}
+
+onLoad(getCategoryList)
 </script>
 
 <template>
@@ -7,8 +27,8 @@ import img from '~/static/images/cover.jpg'
     <Header title="分类" />
     <view class="classify_content">
       <Item
-        v-for="item in 10" :key="item"
-        :title="item" :url="img"
+        v-for="{ id, name, url } in categoryList" :key="id"
+        :title="name" :url="url" :category-id="id"
       />
     </view>
   </div>

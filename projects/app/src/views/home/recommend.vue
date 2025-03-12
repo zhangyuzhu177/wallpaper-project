@@ -1,7 +1,20 @@
 <script setup lang="ts">
+import type { IWallpaper } from 'types'
+
+/** 每日推荐壁纸列表 */
+const recommendList = ref<IWallpaper[]>()
+
+/** 计算当前时间 */
 const day = computed(() => {
   return new Date().getDate()
 })
+
+/** 获取每日推荐壁纸列表 */
+async function getRecommendWallpaper() {
+  recommendList.value = await getRecommendWallpaperApi()
+}
+
+onLoad(getRecommendWallpaper)
 </script>
 
 <template>
@@ -15,11 +28,11 @@ const day = computed(() => {
     <scroll-view scroll-x :show-scrollbar="false">
       <view class="recommend_content">
         <navigator
-          v-for="item in 8" :key="item"
+          v-for="item in recommendList" :key="item.id"
           url="/pages/preview/preview"
           class="recommend_item"
         >
-          <image src="../../static/images/cover.jpg" mode="aspectFill" />
+          <image :src="item.url" mode="aspectFill" />
         </navigator>
       </view>
     </scroll-view>
@@ -41,12 +54,12 @@ const day = computed(() => {
       gap: 16rpx;
 
     .recommend_item {
-      width: 200rpx;
-      height: 430rpx;
+      width: 230rpx;
+      height: 400rpx;
 
       image {
-        width: 200rpx;
-        height: 430rpx;
+        width: 230rpx;
+        height: 400rpx;
         border-radius: 10rpx;
       }
     }

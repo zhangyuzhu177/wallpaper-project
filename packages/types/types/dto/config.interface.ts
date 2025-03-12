@@ -6,6 +6,8 @@ import type { ICategoryIdDto } from './id/category.interface'
 export interface IConfigDto {
   /** 轮播图配置 */
   [Config.BANNER_CONFIG]?: {
+    /** 唯一标识 */
+    id: string
     /** 分类 */
     categoryId?: ICategoryIdDto['categoryId']
     /** 图片地址 */

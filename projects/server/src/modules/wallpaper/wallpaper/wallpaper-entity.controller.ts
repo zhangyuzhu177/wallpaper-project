@@ -33,21 +33,24 @@ export class WallpaperEntityController {
   @ApiOperation({
     summary: '获取指定分类下的壁纸列表',
   })
-  @ApiSuccessResponse(SuccessDto<Wallpaper>)
-  @Post('query:categoryId')
+  @ApiSuccessResponse(QueryResDto<Wallpaper>)
+  @Post('query/:categoryId')
   public async getWallpapersByCategoryId(
     @Body() body: QueryPagination,
     @Param() { categoryId }: CategoryIdDto,
   ) {
     const { total, page, pageSize } = await getQueryPaging(
-      this._wallpaperSrv.entitiyRepo(),
+      this._wallpaperSrv.entityRepo(),
       {
         pagination: body,
         where: { categoryId },
       },
     )
-    const data = await this._wallpaperSrv.entitiyRepo().find({
+    const data = await this._wallpaperSrv.entityRepo().find({
       where: { categoryId },
+      relations: {
+        category: true,
+      },
       ...(
         body.pageSize !== 'all'
           ? {
@@ -71,7 +74,7 @@ export class WallpaperEntityController {
   @ApiOperation({
     summary: '获取每日推荐',
   })
-  @ApiSuccessResponse(QueryResDto<Wallpaper>)
+  @ApiSuccessResponse(SuccessDto<Wallpaper>)
   @Get('recommend')
   public getDailyRecommend() {
     return this._entitySrv.getDailyRecommend()
@@ -101,7 +104,7 @@ export class WallpaperEntityController {
     @Body() body: QueryPagination,
   ) {
     const { total, page, pageSize } = await getQueryPaging(
-      this._wallpaperSrv.entitiyRepo(),
+      this._wallpaperSrv.entityRepo(),
       {
         pagination: body,
         where: {
@@ -111,7 +114,7 @@ export class WallpaperEntityController {
         },
       },
     )
-    const data = await this._wallpaperSrv.entitiyRepo().find({
+    const data = await this._wallpaperSrv.entityRepo().find({
       where: {
         downloadRecords: {
           userId,
@@ -162,7 +165,7 @@ export class WallpaperEntityController {
     @Body() body: QueryPagination,
   ) {
     const { total, page, pageSize } = await getQueryPaging(
-      this._wallpaperSrv.entitiyRepo(),
+      this._wallpaperSrv.entityRepo(),
       {
         pagination: body,
         where: {
@@ -172,7 +175,7 @@ export class WallpaperEntityController {
         },
       },
     )
-    const data = await this._wallpaperSrv.entitiyRepo().find({
+    const data = await this._wallpaperSrv.entityRepo().find({
       where: {
         collections: {
           userId,
@@ -211,7 +214,7 @@ export class WallpaperEntityController {
     @Body() body: QueryDto<Wallpaper>,
   ) {
     return getQuery(
-      this._wallpaperSrv.entitiyRepo(),
+      this._wallpaperSrv.entityRepo(),
       body,
     )
   }

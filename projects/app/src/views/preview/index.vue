@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import moment from 'moment'
-
-import cover from '~/static/images/cover.jpg'
+import { formatFileSize } from 'utils'
+import type { IWallpaper } from 'types'
 
 const popup = ref()
 
@@ -9,6 +9,11 @@ const popup = ref()
 const isMask = ref(false)
 /** 是否收藏 */
 const isFavorite = ref(false)
+/** 壁纸列表 */
+const wallpapers = ref<IWallpaper[]>()
+/** 当前壁纸 */
+const current = ref(1)
+const total = ref(0)
 
 /** 时间 */
 const time = computed(() => {
@@ -18,6 +23,24 @@ const time = computed(() => {
 const date = computed(() => {
   return moment().format('MM月DD日')
 })
+/** 壁纸信息 */
+const wallpaperInfo = computed(() => {
+  return wallpapers.value?.[current.value - 1]
+})
+
+async function getWallpapersByCategoryId(id?: string) {
+  if (!id)
+    return
+  const res = await getWallpapersByCategoryIdApi(
+    id,
+    {
+      page: 1,
+      pageSize: 'all',
+    },
+  )
+  wallpapers.value = res.data
+  total.value = res.total
+}
 
 /**
  * 返回上一页
@@ -25,22 +48,30 @@ const date = computed(() => {
 function jumpBack() {
   uni.navigateBack()
 }
+
+function handleChange(e: any) {
+  current.value = e.detail.current + 1
+}
+
+onLoad((e) => {
+  getWallpapersByCategoryId(e?.id)
+})
 </script>
 
 <template>
   <view class="preview">
-    <swiper circular>
-      <swiper-item v-for="(_, index) in 10" :key="index">
-        <image :src="cover" @click="isMask = true" />
+    <swiper vertical @change="handleChange">
+      <swiper-item v-for="item in wallpapers" :key="item.id">
+        <image :src="item.url" mode="aspectFill" @click="isMask = true" />
       </swiper-item>
     </swiper>
 
     <view v-if="isMask" class="mask" @click="isMask = false">
       <view class="content">
         <view class="count">
-          6 / 9
+          {{ current }} / {{ total }}
         </view>
-        <view>
+        <view class="time_date">
           <view class="time" v-text="time" />
           <view class="date" v-text="date" />
         </view>
@@ -74,8 +105,8 @@ function jumpBack() {
           <uni-icons type="closeempty" size="24" @click="popup.close()" />
         </view>
         <view class="popup_content">
-          <text v-text="'大小：111'" />
-          <text v-text="'分类：111'" />
+          <text v-text="`大小：${formatFileSize(wallpaperInfo?.size)}`" />
+          <text v-text="`分类：${wallpaperInfo?.category.name}`" />
         </view>
       </view>
     </uni-popup>
@@ -99,10 +130,12 @@ function jumpBack() {
     }
     image {
       width: 100%;
+      height: 100%;
     }
   }
 
   .mask{
+    height: 100%;
     position: absolute;
     inset: 0;
     display: flex;
@@ -124,14 +157,21 @@ function jumpBack() {
         backdrop-filter: blur(10rpx);
       }
 
-      .time {
-        text-align: center;
-        font-size: 148rpx;
+      .time_date{
+        display: flex;
+        flex-direction: column;
+
+        .time {
+          text-align: center;
+          font-size: 140rpx;
+          line-height: 140rpx;
+        }
+        .date {
+          text-align: center;
+          font-size: 36rpx;
+        }
       }
-      .date {
-        text-align: center;
-        font-size: 36rpx;
-      }
+
     }
 
   }

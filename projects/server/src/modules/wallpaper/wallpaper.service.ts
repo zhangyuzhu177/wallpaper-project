@@ -17,11 +17,11 @@ export class WallpaperService {
 
   ) {}
 
-  public entitiyQb(alias = 'w') {
+  public entityQb(alias = 'w') {
     return this._wallpaperRepo.createQueryBuilder(alias)
   }
 
-  public entitiyRepo() {
+  public entityRepo() {
     return this._wallpaperRepo
   }
 

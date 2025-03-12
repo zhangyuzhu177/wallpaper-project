@@ -1,17 +1,38 @@
 <script setup lang="ts">
+import { randomId } from 'utils'
+import type { Config, IConfigDto } from 'types'
+
 import cover from '~/static/images/cover.jpg'
 
-const list = [
+const DEFAULT: IConfigDto[Config.BANNER_CONFIG] = [
   {
-    img: cover,
-  },
-  {
-    img: cover,
-  },
-  {
-    img: cover,
+    id: randomId(),
+    url: cover,
   },
 ]
+
+/** 轮播图列表 */
+const bannerList = ref<IConfigDto[Config.BANNER_CONFIG]>(DEFAULT)
+
+/**
+ * 获取轮播图配置
+ */
+async function getBannerConfig() {
+  bannerList.value = await getBannerConfigApi() || DEFAULT
+}
+
+/**
+ * 跳转详情
+ */
+function jumpInfo(to?: string) {
+  if (!to)
+    return
+  uni.navigateTo({
+    url: `/pages/classify/classlist?id=${to}`,
+  })
+}
+
+onLoad(getBannerConfig)
 </script>
 
 <template>
@@ -22,8 +43,15 @@ const list = [
       indicator-active-color="#fff"
       circular indicator-dots autoplay
     >
-      <swiper-item v-for="{ img } in list" :key="img">
-        <image :src="img" />
+      <swiper-item
+        v-for="item in bannerList"
+        :key="item.id"
+      >
+        <image
+          :src="item.url"
+          mode="aspectFill"
+          @click="jumpInfo(item.categoryId)"
+        />
       </swiper-item>
     </swiper>
   </view>

@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import type { ICategory } from 'types'
-import { pathExtName, randomString } from 'utils'
+import { pathExtName, randomId, randomString } from 'utils'
 
 const { loading, bannerConfig } = useSysConfig()
 
 /** 分类列表 */
 const categorys = ref<ICategory[]>()
-/** 图片 */
-const images = ref<File | File[]>()
 
 onBeforeMount(async () => {
   categorys.value = (await categoryQueryApi({
@@ -23,7 +21,7 @@ onBeforeMount(async () => {
 /**
  * 上传图片
  */
-async function uploadFile(file: File | File[], index: number) {
+async function uploadFile(file: File | File[], id: string) {
   if (!file)
     return
   if (Array.isArray(file))
@@ -36,8 +34,11 @@ async function uploadFile(file: File | File[], index: number) {
       { path: `sys-config/banner/${randomString(24, 24, '')}${pathExtName(file.name)}` },
       file,
     )
-    if (url && bannerConfig.value?.length)
-      bannerConfig.value[index].url = url
+    if (url && bannerConfig.value?.length) {
+      const targetBanner = bannerConfig.value.find(item => item.id === id)
+      if (targetBanner)
+        targetBanner.url = url
+    }
   }
   catch (_) { }
   finally {
@@ -58,14 +59,16 @@ async function uploadFile(file: File | File[], index: number) {
       <ZTextBtn
         label="添加项"
         @click="bannerConfig?.push({
+          id: randomId(),
           categoryId: '',
           url: '',
+          tempImage: undefined,
         })"
       />
     </div>
     <div flex="~ col 1 gap4" p-2 h-0 overflow-auto>
       <div
-        v-for="(item, index) in bannerConfig" :key="index"
+        v-for="(item, index) in bannerConfig" :key="item.id"
         flex="~ col gap1" p-2 b-rd-1
         :style="{
           boxShadow: '4px 0px 12px -2px #0000001F, 2px 0px 8px -2px #0000000A',
@@ -99,7 +102,7 @@ async function uploadFile(file: File | File[], index: number) {
             <ZLabel required label="壁纸" />
             <div>
               <ZUpload
-                v-model="images"
+                v-model="item.tempImage"
                 type="secondary"
                 :multiple="false"
                 w-30
@@ -120,8 +123,8 @@ async function uploadFile(file: File | File[], index: number) {
                 </div>
               </ZUpload>
               <ZImgCropper
-                v-model="images"
-                @callback="(val) => uploadFile(val, index)"
+                v-model="item.tempImage"
+                @callback="(val) => uploadFile(val, item.id)"
               />
             </div>
           </div>

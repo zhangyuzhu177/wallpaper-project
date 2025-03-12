@@ -1,5 +1,17 @@
 <script setup lang="ts">
+import type { INotice } from 'types'
 
+/** 公告列表 */
+const noticeList = ref<INotice[]>()
+
+/**
+ * 获取公告列表
+ */
+async function getNoticeList() {
+  noticeList.value = await getNoticeListApi()
+}
+
+onLoad(getNoticeList)
 </script>
 
 <template>
@@ -15,10 +27,10 @@
 
     <view class="home_notice_content">
       <swiper autoplay vertical circular disable-touch>
-        <swiper-item v-for="(_, index) in 4" :key="index">
+        <swiper-item v-for="{ id, title } in noticeList" :key="id">
           <navigator
-            :url="`/pages/notice/detail?id=${index}`"
-            v-text="`${index}公告内容公告内容公告内容公告内容公告内容公告内容`"
+            :url="`/pages/notice/detail?id=${id}`"
+            v-text="title"
           />
         </swiper-item>
       </swiper>
@@ -60,7 +72,6 @@
       &-item {
         height: 100%;
         color: $uni-color-grey-6;
-        font-size: 24rpx;
         display: flex;
         align-items: center;
 
