@@ -19,7 +19,8 @@
       "style": {
         "navigationBarTitleText": "我的",
         "navigationStyle": "custom"
-      }
+      },
+      "needLogin": true
     },
     {
       "path": "pages/notice/detail",
@@ -45,7 +46,8 @@
     {
       "path": "pages/auth/login",
       "style": {
-        "navigationBarTitleText": ""
+        "navigationBarTitleText": "",
+        "navigationStyle": "custom"
       }
     },
     {
@@ -90,7 +92,9 @@
     "autoscan": true,
     "custom": {
       // uni-ui 规则如下配置
-      "^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue"
+      "^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue",
+      "^up-(.*)": "uview-plus/components/u-$1/u-$1.vue",
+      "^u-([^-].*)": "uview-plus/components/u-$1/u-$1.vue"
     }
   }
 }

@@ -164,9 +164,7 @@ export class AuthUserService {
   public async loginUserByPassword(body: LoginByPasswordBodyDto, ip: string) {
     paramAtLeastOne(body, 'account', 'email', 'phone')
 
-    const { account, email, phone, password, code, bizId } = body
-
-    await this._codeSrv.verifyCaptcha(bizId, [ip, code])
+    const { account, email, phone, password } = body
 
     const qb = this._userSrv.qb().addSelect('u.password')
     if (account)

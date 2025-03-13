@@ -4,6 +4,7 @@ import process from 'node:process'
 import uni from '@dcloudio/vite-plugin-uni'
 import { defineConfig, loadEnv } from 'vite'
 import AutoImport from 'unplugin-auto-import/vite'
+import Components from 'unplugin-vue-components/vite'
 
 // https://vitejs.dev/config/
 export default ({ mode }: any) => {
@@ -16,7 +17,7 @@ export default ({ mode }: any) => {
     ...process.env,
     // 默认配置
     ...{
-      VITE_CLIENT_PORT: '5001',
+      VITE_CLIENT_PORT: 5001,
       VITE_CLIENT_BASE: '/',
       VITE_API_BASE: '/api',
       VITE_PROXY_TARGET: 'http://localhost:3000/api',
@@ -72,6 +73,10 @@ export default ({ mode }: any) => {
           'src/hooks',
           'src/api',
         ],
+      }),
+
+      Components({
+        dts: 'src/types/auto-components.d.ts',
       }),
     ],
   })

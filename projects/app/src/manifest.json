@@ -51,6 +51,7 @@
   /* 小程序特有相关 */
   "mp-weixin": {
     "appid": "wx92d5c51fe11e0384",
+    "mergeVirtualHostAttributes": true,
     "setting": {
       "urlCheck": false
     },

@@ -3,7 +3,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "types": [
-      "@dcloudio/types"
+      "@dcloudio/types",
+      "uview-plus/types"
     ],
     "paths": {
       "~/*": ["src/*"]

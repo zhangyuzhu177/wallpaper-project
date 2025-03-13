@@ -1,4 +1,5 @@
 import type { IBasicResponse } from 'types'
+import { USER_AUTH_TOKEN_KEY } from 'shared/constants/storage'
 
 interface IRequestConfig {
   url: string
@@ -35,12 +36,8 @@ function showError(message: string) {
 
 // 处理登录过期
 function handleAuthError() {
-  // 清除本地token
-  uni.removeStorageSync('token')
-  // 跳转到登录页
-  uni.navigateTo({
-    url: '/pages/login/index',
-  })
+  const { logout } = useUser()
+  logout(true)
 }
 
 export function request<T = any>(config: IRequestConfig): Promise<T> {
@@ -66,7 +63,7 @@ export function request<T = any>(config: IRequestConfig): Promise<T> {
       data,
       header: {
         'Content-Type': 'application/json',
-        'Authorization': uni.getStorageSync('token') ? `Bearer ${uni.getStorageSync('token')}` : '',
+        'Authorization': `Bearer ${uni.getStorageSync(USER_AUTH_TOKEN_KEY) || ''}`,
         ...header,
       },
       method,

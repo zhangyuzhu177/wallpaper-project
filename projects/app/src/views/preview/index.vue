@@ -62,7 +62,10 @@ onLoad((e) => {
   <view class="preview">
     <swiper vertical @change="handleChange">
       <swiper-item v-for="item in wallpapers" :key="item.id">
-        <image :src="item.url" mode="aspectFill" @click="isMask = true" />
+        <image
+          :src="item.url" mode="aspectFill"
+          @click="isMask = true"
+        />
       </swiper-item>
     </swiper>
 
@@ -98,7 +101,7 @@ onLoad((e) => {
       </view>
     </view>
 
-    <uni-popup ref="popup" background-color="#fff" style="border-radius: 20rpx 20rpx 0 0;">
+    <uni-popup ref="popup" background-color="#fff">
       <view class="popup">
         <view class="popup_header">
           <text v-text="'壁纸信息'" />
@@ -166,14 +169,13 @@ onLoad((e) => {
           font-size: 140rpx;
           line-height: 140rpx;
         }
+
         .date {
           text-align: center;
           font-size: 36rpx;
         }
       }
-
     }
-
   }
 
   .footer{

@@ -1,6 +1,6 @@
 import { Mixin } from 'ts-mixer'
 import type { ILoginByPasswordBodyDto } from 'types'
-import { CodeVerifyDto } from 'src/dto/code-verify.dto'
+import { CodeVerifyOptionalDto } from 'src/dto/code-verify.dto'
 import { AccountOptionalDto } from 'src/dto/account.dto'
 
 import { PasswordDto } from '../../password.dto'
@@ -19,6 +19,6 @@ export class LoginByPasswordBodyDto
     EmailOptionalDto,
     PhoneOptionalDto,
     AccountOptionalDto,
-    CodeVerifyDto,
+    CodeVerifyOptionalDto,
   )
   implements ILoginByPasswordBodyDto {}
