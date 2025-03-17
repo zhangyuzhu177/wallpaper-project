@@ -1,19 +1,20 @@
 <script lang="ts" setup>
 import moment from 'moment'
 import { formatFileSize } from 'utils'
-import type { IWallpaper } from 'types'
 
-const popup = ref()
+import { useWallpaper } from '~/hooks/walpaper'
 
+const { userInfo } = useUser()
+const { wallpapers, total, collectionWallpaper } = useWallpaper()
+
+/** 是否显示信息框 */
+const show = ref(false)
 /** 是否显示遮照 */
 const isMask = ref(false)
+/** 当前壁纸索引 */
+const current = ref(0)
 /** 是否收藏 */
 const isFavorite = ref(false)
-/** 壁纸列表 */
-const wallpapers = ref<IWallpaper[]>()
-/** 当前壁纸 */
-const current = ref(1)
-const total = ref(0)
 
 /** 时间 */
 const time = computed(() => {
@@ -25,21 +26,67 @@ const date = computed(() => {
 })
 /** 壁纸信息 */
 const wallpaperInfo = computed(() => {
-  return wallpapers.value?.[current.value - 1]
+  return wallpapers.value?.[current.value]
 })
 
-async function getWallpapersByCategoryId(id?: string) {
+watch(
+  wallpaperInfo,
+  (newVal) => {
+    if (newVal) {
+      const { collections } = userInfo.value || {}
+      if (collections)
+        isFavorite.value = collections?.some(v => v.wallpaperId === wallpaperInfo.value?.id)
+      else
+        isFavorite.value = false
+    }
+  },
+  { immediate: true },
+)
+
+/**
+ * 收藏/取消收藏
+ */
+async function changeStatus() {
+  const { id } = wallpaperInfo.value || {}
   if (!id)
     return
-  const res = await getWallpapersByCategoryIdApi(
-    id,
-    {
-      page: 1,
-      pageSize: 'all',
-    },
-  )
-  wallpapers.value = res.data
-  total.value = res.total
+
+  await collectionWallpaper(id, !isFavorite.value)
+
+  uni.showToast({
+    title: isFavorite.value ? '收藏成功' : '已取消收藏',
+    icon: 'success',
+  })
+}
+
+/**
+ * 下载壁纸
+ */
+async function download() {
+  const { id } = wallpaperInfo.value || {}
+  if (!id)
+    return
+  const url = await downloadWallpaperApi(id)
+  if (url) {
+    uni.downloadFile({
+      url,
+      success: (res) => {
+        console.log(res)
+
+        // downloadUrl(res.tempFilePath)
+        uni.showToast({
+          title: '下载成功',
+          icon: 'success',
+        })
+      },
+      fail: () => {
+        uni.showToast({
+          title: '下载失败',
+          icon: 'error',
+        })
+      },
+    })
+  }
 }
 
 /**
@@ -49,18 +96,20 @@ function jumpBack() {
   uni.navigateBack()
 }
 
-function handleChange(e: any) {
-  current.value = e.detail.current + 1
-}
-
 onLoad((e) => {
-  getWallpapersByCategoryId(e?.id)
+  if (e?.index)
+    current.value = Number.parseInt(e?.index)
 })
 </script>
 
 <template>
   <view class="preview">
-    <swiper vertical @change="handleChange">
+    <swiper
+      :current="current" vertical
+      @change="(e: any) => {
+        current = e.detail.current
+      }"
+    >
       <swiper-item v-for="item in wallpapers" :key="item.id">
         <image
           :src="item.url" mode="aspectFill"
@@ -86,33 +135,39 @@ onLoad((e) => {
         <uni-icons type="undo" color="$uni-color-grey-1" size="24" />
         <text v-text="'返回'" />
       </view>
-      <view class="info" @click="popup.open('bottom')">
+      <view class="info" @click="show = true">
         <uni-icons type="info" color="$uni-color-grey-1" size="24" />
         <text v-text="'信息'" />
       </view>
-      <view class="info">
-        <uni-icons v-if="isFavorite" type="heart-filled" color="#F44336" size="24" />
-        <uni-icons v-else type="heart" color="$uni-color-grey-1" size="24" />
+      <view class="info" @click="changeStatus">
+        <uni-icons
+          v-if="isFavorite"
+          type="heart-filled" color="#F44336" size="24"
+        />
+        <uni-icons
+          v-else
+          type="heart" color="$uni-color-grey-1" size="24"
+        />
         <text v-text="'收藏'" />
       </view>
-      <view class="info">
+      <view class="info" @click="download">
         <uni-icons type="download" color="$uni-color-grey-1" size="24" />
         <text v-text="'下载'" />
       </view>
     </view>
 
-    <uni-popup ref="popup" background-color="#fff">
-      <view class="popup">
-        <view class="popup_header">
-          <text v-text="'壁纸信息'" />
-          <uni-icons type="closeempty" size="24" @click="popup.close()" />
-        </view>
-        <view class="popup_content">
-          <text v-text="`大小：${formatFileSize(wallpaperInfo?.size)}`" />
-          <text v-text="`分类：${wallpaperInfo?.category.name}`" />
-        </view>
+    <up-action-sheet
+      :show="show"
+      title="壁纸信息"
+      safe-area-inset-bottom
+      :round="10"
+      @close="show = false"
+    >
+      <view class="popup_content">
+        <text v-text="`大小：${formatFileSize(wallpaperInfo?.size)}`" />
+        <text v-text="`分类：${wallpaperInfo?.category.name}`" />
       </view>
-    </uni-popup>
+    </up-action-sheet>
   </view>
 </template>
 
@@ -201,24 +256,13 @@ onLoad((e) => {
     }
   }
 
-  .popup{
-
-    .popup_header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 16rpx 24rpx;
-      font-size: 32rpx;
-      border-bottom: 1rpx solid $uni-color-grey-3;
-    }
-
-    .popup_content {
-      display: flex;
-      flex-direction: column;
-      gap: 16rpx;
-      padding: 16rpx 24rpx;
-      min-height: 200rpx;
-    }
+  .popup_content {
+    display: flex;
+    gap: 16rpx;
+    flex-direction: column;
+    align-items: self-start;
+    padding: 16rpx 24rpx;
+    min-height: 200rpx;
   }
 
 }

@@ -103,6 +103,9 @@ export function useUser() {
     userAuthToken.value = ''
     uni.removeStorageSync(USER_AUTH_TOKEN_KEY)
     userInfo.value = undefined
+    uni.navigateTo({
+      url: '/pages/auth/login',
+    })
   }
 
   return {

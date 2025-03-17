@@ -1,6 +1,6 @@
 import { PermissionType, UserType } from 'types'
 import { HasPermission, IsLogin } from 'src/guards'
-import type { Wallpaper } from 'src/entities'
+import type { User, Wallpaper } from 'src/entities'
 import { ApiOperation, ApiTags } from '@nestjs/swagger'
 import { ApiSuccessResponse, getQuery, getQueryPaging } from 'src/utils'
 import { Body, Controller, Delete, Get, Param, Post, Req } from '@nestjs/common'
@@ -143,7 +143,7 @@ export class WallpaperEntityController {
   @ApiOperation({
     summary: '添加/取消收藏',
   })
-  @ApiSuccessResponse(SuccessStringDto)
+  @ApiSuccessResponse(SuccessDto<User>)
   @IsLogin(UserType.USER)
   @Post('collection/:wallpaperId')
   public collectionWallpaper(

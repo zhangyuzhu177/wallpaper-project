@@ -1,28 +1,12 @@
 <script setup lang="ts">
-import type { IWallpaper } from 'types'
+import { useWallpaper } from '~/hooks/walpaper'
+
+const { wallpapers, getWallpapersByCategoryId } = useWallpaper()
 
 /** 标题 */
 const title = ref()
 /** 分类ID */
 const categoryId = ref()
-/** 壁纸列表 */
-const wallpapers = ref<IWallpaper[]>()
-
-/**
- * 获取壁纸列表
- */
-async function getWallpapersByCategoryId(id?: string) {
-  if (!id)
-    return
-  const res = await getWallpapersByCategoryIdApi(
-    id,
-    {
-      page: 1,
-      pageSize: 10,
-    },
-  )
-  wallpapers.value = res.data
-}
 
 /**
  * 返回上一页
@@ -72,8 +56,8 @@ onLoad((e) => {
     </Header>
     <view class="content">
       <navigator
-        v-for="item in wallpapers" :key="item.id"
-        :url="`/pages/preview/preview?id=${categoryId}`"
+        v-for="(item, index) in wallpapers" :key="item.id"
+        :url="`/pages/preview/preview?index=${index}`"
         class="item"
       >
         <image :src="item.url" mode="aspectFill" />

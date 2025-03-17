@@ -77,7 +77,9 @@ async function onChooseAvatar(e: any) {
           {{ userInfo?.name || '未登录' }}
         </text>
         <text class="account">
-          账号: {{ userInfo?.account }}
+          <up-copy :content="userInfo?.account">
+            <text>账号:{{ userInfo?.account }}</text>
+          </up-copy>
         </text>
       </view>
     </view>

@@ -29,13 +29,16 @@ export function setResponseInterceptor(callback: (response: any) => any) {
 function showError(message: string) {
   uni.showToast({
     title: message || '请求失败',
-    icon: 'none',
-    position: 'top',
+    icon: 'error',
   })
 }
 
 // 处理登录过期
 function handleAuthError() {
+  uni.showToast({
+    title: '登录已过期，请重新登录',
+    icon: 'error',
+  })
   const { logout } = useUser()
   logout(true)
 }

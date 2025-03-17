@@ -7,11 +7,13 @@
 export {}
 declare global {
   const EffectScope: typeof import('vue')['EffectScope']
+  const collectionWallpaperApi: typeof import('../api/wallpaper')['collectionWallpaperApi']
   const computed: typeof import('vue')['computed']
   const createApp: typeof import('vue')['createApp']
   const customRef: typeof import('vue')['customRef']
   const defineAsyncComponent: typeof import('vue')['defineAsyncComponent']
   const defineComponent: typeof import('vue')['defineComponent']
+  const downloadWallpaperApi: typeof import('../api/wallpaper')['downloadWallpaperApi']
   const effectScope: typeof import('vue')['effectScope']
   const getBannerConfigApi: typeof import('../api/config')['getBannerConfigApi']
   const getCaptchaImgApi: typeof import('../api/code')['getCaptchaImgApi']
@@ -97,6 +99,7 @@ declare global {
   const useSystem: typeof import('../hooks/system')['useSystem']
   const useTemplateRef: typeof import('vue')['useTemplateRef']
   const useUser: typeof import('../hooks/user')['useUser']
+  const useWallpaper: typeof import('../hooks/walpaper')['useWallpaper']
   const userAuthToken: typeof import('../hooks/user')['userAuthToken']
   const userInfo: typeof import('../hooks/user')['userInfo']
   const userOwnGetProfileApi: typeof import('../api/user')['userOwnGetProfileApi']

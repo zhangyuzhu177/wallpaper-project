@@ -139,16 +139,22 @@ export class WallpaperEntityService {
             wallpaperId: id,
           }),
         )
-        return true
       }
       else {
-        const res = await this._wallpaperSrv.collectionRepo().delete({
+        await this._wallpaperSrv.collectionRepo().delete({
           userId,
           wallpaperId: id,
         })
-
-        return res.affected > 0
       }
+
+      const user = await this._userSrv.repo().findOne({
+        where: { id: userId },
+        relations: {
+          collections: true,
+          downloadRecords: true,
+        },
+      })
+      return user
     }
     catch (e) {
       const sqlError = parseSqlError(e)
