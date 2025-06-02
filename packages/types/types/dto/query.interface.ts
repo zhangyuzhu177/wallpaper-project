@@ -1,4 +1,4 @@
-import type { FindOneOptions } from 'typeorm'
+import type { FindOneOptions, FindOptionsWhere } from 'typeorm'
 
 import type { IBasicResponse } from '../http/basic.interface'
 
@@ -9,7 +9,7 @@ export interface IQueryDto<Entity> {
   /** 分页信息 */
   pagination?: IQueryPagination
   /** 过滤条件 */
-  where?: FindOneOptions<Entity>['where']
+  where?: FindOptionsWhere<Entity> | FindOptionsWhere<Entity>[]
   /** 排序信息 */
   order?: FindOneOptions<Entity>['order']
   /** 关联信息 */

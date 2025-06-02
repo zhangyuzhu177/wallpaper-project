@@ -4,6 +4,7 @@ import {
   DescOptionalDto,
   NameDto,
   OrderOptionalDto,
+  StatusDto,
   UrlDto,
 } from 'src/dto'
 
@@ -15,6 +16,7 @@ export class UpsertCategoryBodyDto
   extends Mixin(
     UrlDto,
     NameDto,
+    StatusDto,
     DescOptionalDto,
     OrderOptionalDto,
   )

@@ -385,8 +385,6 @@ declare module 'vue' {
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
     readonly RSA_KEY: UnwrapRef<typeof import('../../../shared/constants/encrypt')['RSA_KEY']>
     readonly TABLE_PAGINATION: UnwrapRef<typeof import('../../../shared/constants/table')['TABLE_PAGINATION']>
-    readonly USER_AUTH_TOKEN_KEY: UnwrapRef<typeof import('../../../shared/constants/storage')['USER_AUTH_TOKEN_KEY']>
-    readonly USER_REMEMBER_LOGIN_INFO_KEY: UnwrapRef<typeof import('../../../shared/constants/storage')['USER_REMEMBER_LOGIN_INFO_KEY']>
     readonly adminAssignRoleApi: UnwrapRef<typeof import('../../../shared/api/admin')['adminAssignRoleApi']>
     readonly adminAuthToken: UnwrapRef<typeof import('../../../shared/hooks/admin')['adminAuthToken']>
     readonly adminChangeStatusApi: UnwrapRef<typeof import('../../../shared/api/admin')['adminChangeStatusApi']>

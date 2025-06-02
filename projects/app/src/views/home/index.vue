@@ -1,43 +1,22 @@
-<script lang="ts" setup>
-import Banner from './banner.vue'
-import Notice from './notice.vue'
+<script setup lang="ts">
+import Swiper from './swiper.vue'
+import Notify from './notify.vue'
+import SelectedTopics from './selectedTopics.vue'
 import Recommend from './recommend.vue'
-import Topics from './topics.vue'
 </script>
 
 <template>
-  <view class="home_layout page_bg">
-    <Header title="推荐" />
+  <div class="flex flex-col gap6 p4">
+    <!-- 轮播图 -->
+    <Swiper />
 
-    <!-- 轮播 -->
-    <Banner />
+    <!-- 公告 -->
+    <Notify />
 
-    <view class="content">
-      <!-- 公告 -->
-      <Notice />
+    <!-- 专题精选 -->
+    <SelectedTopics />
 
-      <!-- 每日推荐 -->
-      <Recommend />
-
-      <!-- 专题精选 -->
-      <Topics />
-    </view>
-  </view>
+    <!-- 每日推荐 -->
+    <Recommend />
+  </div>
 </template>
-
-<style lang="scss" scoped>
-.home_layout {
-  width: 750rpx;
-  display: flex;
-  gap: 36rpx;
-  flex-direction: column;
-  padding-bottom: 30rpx;
-
-  .content {
-    padding: 0 38rpx;
-    display: flex;
-    gap: 36rpx;
-    flex-direction: column;
-  }
-}
-</style>

@@ -27,14 +27,33 @@ export class CategoryController {
   ) { }
 
   @ApiOperation({
-    summary: '获取所有分类（根据 order 排序）',
+    summary: '获取所有分类精选（根据 order 排序）',
   })
   @ApiSuccessResponse(SuccessDto<Category[]>)
   @Get()
   public getCategorys() {
-    return this._wallpaperSrv.categoryQb()
-      .orderBy(`COALESCE(c.order, ${Number.MAX_SAFE_INTEGER})`, 'ASC')
-      .getMany()
+    return this._wallpaperSrv.categoryRepo().find({
+      where: {
+        status: true,
+      },
+      order: {
+        order: 'ASC',
+      },
+      relations: {
+        wallpapers: true,
+      },
+      select: {
+        id: true,
+        name: true,
+        url: true,
+        wallpapers: {
+          id: true,
+        },
+      },
+    })
+    // return this._wallpaperSrv.categoryQb()
+    //   .orderBy(`COALESCE(c.order, ${Number.MAX_SAFE_INTEGER})`, 'ASC')
+    //   .getMany()
   }
 
   @ApiOperation({

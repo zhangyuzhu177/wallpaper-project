@@ -21,7 +21,7 @@ export class FileController {
   })
   @ApiSuccessResponse(SuccessStringDto)
   @ApiFormData()
-  @IsLogin(UserType.ADMIN, true)
+  @IsLogin([UserType.ADMIN, UserType.USER], true)
   @Post('upload')
   public async uploadPublicFile(
     @Query() { path }: FilePathDto,
@@ -33,19 +33,21 @@ export class FileController {
 
     // 校验用户权限
     const { admin } = req.raw
-    // 管理员
-    const permission = admin.adminRole?.permissions?.map(({ name }) => name) ?? []
-    if (!arrayHasIntersection(
-      permission,
-      [
-        PermissionType.CONFIG_UPSERT,
-        PermissionType.CATEGORY_CREATE,
-        PermissionType.CATEGORY_UPDATE,
-        PermissionType.WALLPAPER_CREATE,
-        PermissionType.WALLPAPER_UPDATE,
-      ],
-    ))
-      responseError(ErrorCode.PERMISSION_DENIED)
+    if (admin) {
+      // 管理员
+      const permission = admin.adminRole?.permissions?.map(({ name }) => name) ?? []
+      if (!arrayHasIntersection(
+        permission,
+        [
+          PermissionType.CONFIG_UPSERT,
+          PermissionType.CATEGORY_CREATE,
+          PermissionType.CATEGORY_UPDATE,
+          PermissionType.WALLPAPER_CREATE,
+          PermissionType.WALLPAPER_UPDATE,
+        ],
+      ))
+        responseError(ErrorCode.PERMISSION_DENIED)
+    }
 
     return this._fileSrv.upload(
       path,

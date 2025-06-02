@@ -1,5 +1,5 @@
 import { decorate } from 'ts-mixer'
-import type { FindOneOptions } from 'typeorm'
+import type { FindOneOptions, FindOptionsWhere } from 'typeorm'
 import { ApiProperty } from '@nestjs/swagger'
 import type { IQueryDto, IQueryResDto } from 'types'
 import { GenerateParamsDecorator, sharedVariableMarkdown } from 'src/utils'
@@ -22,7 +22,7 @@ export class QueryDto<T> implements IQueryDto<T> {
       type: Object,
     }),
   ], true))
-  where?: FindOneOptions<T>['where']
+  where?: FindOptionsWhere<T> | FindOptionsWhere<T>[]
 
   @decorate(GenerateParamsDecorator([
     ApiProperty({

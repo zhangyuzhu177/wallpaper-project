@@ -44,6 +44,7 @@ const readonly = computed(() => props.type === '查看')
 const initData: IUpsertCategoryBodyDto = {
   name: '',
   url: '',
+  status: true,
 }
 /** 分类表单 */
 const form = ref(cloneDeep(initData))
@@ -61,7 +62,7 @@ watch(
         form.value = cloneDeep(initData)
 
       else if (category)
-        form.value = objectPick(category, 'name', 'url', 'order', 'desc')
+        form.value = objectPick(category, 'name', 'url', 'order', 'desc', 'status')
     }
   },
 )
@@ -190,6 +191,23 @@ async function uploadFile(file?: File | File[]) {
         :min="1" :max="9999"
         :readonly mb5
       />
+      <div flex="~ col gap1">
+        <ZLabel
+          label="专题精选"
+        />
+        <div flex="~ gap10" my3>
+          <ZRadio
+            :model-value="form.status?.toString()"
+            label="是" val="true" :disable="readonly"
+            @update:model-value="form.status = true"
+          />
+          <ZRadio
+            :model-value="form.status?.toString()"
+            label="否" val="false" :disable="readonly"
+            @update:model-value="form.status = false"
+          />
+        </div>
+      </div>
       <ZInput
         v-model="form.desc"
         label="描述"

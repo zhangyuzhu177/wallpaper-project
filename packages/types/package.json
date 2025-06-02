@@ -21,13 +21,14 @@
     "auto-export": "nodemon  --config nodemon.json --exec \"pnpm run generate:export\""
   },
   "dependencies": {
-    "typeorm": "^0.3.17"
+    "typeorm": "^0.3.22"
   },
   "devDependencies": {
     "@nestjs/common": "^10.1.2",
     "concurrently": "^8.0.1",
     "glob": "^10.3.3",
     "nodemon": "^2.0.22",
-    "rimraf": "^5.0.0"
+    "rimraf": "^5.0.0",
+    "typescript": "^5.1.6"
   }
 }

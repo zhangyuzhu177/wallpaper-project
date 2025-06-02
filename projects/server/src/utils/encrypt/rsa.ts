@@ -4,7 +4,6 @@ let rsa: NodeRSA
 
 function initRsa() {
   const { RSA_PUBLIC_KEY, RSA_PRIVATE_KEY } = process.env
-
   rsa = new NodeRSA()
   rsa.setOptions({ encryptionScheme: 'pkcs1' })
   rsa.importKey(RSA_PUBLIC_KEY, 'pkcs8-public')
@@ -33,9 +32,10 @@ export function rsaDecrypt(hash: string, key = 'ZyzRsa') {
     const str = rsa.decrypt(hash, 'utf8')
     if (!str)
       return hash
+
     return str.replace(key, '').split('').map(char => String.fromCharCode(char.charCodeAt(0) - 1)).join('')
   }
-  catch (_) {
+  catch (e) {
     return hash
   }
 }

@@ -1,12 +1,14 @@
 import { UserType } from 'types'
 import { IsLogin } from 'src/guards'
-import { SuccessBooleanDto } from 'src/dto'
+import { SuccessBooleanDto, SuccessStringDto } from 'src/dto'
 import { ApiSuccessResponse } from 'src/utils'
 import { ApiOperation, ApiTags } from '@nestjs/swagger'
 import { JwtAuthService } from 'src/modules/jwt/jwt.service'
 import { Body, Controller, Get, Post, Req } from '@nestjs/common'
 import { LoginByPasswordBodyDto, LoginSuccessResDto } from 'src/dto/common/login'
 
+import { UserService } from 'src/modules/user/user.service'
+import { CreateUserBodyDto } from 'src/modules/user/dto/create-user.body'
 import { LoginByWeChatBodyDto } from './dto/login-by-wechat.body.dto'
 import { AuthUserService } from './auth-user.service'
 
@@ -16,6 +18,7 @@ export class AuthUserController {
   constructor(
     private readonly _jwtAuthSrv: JwtAuthService,
     private readonly _authUserSrv: AuthUserService,
+    private readonly _userSrv: UserService,
   ) { }
 
   @ApiOperation({
@@ -28,6 +31,17 @@ export class AuthUserController {
     @Req() req: FastifyRequest,
   ) {
     return this._authUserSrv.loginByWeChat(body.code, req.raw.ip)
+  }
+
+  @ApiOperation({
+    summary: '用户注册',
+  })
+  @ApiSuccessResponse(SuccessStringDto)
+  @Post('register')
+  public registerUser(
+    @Body() body: CreateUserBodyDto,
+  ) {
+    return this._userSrv.createUser(body)
   }
 
   @ApiOperation({

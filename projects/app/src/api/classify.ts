@@ -1,10 +1,9 @@
 import type { ICategory } from 'types'
+import { http } from '@/utils/http'
 
 /**
- * 获取分类列表
+ * 获取专题精选
  */
-export function getCategoryListApi() {
-  return request<ICategory[]>({
-    url: '/wallpaper/category',
-  })
+export function getSelectedTopicsApi() {
+  return http.get<ICategory[]>('/wallpaper/category')
 }

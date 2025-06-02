@@ -1,200 +1,187 @@
 <script setup lang="ts">
-const { isLogin, userInfo, logout, getOwnProfile } = useUser()
-const { titleBarHeight, statusBarHeight } = useSystem()
+import { pathExtName, randomString } from 'utils'
+import { toast } from '@/utils/toast'
+import { useUserStore } from '@/store'
+import { uploadFileUrl, useUpload } from '@/utils/uploadFile'
+import { USER_MENU } from '@/constants/userMenu'
+import { USER_AUTH_TOKEN_KEY } from '@/constants/storage'
 
-onLoad(() => {
-  if (!isLogin.value) {
-    uni.navigateTo({
-      url: '/pages/auth/login',
-    })
-  }
+const userStore = useUserStore()
+
+const isLogined = ref(false)
+const defaultAvatar = '/static/images/default-avatar.png'
+
+const userInfo = computed(() => userStore.userInfo)
+const userId = computed(() => userStore.userInfo.id)
+
+onShow(() => {
+  isLogined.value = !!uni.getStorageSync(USER_AUTH_TOKEN_KEY)
+
+  if (!isLogined.value)
+    userStore.userInfo = undefined
+
+  isLogined.value && useUserStore().getUserInfo()
 })
 
-const menuList = [
-  { title: '收藏', icon: 'heart', url: '/pages/preview/preview' },
-  { title: '下载', icon: 'download', url: '/pages/preview/preview' },
-]
+// #ifndef MP-WEIXIN
+// 上传头像
+const { run } = useUpload(
+  // `${uploadFileUrl.USER_AVATAR}?path=/avatar/${userId.value}/${randomString(24, 24, '')}`,
+  `http://localhost:9000/api/file/upload?path=/avatar/${userId.value}/${randomString(24, 24, '')}`,
+  {},
+  {
+    onSuccess: (res) => {
+      const { data } = res
+      userStore.updateUserAvatar(data)
+      toast.success('上传成功')
+    },
+  },
+)
+// #endif
+
+// 微信小程序下选择头像事件
+function onChooseAvatar(e: any) {
+  const { avatarUrl } = e.detail
+
+  const { run } = useUpload(
+    `${uploadFileUrl.USER_AVATAR}?path=/avatar/${userId.value}/${randomString(24, 24, '')}${pathExtName(avatarUrl)}`,
+    {},
+    {
+      onSuccess: (res) => {
+        const { data } = res
+        userStore.updateUserAvatar(data)
+        toast.success('上传成功')
+      },
+    },
+    avatarUrl,
+  )
+  run()
+}
 
 /**
- * 跳转
+ * 跳转登录页
  */
-function jump(url: string) {
-  uni.navigateTo({ url })
+function jumpLogin() {
+  const redirectRoute = `/pages/login/index?redirect=${encodeURIComponent('/pages/user/index')}`
+
+  uni.navigateTo({
+    url: redirectRoute,
+  })
+}
+
+/**
+ * 跳转指定页面
+ */
+function jump(to: string) {
+  if (!isLogined.value) {
+    return uni.showToast({
+      icon: 'none',
+      title: '请先登录!',
+    })
+  }
+
+  // uni.navigateTo({
+  //   url: to,
+  // })
 }
 
 /**
  * 退出登录
  */
 function handleLogout() {
+  if (!isLogined)
+    return
+
   uni.showModal({
     title: '提示',
     content: '确定要退出登录吗？',
     success: (res) => {
       if (res.confirm) {
-        logout()
-        uni.navigateTo({
-          url: '/pages/auth/login',
-        })
+        // 清空用户信息
+        useUserStore().logout()
+        // 执行退出登录逻辑
+        toast.success('退出登录成功')
+        // #ifdef MP-WEIXIN
+        uni.reLaunch({ url: '/pages/home/index' })
+        // 微信小程序，去首页
+        // #endif
+        // #ifndef MP-WEIXIN
+        // 非微信小程序，去登录页
+        uni.reLaunch({ url: '/pages/login/index' })
+        // #endif
       }
     },
   })
 }
-
-async function onChooseAvatar(e: any) {
-  const { avatarUrl } = e.detail
-  if (!avatarUrl)
-    return
-
-  uni.showLoading({
-    title: '上传中...',
-  })
-
-  try {
-    const res = await userUpdateAvatarApi({ avatar: avatarUrl })
-    if (res) {
-      userInfo.value!.avatar = avatarUrl
-      await getOwnProfile()
-    }
-  }
-  finally {
-    uni.hideLoading()
-  }
-}
 </script>
 
 <template>
-  <view
-    class="user_layout page_bg"
-    :style="{ paddingTop: `${titleBarHeight + statusBarHeight}px` }"
-  >
+  <view class="flex flex-col gap6">
     <!-- 用户信息区域 -->
-    <view class="user-info">
-      <button open-type="chooseAvatar" @chooseavatar="onChooseAvatar">
-        <image class="avatar" :src="userInfo?.avatar" mode="aspectFill" />
-      </button>
-      <view class="info">
-        <text class="nickname">
-          {{ userInfo?.name || '未登录' }}
-        </text>
-        <text class="account">
-          <up-copy :content="userInfo?.account">
-            <text>账号:{{ userInfo?.account }}</text>
-          </up-copy>
-        </text>
-      </view>
-    </view>
-
-    <!-- 功能菜单 -->
-    <view class="menu-list">
-      <view
-        v-for="(item, index) in menuList"
-        :key="index"
-        class="menu-item"
-        @click="jump(item.url)"
+    <view class="px-4 py-6 flex gap4 items-center rounded-full">
+      <!-- #ifdef MP-WEIXIN -->
+      <button
+        class="p0 m0 w-[80px] h-[80px] rounded-full" open-type="chooseAvatar"
+        @chooseavatar="onChooseAvatar"
       >
-        <uni-icons :type="item.icon" size="24" color="#666" />
-        <text class="menu-title">
-          {{ item.title }}
-        </text>
-        <uni-icons type="right" size="16" color="#999" />
+        <wd-img :src="userInfo?.avatar ?? defaultAvatar" width="100%" height="100%" radius="100%" />
+      </button>
+      <!-- #endif -->
+      <!-- #ifndef MP-WEIXIN -->
+      <view class="w-[80px] h-[80px] rounded-full" @click="run">
+        <wd-img
+          :src="userInfo?.avatar ?? defaultAvatar"
+          width="100%" height="100%" radius="100%"
+        />
+      </view>
+      <!-- #endif -->
+      <view v-if="userInfo" class="flex flex-col gap1">
+        <view class="text-xl" v-text="userInfo?.name" />
+        <view
+          v-if="userInfo?.account" class="text-grey-5"
+          v-text="`ID: ${userInfo?.account}`"
+        />
+      </view>
+      <view v-else class="text-grey-5" v-text="'请先登录'" />
+    </view>
+
+    <!-- 功能区块 -->
+    <view class="flex flex-col">
+      <view
+        v-for="item in USER_MENU" :key="item.to"
+        class="flex flex-col"
+        @click="jump(item.to)"
+      >
+        <view class="flex items-center justify-between px-4 py-3">
+          <view class="flex gap2 items-center">
+            <wd-img :src="item.icon" width="24px" height="24px" />
+            <view v-text="item.label" />
+          </view>
+          <view class="i-carbon:chevron-right w-[16px] h-[16px] text-grey-6" />
+        </view>
+        <view class="h-[1px] w-full bg-grey-3" />
       </view>
     </view>
 
-    <!-- 退出登录按钮 -->
-    <view class="logout-btn" @click="handleLogout">
-      <button type="button">
+    <!--  退出登录按钮 -->
+    <view class="px-6 py-4">
+      <wd-button
+        v-if="!isLogined"
+        block
+        style="width: 100%;"
+        @click="jumpLogin"
+      >
+        登录
+      </wd-button>
+      <wd-button
+        v-else
+        type="error"
+        block
+        style="width: 100%;"
+        @click="handleLogout"
+      >
         退出登录
-      </button>
+      </wd-button>
     </view>
   </view>
 </template>
-
-<style lang="scss" scoped>
-.user_layout {
-  padding: 30rpx;
-}
-
-.user-info {
-  display: flex;
-  gap: 30rpx;
-  align-items: center;
-  border-radius: 20rpx;
-  margin-bottom: 30rpx;
-  padding-top: 100rpx;
-
-  button {
-    width: 150rpx;
-    height: 150rpx;
-    border-radius: 50%;
-    margin: 0;
-    padding: 0;
-    &::after {
-      display: none;
-    }
-  }
-
-  .avatar {
-    width: 150rpx;
-    height: 150rpx;
-    border-radius: 60rpx;
-    margin-right: 30rpx;
-  }
-
-  .info {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-
-    .nickname {
-      font-size: 32rpx;
-      font-weight: bold;
-      color: #333;
-      margin-bottom: 10rpx;
-    }
-
-    .account {
-      font-size: 24rpx;
-      color: #999;
-    }
-  }
-}
-
-.menu-list {
-  background: #fff;
-  border-radius: 20rpx;
-  margin-bottom: 30rpx;
-
-  .menu-item {
-    display: flex;
-    align-items: center;
-    padding: 30rpx;
-    border-bottom: 1rpx solid #f5f5f5;
-
-    &:last-child {
-      border-bottom: none;
-    }
-
-    .menu-title {
-      flex: 1;
-      margin-left: 20rpx;
-      font-size: 28rpx;
-      color: #333;
-    }
-  }
-}
-
-.logout-btn {
-  padding: 30rpx;
-
-  button {
-    width: 100%;
-    height: 80rpx;
-    line-height: 80rpx;
-    text-align: center;
-    background: #ff4d4f;
-    color: #fff;
-    border-radius: 40rpx;
-    font-size: 28rpx;
-  }
-}
-</style>

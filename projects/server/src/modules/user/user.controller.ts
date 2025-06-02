@@ -48,7 +48,7 @@ export class UserController {
   @IsLogin(UserType.USER)
   @Post('own/avatar')
   public async changeOwnAvatar(
-    @Body() { avatar = null }: AvatarOptionalDto,
+    @Body() { avatar }: AvatarOptionalDto,
     @Req() req: FastifyRequest,
   ) {
     const updateRes = await this._userSrv.repo().update(

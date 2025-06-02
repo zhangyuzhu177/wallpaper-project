@@ -21,7 +21,9 @@ pnpm build:packages
 
 后端：在 `projects/server` 目录下创建 `.env` 文件，具体配置见`projects/server/src/types/global.d.ts` 文件
 
-前端：在 `projects/shared` 目录下创建 `.env` 文件，具体配置见 `projects/shared/types/env.d.ts` 文件
+管理后台：在 `projects/shared` 目录下创建 `.env` 文件，具体配置见 `projects/shared/types/env.d.ts` 文件
+
+app：在 `projects/app/env` 目录下创建 `.env` 文件，具体配置见 `projectsprojects/app/src/env.d.ts` 文件
 
 4. 启动项目
 ```sh

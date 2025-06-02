@@ -31,6 +31,14 @@ export class Category extends BaseTimeStamp implements ICategory {
   url: string
 
   @ApiProperty({
+    description: '是否推荐',
+  })
+  @Column({
+    default: true,
+  })
+  status: boolean
+
+  @ApiProperty({
     description: '分类描述',
   })
   @Column({

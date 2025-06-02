@@ -1,0 +1,100 @@
+{
+  "pages": [ // pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+    {
+      "path": "pages/home/home",
+      "style": {
+        "navigationBarTitleText": "推荐",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/classify/classify",
+      "style": {
+        "navigationBarTitleText": "分类",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/user/user",
+      "style": {
+        "navigationBarTitleText": "我的",
+        "navigationStyle": "custom"
+      },
+      "needLogin": true
+    },
+    {
+      "path": "pages/notice/detail",
+      "style": {
+        "navigationBarTitleText": "公告",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/classify/classlist",
+      "style": {
+        "navigationBarTitleText": "classlist",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/preview/preview",
+      "style": {
+        "navigationBarTitleText": "preview",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/auth/login",
+      "style": {
+        "navigationBarTitleText": "",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/demo/demo",
+      "style": {
+        "navigationBarTitleText": "demo",
+        "enablePullDownRefresh": true
+      }
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#9798a5",
+    "selectedColor": "#2ab08a",
+    "list": [
+      {
+        "text": "首页",
+        "pagePath": "pages/home/home",
+        "iconPath": "static/icon/default/home.png",
+        "selectedIconPath": "static/icon/active/home.png"
+      },
+      {
+        "text": "分类",
+        "pagePath": "pages/classify/classify",
+        "iconPath": "static/icon/default/classify.png",
+        "selectedIconPath": "static/icon/active/classify.png"
+      },
+      {
+        "text": "我的",
+        "pagePath": "pages/user/user",
+        "iconPath": "static/icon/default/user.png",
+        "selectedIconPath": "static/icon/active/user.png"
+      }
+    ]
+  },
+  "easycom": {
+    "autoscan": true,
+    "custom": {
+      // uni-ui 规则如下配置
+      "^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue",
+      "^up-(.*)": "uview-plus/components/u-$1/u-$1.vue",
+      "^u-([^-].*)": "uview-plus/components/u-$1/u-$1.vue"
+    }
+  }
+}

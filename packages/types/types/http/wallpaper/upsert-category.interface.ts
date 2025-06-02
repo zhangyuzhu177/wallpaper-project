@@ -8,5 +8,5 @@ export interface IUpsertCategoryBodyDto
   extends
   Pick<
     ICategory,
-    'name' | 'url' | 'desc' | 'order'
+    'name' | 'url' | 'desc' | 'order' | 'status'
   > {}
