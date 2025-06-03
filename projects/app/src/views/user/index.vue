@@ -154,7 +154,7 @@ function handleLogout() {
       >
         <view class="flex items-center justify-between px-4 py-3">
           <view class="flex gap2 items-center">
-            <wd-img :src="item.icon" width="24px" height="24px" />
+            <wd-img :src="item.icon" width="20px" height="20px" />
             <view v-text="item.label" />
           </view>
           <view class="i-carbon:chevron-right w-[16px] h-[16px] text-grey-6" />
@@ -167,7 +167,7 @@ function handleLogout() {
     <view class="px-6 py-4">
       <wd-button
         v-if="!isLogined"
-        block
+        block :round="false"
         style="width: 100%;"
         @click="jumpLogin"
       >
@@ -175,12 +175,14 @@ function handleLogout() {
       </wd-button>
       <wd-button
         v-else
-        type="error"
-        block
+        type="info"
+        block :round="false"
         style="width: 100%;"
         @click="handleLogout"
       >
-        退出登录
+        <view class="text-[#FA4350]">
+          退出登录
+        </view>
       </wd-button>
     </view>
   </view>

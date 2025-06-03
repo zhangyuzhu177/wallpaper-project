@@ -20,7 +20,7 @@ export default defineUniPages({
   // 如果不需要tabBar，可以注释掉这个配置，或者直接删除
   tabBar: {
     color: '#4B5563',
-    selectedColor: '#3E7BFA',
+    selectedColor: '#007AFF',
     backgroundColor: '#FFFFFF',
     borderStyle: 'black',
     height: '63px',

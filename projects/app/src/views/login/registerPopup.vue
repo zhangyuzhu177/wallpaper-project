@@ -165,7 +165,15 @@ async function register() {
         />
       </wd-cell-group>
       <view class="footer px-6">
-        <wd-button :loading="loading" :disabled="disabled" type="primary" size="large" block @click="handleSubmit">
+        <wd-button
+          :loading="loading"
+          :disabled="disabled"
+          type="primary"
+          size="large"
+          block
+          :round="false"
+          @click="handleSubmit"
+        >
           立即注册
         </wd-button>
       </view>

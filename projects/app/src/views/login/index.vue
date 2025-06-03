@@ -129,27 +129,33 @@ function handleAgreement(type: 'user' | 'privacy') {
         <view class="input-wrapper">
           <wd-input
             v-model="loginForm.account"
-            prefix-icon="user"
             placeholder="请输入账号"
             clearable
-            class="login-input"
+            custom-class="login-input"
             :border="false"
             required
-          />
-          <view class="input-bottom-line" />
+          >
+            <template #prefix>
+              <view class="i-mingcute:user-3-line size-5 text-[#9CA3AF]" />
+            </template>
+          </wd-input>
+          <!-- <view class="input-bottom-line" /> -->
         </view>
         <view class="input-wrapper">
           <wd-input
             v-model="loginForm.password"
-            prefix-icon="lock-on"
             placeholder="请输入密码"
             clearable
             show-password
-            class="login-input"
-            :border="false"
+            custom-class="login-input"
+            :border="true"
             required
-          />
-          <view class="input-bottom-line" />
+          >
+            <template #prefix>
+              <view class="i-mingcute:lock-line size-5 text-[#9CA3AF]" />
+            </template>
+          </wd-input>
+          <!-- <view class="input-bottom-line" /> -->
         </view>
         <view class="text-grey-4" @click="registerDialog = true" v-text="'立即注册'" />
         <!-- 验证码区域 -->
@@ -182,10 +188,10 @@ function handleAgreement(type: 'user' | 'privacy') {
         <wd-button
           type="primary"
           size="large"
-          block
+          :round="false"
           :disabled="disabled"
           :loading="userStore.loading"
-          class="account-login-btn"
+          custom-class="account-login-btn"
           @click="handleAccountLogin"
         >
           <wd-icon name="right" size="18px" class="login-icon" />
@@ -196,20 +202,23 @@ function handleAgreement(type: 'user' | 'privacy') {
         <view class="flex items-center gap6">
           <view class="h-[1px] bg-grey-3 flex-1" />
           <view class="text-grey-6">
-            或
+            其他登录方式
           </view>
           <view class="h-[1px] bg-grey-3 flex-1" />
         </view>
         <wd-button
-          type="info"
+          type="success"
           size="large"
+          :round="false"
           block
-          plain
           :loading="userStore.wxLoading"
           class="wechat-login-btn"
           @click="handleWechatLogin"
         >
-          微信一键登录
+          <view class="flex gap2 items-center">
+            <view class="i-mingcute:wechat-fill" />
+            <view>微信一键登录</view>
+          </view>
         </wd-button>
         <!-- #endif -->
       </view>
@@ -240,6 +249,26 @@ function handleAgreement(type: 'user' | 'privacy') {
 </template>
 
 <style lang="scss" scoped>
+.input-wrapper {
+  :deep() {
+    .login-input {
+      border-radius: 8px;
+      padding: 4px 16px;
+      background-color: #F7F9FC;
+      border: 1px solid #E4E7EC;
+
+      &::after {
+        height: 0;
+      }
+
+      .wd-icon {
+        background-color: #F9FAFB;
+        font-size: 20px;
+      }
+    }
+  }
+}
+
 /* 验证码输入框样式 */
 .captcha-wrapper {
   .captcha-input {
@@ -398,8 +427,8 @@ function handleAgreement(type: 'user' | 'privacy') {
       }
 
       .login-input {
+        border:1px solid #000;
         padding: 12rpx 20rpx;
-        background-color: rgba(245, 247, 250, 0.7);
         border-radius: 16rpx;
         transition: all 0.3s ease;
 
@@ -452,78 +481,7 @@ function handleAgreement(type: 'user' | 'privacy') {
       }
     }
   }
-
-  .login-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 36rpx;
-
-    .account-login-btn {
-      height: 96rpx;
-      margin-top: 20rpx;
-      font-size: 32rpx;
-      font-weight: 500;
-      letter-spacing: 2rpx;
-      border-radius: 48rpx;
-      box-shadow: 0 10rpx 20rpx rgba(25, 137, 250, 0.25);
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      .login-icon {
-        margin-right: 8rpx;
-        opacity: 0.8;
-        transition: all 0.3s ease;
-      }
-
-      &:active {
-        box-shadow: 0 5rpx 10rpx rgba(25, 137, 250, 0.2);
-        transform: scale(0.98);
-
-        .login-icon {
-          transform: translateX(3rpx);
-        }
-      }
-    }
-
-    .divider {
-      display: flex;
-      align-items: center;
-      margin: 24rpx 0;
-
-      .divider-line {
-        flex: 1;
-        height: 1px;
-        background-color: #eeeeee;
-      }
-
-      .divider-text {
-        padding: 0 24rpx;
-        font-size: 24rpx;
-        color: #999999;
-      }
-    }
-
-    .wechat-login-btn {
-      height: 96rpx;
-      font-size: 32rpx;
-      color: #07c160 !important;
-      border-color: #07c160 !important;
-      border-radius: 48rpx;
-      transition: all 0.3s ease;
-    }
-
-      .wechat-icon {
-        margin-right: 12rpx;
-      }
-
-      &:active {
-        background-color: rgba(7, 193, 96, 0.08);
-        transform: scale(0.98);
-      }
-    }
-  }
+}
 
 .privacy-agreement {
   display: flex;
