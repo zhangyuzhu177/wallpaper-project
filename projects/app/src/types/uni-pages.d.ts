@@ -8,6 +8,7 @@ interface NavigateToOptions {
        "/pages/about/about" |
        "/pages/classify/index" |
        "/pages/login/index" |
+       "/pages/notify/details" |
        "/pages/user/index";
 }
 interface RedirectToOptions extends NavigateToOptions {}

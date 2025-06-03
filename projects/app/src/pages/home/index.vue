@@ -15,7 +15,9 @@ import Home from '@/views/home/index.vue'
 <template>
   <uni-layout name="home">
     <template #title>
-      推荐
+      <view class="px-5 text-5 font-600">
+        推荐
+      </view>
     </template>
     <Home />
   </uni-layout>

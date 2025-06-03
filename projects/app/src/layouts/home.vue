@@ -4,10 +4,8 @@ import type { ConfigProviderThemeVars } from 'wot-design-uni'
 const { statusBarHeight, titleBarHeight } = useSystem()
 
 const themeVars: ConfigProviderThemeVars = {
-  // colorTheme: 'red',
   buttonPrimaryBgColor: '#007AFF',
   buttonSuccessBgColor: '#07C160',
-  // buttonPrimaryColor: '#07c160',
 }
 </script>
 
@@ -18,7 +16,7 @@ const themeVars: ConfigProviderThemeVars = {
       :style="{ height: `${statusBarHeight + titleBarHeight}px` }"
     >
       <view
-        class="flex items-center px-5 text-5 font-600"
+        class="flex items-center flex-1"
         :style="{
           height: `${titleBarHeight}px`,
           paddingTop: `${statusBarHeight}px`,

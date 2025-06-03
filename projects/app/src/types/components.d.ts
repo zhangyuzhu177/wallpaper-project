@@ -7,7 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    FgNavbar: typeof import('./../components/fg-navbar/fg-navbar.vue')['default']
     PrivacyPopup: typeof import('./../components/privacy-popup/privacy-popup.vue')['default']
+    ZNavbar: typeof import('./../components/navbar/ZNavbar.vue')['default']
   }
 }

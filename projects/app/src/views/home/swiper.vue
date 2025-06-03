@@ -22,6 +22,7 @@ onLoad(() => {
 <template>
   <wd-swiper
     v-model:current="current"
+    class="bg-grey-2 b-rd-2"
     value-key="url"
     :list="swiperList"
     autoplay

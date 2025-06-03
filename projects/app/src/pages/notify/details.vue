@@ -7,20 +7,19 @@
 }
 </route>
 
-<script lang="ts" setup>
+<script setup lang="ts">
+
 </script>
 
 <template>
   <uni-layout name="home">
     <template #title>
-      <view class="px-5 text-5 font-600">
-        分类
+      <view class="w-full">
+        <ZNavbar title="公告详情" :capsule="true" />
       </view>
     </template>
-    <view
-      class="overflow-hidden"
-    >
-      分类
+    <view>
+      公告详情
     </view>
   </uni-layout>
 </template>

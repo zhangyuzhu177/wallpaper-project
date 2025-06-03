@@ -77,6 +77,14 @@
       }
     },
     {
+      "path": "pages/notify/details",
+      "type": "page",
+      "layout": false,
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
       "path": "pages/user/index",
       "type": "page",
       "layout": "home",

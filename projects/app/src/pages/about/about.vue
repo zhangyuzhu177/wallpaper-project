@@ -17,7 +17,7 @@ const { safeAreaInsets } = uni.getSystemInfoSync()
 
 <template>
   <view>
-    <fg-navbar>关于</fg-navbar>
+    <!-- <fg-navbar>关于</fg-navbar> -->
     <view
       class="bg-white overflow-hidden pt-2 px-4"
       :style="{ marginTop: `${safeAreaInsets?.top}px` }"
