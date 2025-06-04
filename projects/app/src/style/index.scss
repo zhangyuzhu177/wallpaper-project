@@ -1,5 +1,6 @@
 // @import './iconfont.css';
 @import './variables.css';
+@import './fonts.css';
 
 /** Reset some default browser styles */
 h1, h2, h3, h4, h5, h6, p, ul, li {
@@ -9,7 +10,7 @@ h1, h2, h3, h4, h5, h6, p, ul, li {
 
 html,
 body,
-#app {
+page, #app {
   width: 100%;
   height: 100%;
   margin: 0;
@@ -17,7 +18,8 @@ body,
   font-size: 16px;
   line-height: 24px;
   font-weight: 400;
-  color: var(--grey-9);
+  color: #1D2739;
+  font-family: 'PingFang'
 }
 
 .test {

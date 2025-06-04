@@ -1,8 +1,14 @@
 <script setup lang="ts">
 import Swiper from './swiper.vue'
-import Notify from './notify.vue'
-import SelectedTopics from './selectedTopics.vue'
+import Notice from './notice.vue'
+import SpecialPicked from './specialPicked.vue'
 import Recommend from './recommend.vue'
+
+const { getHomeData } = useHome()
+
+onLoad(() => {
+  getHomeData()
+})
 </script>
 
 <template>
@@ -11,10 +17,10 @@ import Recommend from './recommend.vue'
     <Swiper />
 
     <!-- 公告 -->
-    <Notify />
+    <Notice />
 
     <!-- 专题精选 -->
-    <SelectedTopics />
+    <SpecialPicked />
 
     <!-- 每日推荐 -->
     <Recommend />

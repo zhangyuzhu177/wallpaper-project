@@ -1,0 +1,11 @@
+@font-face {
+  font-family: 'PingFang';
+  src: local('PingFang'),
+    url('/static/fonts/PingFang_400.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+
+.font-pingfang {
+  font-family: 'PingFang';
+}

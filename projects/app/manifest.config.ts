@@ -114,8 +114,16 @@ export default defineManifestConfig({
     appid: VITE_WX_APPID,
     setting: {
       urlCheck: false,
+      ignoreDevUnusedFiles: false,
+      ignoreUploadUnusedFiles: false,
     },
     usingComponents: true,
+    styleIsolation: 'shared',
+    optimization: {
+      treeShaking: {
+        enable: false,
+      },
+    },
     // __usePrivacyCheck__: true,
   },
   'mp-alipay': {

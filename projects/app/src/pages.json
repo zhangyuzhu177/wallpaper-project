@@ -70,6 +70,21 @@
       }
     },
     {
+      "path": "pages/details/index",
+      "type": "page",
+      "layout": false,
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/details/preview",
+      "type": "page",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
       "path": "pages/login/index",
       "type": "page",
       "style": {
@@ -77,7 +92,7 @@
       }
     },
     {
-      "path": "pages/notify/details",
+      "path": "pages/notice/details",
       "type": "page",
       "layout": false,
       "style": {
@@ -89,6 +104,22 @@
       "type": "page",
       "layout": "home",
       "needLogin": true,
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/user/privacy",
+      "type": "page",
+      "layout": false,
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/user/settings",
+      "type": "page",
+      "layout": false,
       "style": {
         "navigationStyle": "custom"
       }

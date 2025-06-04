@@ -85,9 +85,17 @@
   "mp-weixin": {
     "appid": "wx92d5c51fe11e0384",
     "setting": {
-      "urlCheck": false
+      "urlCheck": false,
+      "ignoreDevUnusedFiles": false,
+      "ignoreUploadUnusedFiles": false
     },
-    "usingComponents": true
+    "usingComponents": true,
+    "styleIsolation": "shared",
+    "optimization": {
+      "treeShaking": {
+        "enable": false
+      }
+    }
   },
   "mp-alipay": {
     "usingComponents": true,

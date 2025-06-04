@@ -164,9 +164,10 @@ function handleLogout() {
     </view>
 
     <!--  退出登录按钮 -->
-    <view class="px-6 py-4">
+    <view class="btns px-6 py-4">
       <wd-button
         v-if="!isLogined"
+        size="large"
         block :round="false"
         style="width: 100%;"
         @click="jumpLogin"
@@ -175,7 +176,8 @@ function handleLogout() {
       </wd-button>
       <wd-button
         v-else
-        type="info"
+        size="large"
+        custom-class="logout-btn"
         block :round="false"
         style="width: 100%;"
         @click="handleLogout"
@@ -187,3 +189,13 @@ function handleLogout() {
     </view>
   </view>
 </template>
+
+<style lang="scss" scoped>
+.btns {
+  :deep() {
+    .logout-btn {
+      background-color: #FBEAE9 !important;
+    }
+  }
+}
+</style>

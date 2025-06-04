@@ -17,10 +17,20 @@
         分类
       </view>
     </template>
-    <view
-      class="overflow-hidden"
-    >
-      分类
+    <view class="btn">
+      <wd-button custom-class="text-btn">
+        测试
+      </wd-button>
     </view>
   </uni-layout>
 </template>
+
+<style lang="scss">
+.btn {
+  :deep() {
+    .text-btn {
+      background-color: pink !important;
+    }
+  }
+}
+</style>

@@ -1,31 +1,18 @@
 <script setup lang="ts">
-import type { Config, IConfigDto } from 'types'
-import { getBannerConfigApi } from '@/api/config'
+const { swiperList } = useHome()
 
 const current = ref<number>(0)
-
-const swiperList = ref<IConfigDto[Config.BANNER_CONFIG]>()
-
-/**
- * 获取轮播图 列表
- */
-async function getBannerConfig() {
-  const res = await getBannerConfigApi()
-  swiperList.value = res.data
-}
-
-onLoad(() => {
-  getBannerConfig()
-})
 </script>
 
 <template>
   <wd-swiper
+    v-if="swiperList?.length"
     v-model:current="current"
-    class="bg-grey-2 b-rd-2"
     value-key="url"
     :list="swiperList"
+    height="200px"
     autoplay
     :indicator="{ type: 'dots-bar' }"
   />
+  <wd-img v-else src="/static/images/default.png" width="100%" height="200px" radius="8px" />
 </template>

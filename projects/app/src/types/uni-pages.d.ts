@@ -7,9 +7,13 @@ interface NavigateToOptions {
   url: "/pages/home/index" |
        "/pages/about/about" |
        "/pages/classify/index" |
+       "/pages/details/index" |
+       "/pages/details/preview" |
        "/pages/login/index" |
-       "/pages/notify/details" |
-       "/pages/user/index";
+       "/pages/notice/details" |
+       "/pages/user/index" |
+       "/pages/user/privacy" |
+       "/pages/user/settings";
 }
 interface RedirectToOptions extends NavigateToOptions {}
 
