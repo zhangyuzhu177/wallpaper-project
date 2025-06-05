@@ -8,7 +8,7 @@
 </route>
 
 <script setup lang="ts">
-
+import NoticeDetail from '@/views/notice/detail.vue'
 </script>
 
 <template>
@@ -18,8 +18,6 @@
         <ZNavbar title="公告详情" :capsule="true" />
       </view>
     </template>
-    <view>
-      公告详情
-    </view>
+    <NoticeDetail />
   </uni-layout>
 </template>

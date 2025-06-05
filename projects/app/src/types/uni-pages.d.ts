@@ -7,10 +7,10 @@ interface NavigateToOptions {
   url: "/pages/home/index" |
        "/pages/about/about" |
        "/pages/classify/index" |
-       "/pages/details/index" |
-       "/pages/details/preview" |
+       "/pages/detail/index" |
+       "/pages/detail/preview" |
        "/pages/login/index" |
-       "/pages/notice/details" |
+       "/pages/notice/detail" |
        "/pages/user/index" |
        "/pages/user/privacy" |
        "/pages/user/settings";

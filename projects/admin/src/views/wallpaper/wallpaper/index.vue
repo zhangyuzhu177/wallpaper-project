@@ -68,7 +68,7 @@ const cols: QTableColumn<IWallpaper>[] = [
     sortable: true,
   },
   {
-    name: 'createdAt',
+    name: 'updateAt',
     label: '更新时间',
     field: row => moment(row.createdAt).format('YYYY-MM-DD HH:mm'),
     sortable: true,
@@ -111,7 +111,7 @@ const queryWallpaper: QTableProps['onRequest'] = async (props) => {
       },
     }
     if (filter)
-      body.where = { name: Like(`%${filter}%`) }
+      body.where = { categoryId: Like(`%${filter}%`) }
 
     if (sortBy) {
       const sort = descending ? 'desc' : 'asc'
@@ -198,16 +198,15 @@ async function deleteWallpaper() {
         />
       </div>
       <div flex-action>
-        <ZInput
+        <ZSelect
           v-model="filterText"
-          placeholder="搜索壁纸名称"
-          debounce="500"
           size="small"
-        >
-          <template #prepend>
-            <div icon i-mingcute:search-line />
-          </template>
-        </ZInput>
+          placeholder="请选择分类"
+          :options="categorys"
+          option-label="name"
+          option-value="id"
+          w-50
+        />
       </div>
     </div>
 

@@ -1,5 +1,12 @@
 <script setup lang="ts">
 const { noticeList } = useHome()
+
+/**
+ * 跳转公告详情
+ */
+function jumpDetail(id: string) {
+  uni.navigateTo({ url: `/pages/notice/detail?noticeId=${id}` })
+}
 </script>
 
 <template>
@@ -7,16 +14,19 @@ const { noticeList } = useHome()
     <view class="i-mingcute:volume-line text-grey-6 size-5" />
     <view class="notify_content flex-1">
       <swiper autoplay vertical circular disable-touch>
-        <swiper-item v-for="{ id, title } in noticeList" :key="id">
-          <navigator
-            :url="`/pages/notice/details?id=${id}`"
+        <swiper-item
+          v-for="{ id, title } in noticeList" :key="id"
+          class="flex items-center justify-between"
+          @click="jumpDetail(id)"
+        >
+          <view
             class="text-grey-6 truncate"
             v-text="title"
           />
+          <view class="i-mingcute:right-line text-grey-6 size-5" />
         </swiper-item>
       </swiper>
     </view>
-    <view class="i-mingcute:right-line text-grey-6 size-5" />
   </view>
 </template>
 

@@ -70,7 +70,7 @@
       }
     },
     {
-      "path": "pages/details/index",
+      "path": "pages/detail/index",
       "type": "page",
       "layout": false,
       "style": {
@@ -78,7 +78,7 @@
       }
     },
     {
-      "path": "pages/details/preview",
+      "path": "pages/detail/preview",
       "type": "page",
       "style": {
         "navigationStyle": "custom"
@@ -92,7 +92,7 @@
       }
     },
     {
-      "path": "pages/notice/details",
+      "path": "pages/notice/detail",
       "type": "page",
       "layout": false,
       "style": {

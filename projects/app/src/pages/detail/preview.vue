@@ -7,7 +7,7 @@
 </route>
 
 <script setup lang="ts">
-import Preview from '@/views/details/preview/index.vue'
+import Preview from '@/views/detail/preview/index.vue'
 </script>
 
 <template>

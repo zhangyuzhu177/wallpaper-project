@@ -8,7 +8,7 @@
 </route>
 
 <script setup lang="ts">
-import Details from '@/views/details/index.vue'
+import Detail from '@/views/detail/index.vue'
 
 type DetailsType = 'history' | 'collect' | 'classify'
 
@@ -31,6 +31,6 @@ onLoad((options: IOptions) => {
         <ZNavbar :title="type" :capsule="true" />
       </view>
     </template>
-    <Details />
+    <Detail />
   </uni-layout>
 </template>

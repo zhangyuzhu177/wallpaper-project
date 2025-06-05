@@ -84,26 +84,44 @@ function handleBackHome() {
 </script>
 
 <template>
-  <wd-navbar
-    :title="title"
-    :left-text="leftText"
-    :right-text="rightText"
-    :left-arrow="leftArrow"
-    :bordered="bordered"
-    :fixed="fixed"
-    :placeholder="placeholder"
-    :z-index="zIndex"
-    :safe-area-inset-top="safeAreaInsetTop"
-    :left-disabled="leftDisabled"
-    :right-disabled="rightDisabled"
-    @click-left="handleBack"
-  >
-    <template #capsule>
-      <wd-navbar-capsule
-        v-if="capsule"
-        @back="handleBack"
-        @back-home="handleBackHome"
-      />
-    </template>
-  </wd-navbar>
+  <view class="z-navbar">
+    <wd-navbar
+      :title="title"
+      :left-text="leftText"
+      :right-text="rightText"
+      :left-arrow="leftArrow"
+      :bordered="bordered"
+      :fixed="fixed"
+      :placeholder="placeholder"
+      :z-index="zIndex"
+      :safe-area-inset-top="safeAreaInsetTop"
+      :left-disabled="leftDisabled"
+      :right-disabled="rightDisabled"
+      custom-class="navbar"
+      @click-left="handleBack"
+    >
+      <template #capsule>
+        <wd-navbar-capsule
+          v-if="capsule"
+          @back="handleBack"
+          @back-home="handleBackHome"
+        />
+      </template>
+    </wd-navbar>
+  </view>
 </template>
+
+<style lang="scss" scoped>
+.z-navbar {
+  :deep() {
+    .navbar {
+      .wd-navbar__title {
+        font-size: 16px;
+        font-weight: normal;
+        max-width: none;
+        margin: 0;
+      }
+    }
+  }
+}
+</style>
