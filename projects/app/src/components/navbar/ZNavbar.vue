@@ -1,10 +1,6 @@
 <script lang="ts" setup>
 interface ZNavbarProps {
   /**
-   * 标题文案
-   */
-  title?: string
-  /**
    * 左侧文案
    */
   leftText?: string
@@ -53,18 +49,12 @@ interface ZNavbarProps {
 withDefaults(
   defineProps<ZNavbarProps>(),
   {
-    title: '',
     leftText: '',
     rightText: '',
     leftArrow: true,
     bordered: true,
-    fixed: false,
     placeholder: true,
-    zIndex: 1,
-    safeAreaInsetTop: false,
-    leftDisabled: false,
-    rightDisabled: false,
-    capsule: false,
+    zIndex: 999,
   },
 )
 
@@ -86,7 +76,6 @@ function handleBackHome() {
 <template>
   <view class="z-navbar">
     <wd-navbar
-      :title="title"
       :left-text="leftText"
       :right-text="rightText"
       :left-arrow="leftArrow"
@@ -100,12 +89,14 @@ function handleBackHome() {
       custom-class="navbar"
       @click-left="handleBack"
     >
-      <template #capsule>
+      <template v-if="capsule" #capsule>
         <wd-navbar-capsule
-          v-if="capsule"
           @back="handleBack"
           @back-home="handleBackHome"
         />
+      </template>
+      <template #title>
+        <slot />
       </template>
     </wd-navbar>
   </view>

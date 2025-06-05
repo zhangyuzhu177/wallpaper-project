@@ -4,14 +4,14 @@ const { recommendList } = useHome()
 
 <template>
   <view class="flex flex-col gap4">
-    <view class="text-lg" v-text="'每日推荐'" />
+    <view class="subtitle-1" v-text="'每日推荐'" />
     <template v-if="recommendList?.length">
       <view class="w-full grid grid-cols-2 gap-3">
         <view
           v-for="item in recommendList" :key="item.id"
-          class="w-full h-[230px] b-rd-2"
+          class="w-full h-[230px] b-rd-3"
         >
-          <wd-img :src="item.url" width="100%" height="230px" radius="8px" mode="aspectFill">
+          <wd-img :src="item.url" width="100%" height="230px" radius="12px" mode="aspectFill">
             <template #loading>
               <view class="w-full h-full flex center bg-[#EFEFEF]" />
             </template>

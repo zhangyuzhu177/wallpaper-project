@@ -11,7 +11,7 @@ const themeVars: ConfigProviderThemeVars = {
 
 <template>
   <wd-config-provider :theme-vars="themeVars">
-    <view
+    <!-- <view
       class="fixed z-999 w-full bg-white"
       :style="{ height: `${statusBarHeight + titleBarHeight}px` }"
     >
@@ -24,17 +24,21 @@ const themeVars: ConfigProviderThemeVars = {
       >
         <slot name="title" />
       </view>
-    </view>
+    </view> -->
+
+    <ZNavbar fixed safe-area-inset-top :left-arrow="false">
+      <slot name="title" />
+    </ZNavbar>
 
     <scroll-view
       :scroll-y="true"
       :style="{
-        paddingTop: `${statusBarHeight + titleBarHeight}px`,
-        height: `calc(100vh - var(--window-bottom) - var(--window-top) - ${statusBarHeight + titleBarHeight}px)`,
+        maxHeight: `calc(100vh - var(--window-bottom) - var(--window-top) - ${statusBarHeight + titleBarHeight + 4}px)`,
       }"
     >
       <slot />
     </scroll-view>
+
     <wd-toast />
     <wd-message-box />
     <privacy-popup />

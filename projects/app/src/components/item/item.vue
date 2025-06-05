@@ -12,23 +12,32 @@ interface ItemProps {
    * 数量
    */
   count?: number
+  /**
+   * 宽度
+   */
+  width?: string
+  /**
+   * 高度
+   */
+  height?: string
 }
 defineProps<ItemProps>()
 </script>
 
 <template>
   <view
-    class="b-rd-2 relative w-[140px] h-[180px]"
+    class="b-rd-3 relative"
+    :style="{ width, height }"
   >
     <wd-img
       :src="url"
-      width="140px"
-      height="180px"
-      radius="8px"
+      :width="width"
+      :height="height"
+      radius="12px"
       mode="aspectFill"
     />
     <view
-      class="bg-black-2 absolute inset-0 b-rd-2 flex
+      class="bg-black-2 absolute inset-0 b-rd-3 flex
           gap-1 flex-col justify-end text-grey-1 p-3"
     >
       <view v-text="title" />

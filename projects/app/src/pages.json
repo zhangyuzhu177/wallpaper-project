@@ -94,7 +94,6 @@
     {
       "path": "pages/notice/detail",
       "type": "page",
-      "layout": false,
       "style": {
         "navigationStyle": "custom"
       }

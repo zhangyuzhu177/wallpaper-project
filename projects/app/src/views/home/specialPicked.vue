@@ -21,7 +21,7 @@ function jumpPage(id?: string) {
 <template>
   <view class="flex flex-col gap4">
     <view class="flex justify-between items-center">
-      <view class="text-lg" v-text="'专题精选'" />
+      <view class="subtitle-1" v-text="'专题精选'" />
       <view
         class="text-sm text-grey-5"
         @click="jumpPage()"
@@ -36,7 +36,9 @@ function jumpPage(id?: string) {
       <view class="flex gap3">
         <Item
           v-for="item in pickedList" :key="item.id"
-          :url="item.url" :title="item.name" :count="item.wallpapers.length"
+          :url="item.url" :title="item.name"
+          :count="item.wallpapers.length"
+          width="140px" height="180px"
           @click="jumpPage(item.id)"
         />
       </view>

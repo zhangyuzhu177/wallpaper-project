@@ -1,6 +1,5 @@
 <route lang="json5">
 {
-  "layout":false,
   "style": {
     "navigationStyle": "custom",
   },
@@ -12,12 +11,12 @@ import NoticeDetail from '@/views/notice/detail.vue'
 </script>
 
 <template>
-  <uni-layout name="home">
-    <template #title>
-      <view class="w-full">
-        <ZNavbar title="公告详情" :capsule="true" />
-      </view>
-    </template>
+  <view class="w-full h-full">
+    <view class="w-full">
+      <ZNavbar fixed safe-area-inset-top :capsule="true">
+        公告详情
+      </ZNavbar>
+    </view>
     <NoticeDetail />
-  </uni-layout>
+  </view>
 </template>
