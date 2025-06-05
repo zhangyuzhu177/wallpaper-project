@@ -22,12 +22,17 @@ interface ItemProps {
   height?: string
 }
 defineProps<ItemProps>()
+
+const $emit = defineEmits<{
+  (_e: 'click'): void
+}>()
 </script>
 
 <template>
   <view
     class="b-rd-3 relative"
     :style="{ width, height }"
+    @click="$emit('click')"
   >
     <wd-img
       :src="url"

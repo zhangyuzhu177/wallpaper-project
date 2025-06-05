@@ -8,29 +8,16 @@
 </route>
 
 <script lang="ts" setup>
+import Classify from '@/views/classify/index.vue'
 </script>
 
 <template>
   <uni-layout name="home">
     <template #title>
-      <view class="px-5 text-5 font-600">
+      <view class="w-full flex items-center px-5 text-6 font-600">
         分类
       </view>
     </template>
-    <view class="btn">
-      <wd-button custom-class="text-btn">
-        测试
-      </wd-button>
-    </view>
+    <Classify />
   </uni-layout>
 </template>
-
-<style lang="scss">
-.btn {
-  :deep() {
-    .text-btn {
-      background-color: pink !important;
-    }
-  }
-}
-</style>

@@ -121,6 +121,9 @@ export const useUserStore = defineStore(
      */
     const wxLogin = async () => {
       wxLoading.value = true
+      uni.showLoading({
+        title: '登录中',
+      })
       try {
         // 获取微信小程序登录的code
         const data = await getWxCode()
@@ -133,6 +136,7 @@ export const useUserStore = defineStore(
       }
       finally {
         wxLoading.value = false
+        uni.hideLoading()
       }
     }
 

@@ -7,6 +7,7 @@ import { USER_MENU } from '@/constants/userMenu'
 import { USER_AUTH_TOKEN_KEY } from '@/constants/storage'
 
 const userStore = useUserStore()
+const { statusBarHeight, titleBarHeight } = useSystem()
 
 const isLogined = ref(false)
 const defaultAvatar = '/static/images/default-avatar.png'
@@ -80,9 +81,7 @@ function jump(to: string) {
     })
   }
 
-  // uni.navigateTo({
-  //   url: to,
-  // })
+  uni.navigateTo({ url: to })
 }
 
 /**
@@ -116,9 +115,14 @@ function handleLogout() {
 </script>
 
 <template>
-  <view class="flex flex-col gap6">
+  <view
+    class="flex flex-col gap6 bg-grey-2 p4"
+    :style="{
+      height: `calc(100vh - var(--window-bottom) - var(--window-top) - ${statusBarHeight + titleBarHeight + 40}px)`,
+    }"
+  >
     <!-- 用户信息区域 -->
-    <view class="px-4 py-6 flex gap4 items-center rounded-full">
+    <view class="px-4 py-6 flex gap4 items-center rounded-2 bg-grey-1">
       <!-- #ifdef MP-WEIXIN -->
       <button
         class="p0 m0 w-[80px] h-[80px] rounded-full" open-type="chooseAvatar"
@@ -142,13 +146,13 @@ function handleLogout() {
           v-text="`ID: ${userInfo?.account}`"
         />
       </view>
-      <view v-else class="text-grey-5" v-text="'请先登录'" />
+      <view v-else class="text-grey-5 " @click="jumpLogin" v-text="'登录/注册'" />
     </view>
 
     <!-- 功能区块 -->
-    <view class="flex flex-col">
+    <view class="flex flex-col b-rd-2 bg-grey-1">
       <view
-        v-for="item in USER_MENU" :key="item.to"
+        v-for="(item, i) in USER_MENU" :key="item.to"
         class="flex flex-col"
         @click="jump(item.to)"
       >
@@ -159,12 +163,12 @@ function handleLogout() {
           </view>
           <view class="i-carbon:chevron-right w-[16px] h-[16px] text-grey-6" />
         </view>
-        <view class="h-[1px] w-full bg-grey-3" />
+        <view v-if="!(i === USER_MENU.length - 1)" class="h-[1px] w-full bg-[#F0F0F0]" />
       </view>
     </view>
 
     <!--  退出登录按钮 -->
-    <view class="btns px-6 py-4">
+    <view class="btns">
       <wd-button
         v-if="!isLogined"
         size="large"

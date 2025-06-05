@@ -14,7 +14,7 @@
 <template>
   <view class="w-full h-full flex flex-col">
     <ZNavbar fixed safe-area-inset-top :capsule="true">
-      账号设置
+      账户设置
     </ZNavbar>
   </view>
 </template>

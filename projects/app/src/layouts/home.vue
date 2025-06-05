@@ -26,14 +26,17 @@ const themeVars: ConfigProviderThemeVars = {
       </view>
     </view> -->
 
-    <ZNavbar fixed safe-area-inset-top :left-arrow="false">
+    <ZNavbar
+      fixed safe-area-inset-top
+      :bordered="false" :left-arrow="false"
+    >
       <slot name="title" />
     </ZNavbar>
 
     <scroll-view
       :scroll-y="true"
       :style="{
-        maxHeight: `calc(100vh - var(--window-bottom) - var(--window-top) - ${statusBarHeight + titleBarHeight + 4}px)`,
+        height: `calc(100vh - var(--window-bottom) - var(--window-top) - ${statusBarHeight + titleBarHeight + 4}px)`,
       }"
     >
       <slot />
