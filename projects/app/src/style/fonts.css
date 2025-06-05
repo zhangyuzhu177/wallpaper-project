@@ -1,7 +1,6 @@
 @font-face {
   font-family: 'PingFang';
-  src: local('PingFang'),
-    url('/static/fonts/PingFang_400.woff2') format('woff2');
+  src: url('https://wallpaper-demo-app.oss-cn-hangzhou.aliyuncs.com/fonts/PingFang_400.woff2') format('woff2');
   font-weight: 400;
   font-display: swap;
 }

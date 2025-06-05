@@ -12,14 +12,9 @@
 </script>
 
 <template>
-  <uni-layout name="home">
-    <template #title>
-      <view class="w-full">
-        <ZNavbar title="账号设置" :capsule="true" />
-      </view>
-    </template>
-    <view>
+  <view class="w-full h-full flex flex-col">
+    <ZNavbar fixed safe-area-inset-top :capsule="true">
       账号设置
-    </view>
-  </uni-layout>
+    </ZNavbar>
+  </view>
 </template>

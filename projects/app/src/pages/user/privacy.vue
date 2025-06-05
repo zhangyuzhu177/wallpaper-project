@@ -12,14 +12,9 @@
 </script>
 
 <template>
-  <uni-layout name="home">
-    <template #title>
-      <view class="w-full">
-        <ZNavbar title="隐私政策" :capsule="true" />
-      </view>
-    </template>
-    <view>
+  <view class="w-full h-full flex flex-col">
+    <ZNavbar fixed safe-area-inset-top :capsule="true">
       隐私政策
-    </view>
-  </uni-layout>
+    </ZNavbar>
+  </view>
 </template>

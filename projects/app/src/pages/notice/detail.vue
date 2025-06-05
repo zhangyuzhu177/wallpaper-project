@@ -11,12 +11,10 @@ import NoticeDetail from '@/views/notice/detail.vue'
 </script>
 
 <template>
-  <view class="w-full h-full">
-    <view class="w-full">
-      <ZNavbar fixed safe-area-inset-top :capsule="true">
-        公告详情
-      </ZNavbar>
-    </view>
+  <view class="w-full h-full flex flex-col">
+    <ZNavbar fixed safe-area-inset-top :capsule="true">
+      公告详情
+    </ZNavbar>
     <NoticeDetail />
   </view>
 </template>

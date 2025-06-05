@@ -8,8 +8,6 @@
 </route>
 
 <script setup lang="ts">
-import Detail from '@/views/detail/index.vue'
-
 type DetailsType = 'history' | 'collect' | 'classify'
 
 interface IOptions {
@@ -25,12 +23,9 @@ onLoad((options: IOptions) => {
 </script>
 
 <template>
-  <uni-layout name="home">
-    <template #title>
-      <view class="w-full">
-        <ZNavbar :title="type" :capsule="true" />
-      </view>
-    </template>
-    <Detail />
-  </uni-layout>
+  <view class="w-full h-full flex flex-col">
+    <ZNavbar fixed safe-area-inset-top :capsule="true">
+      {{ type }}
+    </ZNavbar>
+  </view>
 </template>
