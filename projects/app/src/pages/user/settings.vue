@@ -8,7 +8,7 @@
 </route>
 
 <script setup lang="ts">
-
+import Settings from '@/views/user/settings/index.vue'
 </script>
 
 <template>
@@ -16,5 +16,6 @@
     <ZNavbar fixed safe-area-inset-top :capsule="true">
       账户设置
     </ZNavbar>
+    <Settings />
   </view>
 </template>

@@ -1,19 +1,13 @@
 <script setup lang="ts">
-import { pathExtName, randomString } from 'utils'
+import UserInfo from './UserInfo.vue'
 import { toast } from '@/utils/toast'
 import { useUserStore } from '@/store'
-import { uploadFileUrl, useUpload } from '@/utils/uploadFile'
 import { USER_MENU } from '@/constants/userMenu'
 import { USER_AUTH_TOKEN_KEY } from '@/constants/storage'
 
 const userStore = useUserStore()
-const { statusBarHeight, titleBarHeight } = useSystem()
 
 const isLogined = ref(false)
-const defaultAvatar = '/static/images/default-avatar.png'
-
-const userInfo = computed(() => userStore.userInfo)
-const userId = computed(() => userStore.userInfo.id)
 
 onShow(() => {
   isLogined.value = !!uni.getStorageSync(USER_AUTH_TOKEN_KEY)
@@ -23,41 +17,6 @@ onShow(() => {
 
   isLogined.value && useUserStore().getUserInfo()
 })
-
-// #ifndef MP-WEIXIN
-// 上传头像
-const { run } = useUpload(
-  // `${uploadFileUrl.USER_AVATAR}?path=/avatar/${userId.value}/${randomString(24, 24, '')}`,
-  `http://localhost:9000/api/file/upload?path=/avatar/${userId.value}/${randomString(24, 24, '')}`,
-  {},
-  {
-    onSuccess: (res) => {
-      const { data } = res
-      userStore.updateUserAvatar(data)
-      toast.success('上传成功')
-    },
-  },
-)
-// #endif
-
-// 微信小程序下选择头像事件
-function onChooseAvatar(e: any) {
-  const { avatarUrl } = e.detail
-
-  const { run } = useUpload(
-    `${uploadFileUrl.USER_AVATAR}?path=/avatar/${userId.value}/${randomString(24, 24, '')}${pathExtName(avatarUrl)}`,
-    {},
-    {
-      onSuccess: (res) => {
-        const { data } = res
-        userStore.updateUserAvatar(data)
-        toast.success('上传成功')
-      },
-    },
-    avatarUrl,
-  )
-  run()
-}
 
 /**
  * 跳转登录页
@@ -116,38 +75,13 @@ function handleLogout() {
 
 <template>
   <view
-    class="flex flex-col gap6 bg-grey-2 p4"
+    class="flex flex-col gap6 p4 bg-grey-2 py16"
     :style="{
-      height: `calc(100vh - var(--window-bottom) - var(--window-top) - ${statusBarHeight + titleBarHeight + 40}px)`,
+      height: `calc(100vh - var(--window-bottom) - var(--window-top))`,
     }"
   >
     <!-- 用户信息区域 -->
-    <view class="px-4 py-6 flex gap4 items-center rounded-2 bg-grey-1">
-      <!-- #ifdef MP-WEIXIN -->
-      <button
-        class="p0 m0 w-[80px] h-[80px] rounded-full" open-type="chooseAvatar"
-        @chooseavatar="onChooseAvatar"
-      >
-        <wd-img :src="userInfo?.avatar ?? defaultAvatar" width="100%" height="100%" radius="100%" />
-      </button>
-      <!-- #endif -->
-      <!-- #ifndef MP-WEIXIN -->
-      <view class="w-[80px] h-[80px] rounded-full" @click="run">
-        <wd-img
-          :src="userInfo?.avatar ?? defaultAvatar"
-          width="100%" height="100%" radius="100%"
-        />
-      </view>
-      <!-- #endif -->
-      <view v-if="userInfo" class="flex flex-col gap1">
-        <view class="text-xl" v-text="userInfo?.name" />
-        <view
-          v-if="userInfo?.account" class="text-grey-5"
-          v-text="`ID: ${userInfo?.account}`"
-        />
-      </view>
-      <view v-else class="text-grey-5 " @click="jumpLogin" v-text="'登录/注册'" />
-    </view>
+    <UserInfo />
 
     <!-- 功能区块 -->
     <view class="flex flex-col b-rd-2 bg-grey-1">
@@ -156,7 +90,7 @@ function handleLogout() {
         class="flex flex-col"
         @click="jump(item.to)"
       >
-        <view class="flex items-center justify-between px-4 py-3">
+        <view class="flex items-center justify-between p-4">
           <view class="flex gap2 items-center">
             <wd-img :src="item.icon" width="20px" height="20px" />
             <view v-text="item.label" />

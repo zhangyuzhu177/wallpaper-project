@@ -101,7 +101,6 @@
     {
       "path": "pages/user/index",
       "type": "page",
-      "layout": "home",
       "needLogin": true,
       "style": {
         "navigationStyle": "custom"

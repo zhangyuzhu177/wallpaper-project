@@ -1,7 +1,6 @@
 <route lang="json5">
 {
-  "layout": "home",
-  "needLogin":true,
+  "needLogin": true,
   "style": {
     "navigationStyle": "custom",
   },
