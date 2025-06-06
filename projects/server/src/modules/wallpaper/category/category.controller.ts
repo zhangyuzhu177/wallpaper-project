@@ -3,12 +3,13 @@ import { HasPermission } from 'src/guards'
 import type { Category } from 'src/entities'
 import { ApiOperation, ApiTags } from '@nestjs/swagger'
 import { ApiSuccessResponse, getQuery } from 'src/utils'
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common'
+import { Body, Controller, Delete, Param, Post } from '@nestjs/common'
 import {
   CategoryIdDto,
   IdsDto,
   QueryDto,
   QueryResDto,
+  StatusOptionalDto,
   SuccessDto,
   SuccessNumberDto,
   SuccessStringDto,
@@ -27,15 +28,20 @@ export class CategoryController {
   ) { }
 
   @ApiOperation({
-    summary: '获取所有分类精选（根据 order 排序）',
+    summary: '获取所有分类（根据 order 排序）',
+    description: '根据status获取所有分类/分类精选',
   })
   @ApiSuccessResponse(SuccessDto<Category[]>)
-  @Get()
-  public getCategorys() {
+  @Post('list')
+  public getCategorys(
+    @Body() { status }: StatusOptionalDto,
+  ) {
     return this._wallpaperSrv.categoryRepo().find({
-      where: {
-        status: true,
-      },
+      where: status
+        ? {
+            status: true,
+          }
+        : undefined,
       order: {
         order: 'ASC',
       },
@@ -51,9 +57,6 @@ export class CategoryController {
         },
       },
     })
-    // return this._wallpaperSrv.categoryQb()
-    //   .orderBy(`COALESCE(c.order, ${Number.MAX_SAFE_INTEGER})`, 'ASC')
-    //   .getMany()
   }
 
   @ApiOperation({

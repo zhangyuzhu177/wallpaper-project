@@ -2,7 +2,7 @@ import type { Config, ICategory, IConfigDto, INotice, IWallpaper } from 'types'
 
 import { getNoticeListApi } from '@/api/notice'
 import { getBannerConfigApi } from '@/api/config'
-import { getSelectedPickedApi } from '@/api/classify'
+import { getClassifyListApi } from '@/api/classify'
 import { getRecommendWallpaperApi } from '@/api/wallpaper'
 
 /** 轮播图列表 */
@@ -19,16 +19,13 @@ export function useHome() {
    * 获取首页数据
    */
   async function getHomeData() {
+    uni.showLoading({ title: '加载中...' })
+
     try {
-      const [
-        swiperListRes,
-        noticeListRes,
-        pickedListRes,
-        recommendListRes,
-      ] = await Promise.all([
+      const [swiperListRes, noticeListRes, pickedListRes, recommendListRes] = await Promise.all([
         getBannerConfigApi(),
         getNoticeListApi(),
-        getSelectedPickedApi(),
+        getClassifyListApi({ status: true }),
         getRecommendWallpaperApi(),
       ])
 
@@ -41,8 +38,8 @@ export function useHome() {
       // 设置每日推荐数据
       recommendList.value = recommendListRes.data
     }
-    catch (error) {
-
+    finally {
+      uni.hideLoading()
     }
   }
 

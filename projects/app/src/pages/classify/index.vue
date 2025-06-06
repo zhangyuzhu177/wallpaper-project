@@ -14,7 +14,7 @@ import Classify from '@/views/classify/index.vue'
 <template>
   <uni-layout name="home">
     <template #title>
-      <view class="w-full flex items-center px-5 text-6 font-600">
+      <view class="w-full flex items-center px-5 text-[48rpx] font-600">
         分类
       </view>
     </template>

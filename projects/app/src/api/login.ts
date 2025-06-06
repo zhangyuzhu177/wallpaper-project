@@ -11,7 +11,7 @@ import { http } from '@/utils/http'
 
 /**
  * 用户登录
- * @param ILoginByPasswordBodyDto 登录表单
+ * @param body 登录表单
  */
 export function loginByPasswordApi(body: ILoginByPasswordBodyDto) {
   return http.post<ILoginSuccessResData>('/auth/user/login/password', body)
@@ -19,7 +19,7 @@ export function loginByPasswordApi(body: ILoginByPasswordBodyDto) {
 
 /**
  * 用户注册
- * @param IRegisterBodyDto 注册表单
+ * @param body 注册表单
  */
 export function registerApi(body: ICreateUserBodyDto) {
   return http.post<string>('/auth/user/register', body)
