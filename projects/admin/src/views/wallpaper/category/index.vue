@@ -62,6 +62,11 @@ const cols: QTableColumn<ICategory>[] = [
     field: row => moment(row.createdAt).format('YYYY-MM-DD HH:mm'),
     sortable: true,
   },
+  {
+    name: 'status',
+    label: '专题精选',
+    field: row => row.status ? '正常' : '禁用',
+  },
 ]
 /** 表格分页信息 */
 const pagination = TABLE_PAGINATION('createdAt', true)
@@ -198,6 +203,11 @@ async function deleteCategory() {
       action
       @request="queryCategory"
     >
+      <template #body-cell-status="{ value }">
+        <q-td text-center>
+          <ZStatus :model-value="value" />
+        </q-td>
+      </template>
       <!-- 操作 -->
       <template #body-cell-action="{ row }">
         <q-td auto-width>

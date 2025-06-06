@@ -1,13 +1,15 @@
 <script setup lang="ts">
+import type { ICategory } from 'types'
+
 const { pickedList } = useHome()
 
 /**
  * 跳转分类
  */
-function jumpPage(id?: string) {
-  if (id) {
+function jumpPage(val?: ICategory) {
+  if (val) {
     uni.navigateTo({
-      url: `/pages/detail/index?type=classify&classifyId=${id}`,
+      url: `/pages/detail/index?title=${val.name}&classifyId=${val}`,
     })
   }
   else {
@@ -39,7 +41,7 @@ function jumpPage(id?: string) {
           :url="item.url" :title="item.name"
           :count="item.wallpapers.length"
           width="140px" height="180px"
-          @click="jumpPage(item.id)"
+          @click="jumpPage(item)"
         />
       </view>
     </scroll-view>

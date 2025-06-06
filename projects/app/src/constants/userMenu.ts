@@ -6,12 +6,12 @@ export interface MenuItem {
 
 export const USER_MENU: MenuItem[] = [
   {
-    to: '/pages/detail/index?type=collect',
+    to: '/pages/detail/index?title=我的收藏',
     label: '我的收藏',
     icon: '/static/icons/collect.svg',
   },
   {
-    to: '/pages/detail/index?type=history',
+    to: '/pages/detail/index?title=下载历史',
     label: '下载历史',
     icon: '/static/icons/history.svg',
   },

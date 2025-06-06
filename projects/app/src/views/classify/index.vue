@@ -16,17 +16,26 @@ async function getCategoryList() {
   }
   finally {
     uni.hideLoading()
+    uni.stopPullDownRefresh()
   }
 }
 
 /**
  * 跳转分类
  */
-function jumpPage(id: string) {
+function jumpPage(val: ICategory) {
   uni.navigateTo({
-    url: `/pages/detail/index?type=classify&classifyId=${id}`,
+    url: `/pages/detail/index?title=${val.name}&classifyId=${val.id}`,
   })
 }
+
+/**
+ * 下拉刷新
+ */
+onPullDownRefresh(() => {
+  categoryList.value = undefined
+  getCategoryList()
+})
 
 onLoad(() => {
   getCategoryList()
@@ -44,7 +53,7 @@ onLoad(() => {
         :url="item.url" :title="item.name"
         :count="item.wallpapers.length"
         width="100%" height="120px"
-        @click="jumpPage(item.id)"
+        @click="jumpPage(item)"
       />
     </view>
     <wd-status-tip v-else image="content" tip="暂无数据" />

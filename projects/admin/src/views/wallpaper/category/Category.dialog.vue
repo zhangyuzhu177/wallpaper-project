@@ -125,6 +125,7 @@ async function uploadFile(file?: File | File[]) {
     v-model="dialog"
     :title="`${type}分类`"
     confirm-text="保存"
+    :loading="loading"
     :footer="!readonly" scroll
     :disable-confirm="disable"
     :wrapper-style="{
