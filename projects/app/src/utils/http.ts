@@ -1,4 +1,4 @@
-import type { IBasicResponse } from 'types'
+import { ErrorCode, type IBasicResponse } from 'types'
 import type { CustomRequestOptions } from '@/interceptors/request'
 import { useUserStore } from '@/store'
 
@@ -13,6 +13,7 @@ export function http<T>(options: CustomRequestOptions) {
       // #endif
       // 响应成功
       success(res) {
+        const { status } = res.data as IBasicResponse<T>
         // 状态码 2xx，参考 axios 的设计
         if (res.statusCode >= 200 && res.statusCode < 300) {
           // 2.1 提取核心数据 res.data
@@ -20,9 +21,33 @@ export function http<T>(options: CustomRequestOptions) {
         }
         else if (res.statusCode === 401) {
           // 401错误  -> 清理用户信息，跳转到登录页
-          const userStore = useUserStore()
-          userStore.removeUserInfo()
-          uni.navigateTo({ url: '/pages/login/index' })
+          if (status === ErrorCode.AUTH_ACCOUNT_IS_DISABLE) {
+            uni.showToast({
+              title: '账号已被禁用',
+              icon: 'none',
+              duration: 2000,
+            })
+          }
+          else {
+            const userStore = useUserStore()
+            userStore.logout(true)
+            uni.showModal({
+              title: '提示',
+              content: '您还未登录，是否前往登录？',
+              success: (res) => {
+                if (res.confirm) {
+                  uni.navigateTo({
+                    url: '/pages/login/index',
+                  })
+                }
+                else {
+                  uni.switchTab({
+                    url: '/pages/home/index',
+                  })
+                }
+              },
+            })
+          }
           reject(res)
         }
         else {

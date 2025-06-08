@@ -1,18 +1,18 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import type { ILoginSuccessResData, IUser } from 'types'
+import type { ILoginSuccessResData, IUpdateUserBodyDto, IUser } from 'types'
 import { browser, validateEmail, validatePhone } from 'utils'
 import {
   getUserInfoApi,
   getWxCode,
   loginByPasswordApi,
   logoutApi,
-  updateUserAvatarApi,
   wxLoginApi,
 } from '@/api/login'
 import { RSA_KEY } from '@/constants/encrypt'
 import { toast } from '@/utils/toast'
 import { USER_AUTH_TOKEN_KEY, USER_INFO_KEY } from '@/constants/storage'
+import { updateOwnUserApi, updateUserAvatarApi } from '@/api/user'
 
 export const useUserStore = defineStore(
   'user',
@@ -38,6 +38,7 @@ export const useUserStore = defineStore(
 
       userInfo.value = val || undefined
     }
+
     // 删除用户信息
     const removeUserInfo = () => {
       userInfo.value = undefined
@@ -45,6 +46,7 @@ export const useUserStore = defineStore(
       uni.removeStorageSync(USER_INFO_KEY)
       uni.removeStorageSync(USER_AUTH_TOKEN_KEY)
     }
+
     /**
      * 获取用户信息
      */
@@ -59,6 +61,7 @@ export const useUserStore = defineStore(
       // TODO 这里可以增加获取用户路由的方法 根据用户的角色动态生成路由
       return res
     }
+
     /**
      * 用户登录
      * @param form 登录参数
@@ -98,6 +101,21 @@ export const useUserStore = defineStore(
     }
 
     /**
+     * 更新当前登录用户信息
+     */
+    async function updateOwnUser(body: IUpdateUserBodyDto) {
+      uni.showLoading({ title: '加载中...' })
+      try {
+        await updateOwnUserApi(body)
+        getUserInfo('downloadRecords;collections', false)
+        toast.success('更新成功')
+      }
+      finally {
+        uni.hideLoading()
+      }
+    }
+
+    /**
    * 处理登录信息
    */
     function processLoginInfo(res: ILoginSuccessResData) {
@@ -114,8 +132,10 @@ export const useUserStore = defineStore(
     const logout = async (flag = false) => {
       if (!flag)
         await logoutApi()
+
       removeUserInfo()
     }
+
     /**
      * 微信登录
      */
@@ -151,6 +171,7 @@ export const useUserStore = defineStore(
       logout,
       removeUserInfo,
       updateUserAvatar,
+      updateOwnUser,
     }
   },
   {

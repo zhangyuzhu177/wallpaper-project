@@ -1,8 +1,15 @@
 import { Mixin } from 'ts-mixer'
-import { AccountDto, PasswordDto } from 'src/dto'
 import type { ICreateUserBodyDto } from 'types'
-
-import { UpdateUserBodyDto } from './update-user.body'
+import {
+  AccountDto,
+  AvatarOptionalDto,
+  EmailOptionalDto,
+  NameDto,
+  PasswordDto,
+  PasswordOptionalDto,
+  PhoneOptionalDto,
+  StatusOptionalDto,
+} from 'src/dto'
 
 /**
  * 创建个人用户
@@ -10,7 +17,12 @@ import { UpdateUserBodyDto } from './update-user.body'
  */
 export class CreateUserBodyDto
   extends Mixin(
-    UpdateUserBodyDto,
+    NameDto,
+    PhoneOptionalDto,
+    EmailOptionalDto,
+    AvatarOptionalDto,
+    PasswordOptionalDto,
+    StatusOptionalDto,
     PasswordDto,
     AccountDto,
   )

@@ -59,6 +59,20 @@ export class UserController {
   }
 
   @ApiOperation({
+    summary: '修改当前登入个人用户信息',
+  })
+  @ApiSuccessResponse(SuccessStringDto)
+  @IsLogin(UserType.USER)
+  @Post('own/update')
+  public async updateOwnUser(
+    @Body() body: UpdateUserBodyDto,
+    @Req() req: FastifyRequest,
+  ) {
+    const { id } = req.raw.user
+    return this._userSrv.updateUser(id, body)
+  }
+
+  @ApiOperation({
     summary: '查询个人用户列表',
   })
   @ApiSuccessResponse(QueryResDto<User>)

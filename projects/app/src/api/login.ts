@@ -1,5 +1,4 @@
 import type {
-  IAvatarOptionalDto,
   ICodeDto,
   ICreateUserBodyDto,
   ILoginByPasswordBodyDto,
@@ -37,13 +36,6 @@ export function getUserInfoApi(query?: IRelationRawDto) {
  */
 export function logoutApi() {
   return http.get<void>('/auth/user/logout')
-}
-
-/**
- * 更新用户头像
- */
-export function updateUserAvatarApi(data: IAvatarOptionalDto) {
-  return http.post<string>('/user/own/avatar', data)
 }
 
 /**

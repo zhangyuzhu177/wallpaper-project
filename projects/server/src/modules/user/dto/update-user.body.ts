@@ -1,8 +1,9 @@
 import { Mixin } from 'ts-mixer'
 import type { IUpdateUserBodyDto } from 'types'
 import {
+  AvatarOptionalDto,
   EmailOptionalDto,
-  NameDto,
+  NameOptionalDto,
   PasswordOptionalDto,
   PhoneOptionalDto,
   StatusOptionalDto,
@@ -14,9 +15,10 @@ import {
  */
 export class UpdateUserBodyDto
   extends Mixin(
-    NameDto,
+    NameOptionalDto,
     PhoneOptionalDto,
     EmailOptionalDto,
+    AvatarOptionalDto,
     PasswordOptionalDto,
     StatusOptionalDto,
   )

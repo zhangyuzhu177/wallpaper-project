@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import UserInfo from './UserInfo.vue'
+import Avatar from './components/avatar/Avatar.vue'
 import { toast } from '@/utils/toast'
 import { useUserStore } from '@/store'
 import { USER_MENU } from '@/constants/userMenu'
@@ -8,6 +8,15 @@ import { USER_AUTH_TOKEN_KEY } from '@/constants/storage'
 const userStore = useUserStore()
 
 const isLogined = ref(false)
+
+const userInfo = computed(() => userStore.userInfo)
+
+const icons = [
+  'i-mingcute:star-line',
+  'i-mingcute:download-2-line',
+  'i-mingcute:user-4-line',
+  'i-mingcute:document-2-line',
+]
 
 onShow(() => {
   isLogined.value = !!uni.getStorageSync(USER_AUTH_TOKEN_KEY)
@@ -74,14 +83,27 @@ function handleLogout() {
 </script>
 
 <template>
-  <view
-    class="flex flex-col gap6 p4 bg-grey-2 py16"
-    :style="{
-      height: `calc(100vh - var(--window-bottom) - var(--window-top))`,
-    }"
-  >
+  <view class="h-full flex flex-col gap6  py16">
     <!-- 用户信息区域 -->
-    <UserInfo />
+    <view class="px-4 py-4 flex gap4 items-center rounded-2 bg-grey-1">
+      <Avatar />
+      <view v-if="userInfo" class="flex justify-between items-center flex-1">
+        <view class="flex flex-col">
+          <view class="text-xl" v-text="userInfo?.name" />
+          <view
+            v-if="userInfo?.account" class="text-sm text-grey-5"
+            v-text="`ID: ${userInfo?.account}`"
+          />
+        </view>
+        <view class="flex items-center" @click="jump('/pages/user/settings?title=编辑资料')">
+          <view class="text-sm text-grey-6">
+            编辑资料
+          </view>
+          <view class="i-carbon:chevron-right icon" />
+        </view>
+      </view>
+      <view v-else class="text-grey-5 " @click="jumpLogin" v-text="'登录/注册'" />
+    </view>
 
     <!-- 功能区块 -->
     <view class="flex flex-col b-rd-2 bg-grey-1">
@@ -91,18 +113,19 @@ function handleLogout() {
         @click="jump(item.to)"
       >
         <view class="flex items-center justify-between p-4">
-          <view class="flex gap2 items-center">
-            <wd-img :src="item.icon" width="20px" height="20px" />
+          <view class="flex gap3 items-center">
+            <!-- <wd-img :src="item.icon" width="20px" height="20px" /> -->
+            <view :class="`${icons[i]} size-6 text-grey-9`" />
             <view v-text="item.label" />
           </view>
           <view class="i-carbon:chevron-right w-[16px] h-[16px] text-grey-6" />
         </view>
-        <view v-if="!(i === USER_MENU.length - 1)" class="h-[1px] w-full bg-[#F0F0F0]" />
+        <view class="h-[1px] w-full bg-[#F0F0F0]" />
       </view>
     </view>
 
     <!--  退出登录按钮 -->
-    <view class="btns">
+    <view class="btns px-4">
       <wd-button
         v-if="!isLogined"
         size="large"

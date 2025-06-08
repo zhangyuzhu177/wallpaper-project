@@ -1,5 +1,5 @@
 import { ErrorCode } from 'types'
-import { randomString } from 'utils'
+import { randomNumString } from 'utils'
 import type { AxiosResponse } from 'axios'
 import { HttpService } from '@nestjs/axios'
 import { ConfigService } from '@nestjs/config'
@@ -145,8 +145,8 @@ export class AuthUserService {
       // 不存在自动创建用户
       user = this._userSrv.repo().create({
         openid,
-        account: randomString(9, 9, ''),
-        name: `微信用户${randomString(4, 4, '')}`,
+        account: randomNumString(10),
+        name: '微信用户',
       })
       await this._userSrv.repo().save(user)
     }

@@ -2,10 +2,17 @@
 import { cloneDeep } from 'lodash'
 import type { ICreateUserBodyDto } from 'types'
 import { browser, randomString, validateAccount, validatePassword } from 'utils'
-import type { FormRules } from 'wot-design-uni/components/wd-form/types'
+import { useToast } from 'wot-design-uni'
 import { registerApi } from '@/api/login'
 import { RSA_KEY } from '@/constants/encrypt'
-import { toast } from '@/utils/toast'
+
+const props = defineProps<RegisterPopupProps>()
+
+const emits = defineEmits<{
+  'update:modelValue': [RegisterPopupProps['modelValue']]
+}>()
+
+const toast = useToast()
 
 interface RegisterForm extends ICreateUserBodyDto {
   passwordConfirm: string
@@ -14,11 +21,6 @@ interface RegisterForm extends ICreateUserBodyDto {
 interface RegisterPopupProps {
   modelValue: boolean
 }
-
-const props = defineProps<RegisterPopupProps>()
-const emits = defineEmits<{
-  'update:modelValue': [RegisterPopupProps['modelValue']]
-}>()
 
 const dialog = computed({
   get() {
@@ -37,7 +39,6 @@ const initData: RegisterForm = {
 }
 
 const loading = ref(false)
-const form = ref()
 const model = ref<RegisterForm>(cloneDeep(initData))
 
 const disabled = computed(() => {
@@ -46,76 +47,26 @@ const disabled = computed(() => {
 })
 
 /**
- * 表单校验
- */
-const rules: FormRules = {
-  account: [
-    {
-      required: true,
-      message: '请输入账号',
-      validator: (val) => {
-        const validate = validateAccount(val)
-        if (validate)
-          return Promise.reject(validate)
-        return Promise.resolve()
-      },
-    },
-  ],
-  password: [
-    {
-      required: true,
-      message: '请输入密码',
-      validator: (val) => {
-        const { password, passwordConfirm } = model.value
-        const validate = validatePassword(val)
-        if (validate)
-          return Promise.reject(new Error(validate))
-        else if (password && passwordConfirm && password !== passwordConfirm)
-          return Promise.reject(new Error('两次密码不一致'))
-        else return Promise.resolve()
-      },
-    },
-  ],
-  passwordConfirm: [
-    {
-      required: true,
-      message: '请输入密码',
-      validator: (val) => {
-        const { password, passwordConfirm } = model.value
-        const validate = validatePassword(val)
-        if (validate)
-          return Promise.reject(new Error(validate))
-        else if (password && passwordConfirm && password !== passwordConfirm)
-          return Promise.reject(new Error('两次密码不一致'))
-        else return Promise.resolve()
-      },
-    },
-  ],
-}
-
-/**
   * 关闭回调
   */
 function handleClose() {
+  dialog.value = false
   model.value = cloneDeep(initData)
-}
-
-/**
- * 提交表单
- */
-function handleSubmit() {
-  form.value
-    .validate()
-    .then(({ valid }) => {
-      if (valid)
-        register()
-    })
 }
 
 /**
  * 注册
  */
 async function register() {
+  const verifyAccount = validateAccount(model.value.account)
+  if (verifyAccount)
+    return toast.show(verifyAccount)
+  const verifyPassword = validatePassword(model.value.password)
+  if (verifyPassword)
+    return toast.show(verifyPassword)
+  if (model.value.password !== model.value.passwordConfirm)
+    return toast.show('两次密码不一致')
+
   loading.value = true
   try {
     await registerApi({
@@ -133,38 +84,46 @@ async function register() {
 </script>
 
 <template>
-  <wd-popup v-model="dialog" position="bottom" closable :safe-area-inset-bottom="true" custom-style="height: 400px;" @close="handleClose">
-    <view class="px-4 py-2 text-[20px]" v-text="'注册账号'" />
-    <wd-form ref="form" class="flex flex-col gap8 pt-4" :model="model" :rules="rules">
-      <wd-cell-group border>
-        <wd-input
-          v-model="model.account"
-          label="账号"
-          label-width="100px"
-          clearable
-          prop="account"
-          placeholder="请输入账号"
-        />
-        <wd-input
-          v-model="model.password"
-          label="密码"
-          label-width="100px"
-          show-password
-          clearable
-          prop="password"
-          placeholder="请输入密码"
-        />
-        <wd-input
-          v-model="model.passwordConfirm"
-          label="确认密码"
-          label-width="100px"
-          show-password
-          clearable
-          prop="passwordConfirm"
-          placeholder="请输入密码"
-        />
-      </wd-cell-group>
-      <view class="footer px-6">
+  <wd-popup
+    v-model="dialog"
+    close-on-click-modal
+    custom-class="z-popup"
+    @close="handleClose"
+  >
+    <view class="flex flex-col gap-4 p4 b-rd-2">
+      <view class="flex items-center gap-2 justify-between">
+        <view class="subtitle-1" v-text="'注册账号'" />
+        <view class="i-mingcute:close-line icon" @click="handleClose" />
+      </view>
+      <view class="flex flex-col gap6">
+        <wd-cell-group border>
+          <wd-input
+            v-model="model.account"
+            label="账号"
+            label-width="60px"
+            clearable
+            prop="account"
+            placeholder="请输入账号"
+          />
+          <wd-input
+            v-model="model.password"
+            label="密码"
+            label-width="60px"
+            show-password
+            clearable
+            prop="password"
+            placeholder="请输入密码"
+          />
+          <wd-input
+            v-model="model.passwordConfirm"
+            label="确认密码"
+            label-width="60px"
+            show-password
+            clearable
+            prop="passwordConfirm"
+            placeholder="请输入密码"
+          />
+        </wd-cell-group>
         <wd-button
           :loading="loading"
           :disabled="disabled"
@@ -172,11 +131,21 @@ async function register() {
           size="large"
           block
           :round="false"
-          @click="handleSubmit"
+          @click="register"
         >
           立即注册
         </wd-button>
       </view>
-    </wd-form>
+    </view>
   </wd-popup>
+  <wd-toast />
 </template>
+
+<style lang="scss">
+:deep() {
+  .z-popup {
+    border-radius: 8px;
+    width: 90%;
+  }
+}
+</style>

@@ -261,6 +261,10 @@ function handleAgreement(type: 'user' | 'privacy') {
         height: 0;
       }
 
+      input {
+        font-size: 16px;
+      }
+
       .wd-icon {
         background-color: #F9FAFB;
         font-size: 20px;

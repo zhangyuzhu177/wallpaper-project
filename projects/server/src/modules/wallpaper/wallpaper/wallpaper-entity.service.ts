@@ -2,6 +2,7 @@ import { pathBaseName } from 'utils'
 import { Cron } from '@nestjs/schedule'
 import type { RedisClientType } from 'redis'
 import { Between, type Repository } from 'typeorm'
+import type { OnModuleInit } from '@nestjs/common'
 import { Injectable, Logger } from '@nestjs/common'
 import { Config, ErrorCode, WALLPAPER_DOWNLOAD_LIMIT } from 'types'
 
@@ -16,7 +17,7 @@ import { WallpaperService } from '../wallpaper.service'
 import type { UpsertWallpaperBodyDto } from './dto/upsert-wallpaper.body'
 
 @Injectable()
-export class WallpaperEntityService {
+export class WallpaperEntityService implements OnModuleInit {
   private readonly _logger = new Logger(WallpaperEntityService.name)
 
   private readonly _entityRepo: Repository<Wallpaper>
@@ -35,6 +36,13 @@ export class WallpaperEntityService {
   ) {
     this._entityRepo = this._wallpaperSrv.entityRepo()
     this._client = this._redisSrv.getClient(RedisType.RECOMMEND)
+  }
+
+  /**
+   * 服务初始化时立即执行一次定时任务
+   */
+  async onModuleInit() {
+    await this.handleDailyRecommend()
   }
 
   /**

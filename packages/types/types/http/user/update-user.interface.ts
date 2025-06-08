@@ -1,3 +1,4 @@
+import type { INameOptionalDto } from '../../dto/name.interface'
 import type { IPasswordOptionalDto } from '../../dto/password.interface'
 
 import type { ICreateUserBodyDto } from './create-user.interface'
@@ -8,5 +9,6 @@ import type { ICreateUserBodyDto } from './create-user.interface'
  */
 export interface IUpdateUserBodyDto
   extends
-  Omit<ICreateUserBodyDto, 'password' | 'account'>,
+  Omit<ICreateUserBodyDto, 'password' | 'account' | 'name'>,
+  INameOptionalDto,
   IPasswordOptionalDto {}
