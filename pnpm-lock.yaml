@@ -290,6 +290,9 @@ importers:
       dayjs:
         specifier: 1.11.10
         version: 1.11.10
+      dayjs-plugin-lunar:
+        specifier: ^1.4.1
+        version: 1.4.1(dayjs@1.11.10)(tyme4ts@1.3.3)
       js-cookie:
         specifier: ^3.0.5
         version: 3.0.5
@@ -10632,6 +10635,16 @@ packages:
     resolution: {integrity: sha512-GODcnWq3YGoTnygPfi02ygEiRxqUxpJwuRHjdhJYuxpcZmDq4rjBiXYmbCCzStxo176ixfLT6i4NPwQooRySnw==}
     dev: false
 
+  /dayjs-plugin-lunar@1.4.1(dayjs@1.11.10)(tyme4ts@1.3.3):
+    resolution: {integrity: sha512-nHKJMKoVAGt/Wp6x3xH8GrjWhB25YBYd6iYTCfLkCm4GAS6q3jvfHpLwRnIX8bjHgl8sPlTPiLFcylcEaEnj8Q==}
+    peerDependencies:
+      dayjs: ^1.0.0
+      tyme4ts: ^1.0.0
+    dependencies:
+      dayjs: 1.11.10
+      tyme4ts: 1.3.3
+    dev: false
+
   /dayjs@1.11.10:
     resolution: {integrity: sha512-vjAczensTgRcqDERK0SR2XMwsF/tSvnvlv6VcF2GIhg6Sx4yOIt/irsr1RDJsKiIyBzJDpCoXiWWq28MqH2cnQ==}
     dev: false
@@ -18909,6 +18922,10 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /tyme4ts@1.3.3:
+    resolution: {integrity: sha512-q2fCG8veMmYdCO/I7pSPx7ied9cFebk6PQ4mfRHJ+zctsfSuuYT/R6ixlIHPvL/uAg9x2OGaQzdoBJvtsRvmzg==}
+    dev: false
 
   /type-check@0.4.0:
     resolution: {integrity: sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew==}

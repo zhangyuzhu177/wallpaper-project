@@ -50,6 +50,8 @@ export class WallpaperEntityController {
       where: { categoryId },
       relations: {
         category: true,
+        collections: true,
+        downloadRecords: true,
       },
       ...(
         body.pageSize !== 'all'
@@ -59,6 +61,17 @@ export class WallpaperEntityController {
             }
           : {}
       ),
+      select: {
+        category: {
+          name: true,
+        },
+        collections: {
+          id: true,
+        },
+        downloadRecords: {
+          id: true,
+        },
+      },
       order: {
         createdAt: 'DESC',
       },

@@ -1,40 +1,21 @@
 <script setup lang="ts">
-import type { IQueryPagination, IWallpaper } from 'types'
-import { getWallpapersByCategoryIdApi } from '@/api/wallpaper'
-
 interface IOptions {
   title: string
   classifyId: string
 }
+
+const { wallpapers, getWallpapersByCategoryId } = useWallpaper()
+
 /** 标题 */
 const title = ref('')
-/** 图片列表 */
-const wallpapers = ref<IWallpaper[]>()
-/** 分页 */
-const pagination = ref<IQueryPagination>({
-  page: 1,
-  pageSize: 10,
-})
 
 /**
- * 获取指定分类下的所有壁纸
+ * 跳转预览页面
  */
-async function getWallpapersByCategoryId(classifyId?: string) {
-  if (!classifyId)
-    return
-
-  uni.showLoading({
-    title: '加载中...',
+function jumpPreview(index: number) {
+  uni.navigateTo({
+    url: `/pages/detail/preview?index=${index}`,
   })
-
-  try {
-    const res = await getWallpapersByCategoryIdApi(classifyId, pagination.value)
-    const { page, pageSize, data, total } = res.data
-    wallpapers.value = data
-  }
-  finally {
-    uni.hideLoading()
-  }
 }
 
 onLoad((options: IOptions) => {
@@ -62,8 +43,9 @@ onLoad((options: IOptions) => {
     <template v-if="wallpapers?.length">
       <view class="grid grid-cols-2 gap-3 p4">
         <view
-          v-for="item in wallpapers" :key="item.id"
+          v-for="(item, index) in wallpapers" :key="item.id"
           class="w-full h-[236px] b-rd-3"
+          @click="jumpPreview(index)"
         >
           <wd-img :src="item.url" width="100%" height="236px" radius="12px" mode="aspectFill">
             <template #loading>

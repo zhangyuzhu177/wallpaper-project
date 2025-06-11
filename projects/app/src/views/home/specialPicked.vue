@@ -9,7 +9,7 @@ const { pickedList } = useHome()
 function jumpPage(val?: ICategory) {
   if (val) {
     uni.navigateTo({
-      url: `/pages/detail/index?title=${val.name}&classifyId=${val}`,
+      url: `/pages/detail/index?title=${val.name}&classifyId=${val.id}`,
     })
   }
   else {

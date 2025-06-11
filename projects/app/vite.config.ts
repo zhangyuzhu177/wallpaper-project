@@ -63,7 +63,7 @@ export default async ({ command, mode }: ConfigEnv) => {
     VITE_APP_PROXY,
     VITE_APP_PROXY_PREFIX,
   } = env
-  console.log('环境变量 env -> ', env)
+  // console.log('环境变量 env -> ', env)
 
   process.env = {
     ...process.env,

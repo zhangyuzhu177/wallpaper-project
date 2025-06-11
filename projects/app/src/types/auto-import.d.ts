@@ -85,6 +85,7 @@ declare global {
   const useSystem: typeof import('../hooks/useSystem')['useSystem']
   const useTemplateRef: typeof import('vue')['useTemplateRef']
   const useUpload: typeof import('../hooks/useUpload')['default']
+  const useWallpaper: typeof import('../hooks/useWallapaper')['useWallpaper']
   const watch: typeof import('vue')['watch']
   const watchEffect: typeof import('vue')['watchEffect']
   const watchPostEffect: typeof import('vue')['watchPostEffect']
@@ -181,6 +182,7 @@ declare module 'vue' {
     readonly useSystem: UnwrapRef<typeof import('../hooks/useSystem')['useSystem']>
     readonly useTemplateRef: UnwrapRef<typeof import('vue')['useTemplateRef']>
     readonly useUpload: UnwrapRef<typeof import('../hooks/useUpload')['default']>
+    readonly useWallpaper: UnwrapRef<typeof import('../hooks/useWallapaper')['useWallpaper']>
     readonly watch: UnwrapRef<typeof import('vue')['watch']>
     readonly watchEffect: UnwrapRef<typeof import('vue')['watchEffect']>
     readonly watchPostEffect: UnwrapRef<typeof import('vue')['watchPostEffect']>
