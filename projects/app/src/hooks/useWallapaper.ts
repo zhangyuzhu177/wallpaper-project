@@ -2,7 +2,7 @@ import type { IQueryPagination, IWallpaper } from 'types'
 import { getCollectionWallpaperApi, getDownloadWallpaperApi, getWallpapersByCategoryIdApi } from '@/api/wallpaper'
 import { useUserStore } from '@/store'
 
-const userStore = useUserStore()
+const userUser = useUserStore()
 
 /** 图片列表 */
 const wallpapers = ref<IWallpaper[]>()
@@ -44,7 +44,7 @@ export function useWallpaper() {
    * 获取收藏壁纸列表
    */
   async function getCollectionWallpaperList() {
-    const { id } = userStore.userInfo || {}
+    const { id } = userUser.userInfo || {}
     if (!id)
       return
 
@@ -70,7 +70,7 @@ export function useWallpaper() {
    * 获取下载壁纸列表
    */
   async function getDownloadWallpaperList() {
-    const { id } = userStore.userInfo || {}
+    const { id } = userUser.userInfo || {}
     if (!id)
       return
 

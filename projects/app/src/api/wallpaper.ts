@@ -1,4 +1,4 @@
-import type { IQueryPaginatedResData, IQueryPagination, IWallpaper } from 'types'
+import type { IQueryPaginatedResData, IQueryPagination, IStatusDto, IUser, IWallpaper } from 'types'
 import { http } from '@/utils/http'
 
 /**
@@ -34,4 +34,11 @@ export function getCollectionWallpaperApi(body: IQueryPagination, userId: string
  */
 export function downloadWallpaperApi(wallpaperId: string) {
   return http.get<string>(`/wallpaper/entity/download/${wallpaperId}`)
+}
+
+/**
+ * 收藏/取消收藏壁纸
+ */
+export function collectWallpaperApi(wallpaperId: string, body: IStatusDto) {
+  return http.post<IUser>(`/wallpaper/entity/collection/${wallpaperId}`, body)
 }

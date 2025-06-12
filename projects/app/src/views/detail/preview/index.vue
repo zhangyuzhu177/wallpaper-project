@@ -4,7 +4,8 @@ import 'dayjs/locale/zh-cn'
 import { PluginLunar } from 'dayjs-plugin-lunar'
 import { formatFileSize } from 'utils'
 import { useUserStore } from '@/store'
-import { downloadWallpaperApi } from '@/api/wallpaper'
+import { collectWallpaperApi, downloadWallpaperApi } from '@/api/wallpaper'
+import { USER_INFO_KEY } from '@/constants/storage'
 
 // 注册插件
 dayjs.extend(PluginLunar)
@@ -125,6 +126,34 @@ async function download() {
   })
 }
 
+/**
+ * 处理收藏/取消收藏
+ */
+async function handleCollection() {
+  const { id } = wallpaperInfo.value || {}
+  if (!id)
+    return
+
+  try {
+    const { data } = await collectWallpaperApi(id, { status: !isFavorite.value })
+    if (data) {
+      isFavorite.value = !isFavorite.value
+      useUser.userInfo = data
+      uni.setStorageSync(USER_INFO_KEY, data)
+      uni.showToast({
+        title: isFavorite.value ? '收藏成功' : '已取消收藏',
+        icon: 'none',
+      })
+    }
+  }
+  catch (error) {
+    uni.showToast({
+      title: '操作失败',
+      icon: 'error',
+    })
+  }
+}
+
 onLoad((options: { index: string;type?: string }) => {
   if (options?.index)
     current.value = Number.parseInt(options.index)
@@ -180,7 +209,7 @@ onLoad((options: { index: string;type?: string }) => {
             <view class="i-mingcute:information-line size-6" />
             <view>信息</view>
           </view>
-          <view class="flex flex-col items-center gap-1 px-4 py-1" @click="isFavorite = !isFavorite">
+          <view class="flex flex-col items-center gap-1 px-4 py-1" @click="handleCollection">
             <view v-if="isFavorite" class="i-mingcute:star-fill size-6 bg-#fbc531" />
             <view v-else class="i-mingcute:star-line size-6" />
             <view>收藏</view>
@@ -205,7 +234,7 @@ onLoad((options: { index: string;type?: string }) => {
         <view class="flex flex-col gap-1">
           <view class="flex">
             <view>分类：</view>
-            <view v-text="wallpaperInfo?.category?.name" />
+            <view v-text="wallpaperInfo?.category.name" />
           </view>
           <view class="flex">
             <view>大小：</view>
@@ -213,11 +242,11 @@ onLoad((options: { index: string;type?: string }) => {
           </view>
           <view class="flex">
             <view>收藏：</view>
-            <view v-text="wallpaperInfo?.collections?.length || 0" />
+            <view v-text="wallpaperInfo?.collections.length || 0" />
           </view>
           <view class="flex">
             <view>下载：</view>
-            <view v-text="wallpaperInfo?.downloadRecords?.length || 0" />
+            <view v-text="wallpaperInfo?.downloadRecords.length || 0" />
           </view>
           <view class="flex">
             <view>上传时间：</view>
