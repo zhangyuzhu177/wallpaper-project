@@ -53,11 +53,16 @@ export class WallpaperEntityService implements OnModuleInit {
   public async handleDailyRecommend() {
     this._logger.verbose('定时任务：更新每日推荐')
     try {
-      const res = await this._entityRepo
-        .createQueryBuilder('c')
+      const res = await this._wallpaperSrv.entityQb()
+        .leftJoin('w.category', 'category') // 加载 category 关联
+        .addSelect(['category.id', 'category.url']) // 只选 category 的 id 和 url
+        .leftJoin('w.collections', 'collections') // 加载 collections 关联
+        .addSelect(['collections.id', 'collections.userId']) // 只选 collections 的 id 和 userId
+        .leftJoin('w.downloadRecords', 'downloadRecords') // 加载 downloadRecords 关联
+        .addSelect(['downloadRecords.id', 'downloadRecords.userId']) // 只选 downloadRecords 的 id 和 userId
         .orderBy('RAND()') // MySQL 的随机函数
-        .limit(10)
-        .getMany()
+        .limit(10) // 获取10条数据
+        .getMany() // 获取数据
 
       // 将数据存入Redis，并设置一天的有效期（24小时）
       await this._client.setEx(this._cacheKey, 24 * 60 * 60, JSON.stringify(res)) // 设置缓存并指定过期时

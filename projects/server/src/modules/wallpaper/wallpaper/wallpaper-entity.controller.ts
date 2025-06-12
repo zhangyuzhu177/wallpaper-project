@@ -48,6 +48,11 @@ export class WallpaperEntityController {
     )
     const data = await this._wallpaperSrv.entityRepo().find({
       where: { categoryId },
+      relations: {
+        category: true,
+        collections: true,
+        downloadRecords: true,
+      },
       ...(
         body.pageSize !== 'all'
           ? {
@@ -57,8 +62,18 @@ export class WallpaperEntityController {
           : {}
       ),
       select: {
-        id: true,
-        url: true,
+        category: {
+          id: true,
+          name: true,
+        },
+        collections: {
+          id: true,
+          userId: true,
+        },
+        downloadRecords: {
+          id: true,
+          userId: true,
+        },
       },
       order: {
         createdAt: 'DESC',
@@ -79,38 +94,6 @@ export class WallpaperEntityController {
   @Get('recommend')
   public getDailyRecommend() {
     return this._entitySrv.getDailyRecommend()
-  }
-
-  @ApiOperation({
-    summary: '获取壁纸详情',
-  })
-  @ApiSuccessResponse(SuccessDto<Wallpaper>)
-  @Get('detail/:wallpaperId')
-  public async getWallpaperDetail(
-    @Param() { wallpaperId }: WallpaperIdDto,
-  ) {
-    return await this._wallpaperSrv.entityRepo().findOne({
-      where: {
-        id: wallpaperId,
-      },
-      relations: {
-        category: true,
-        collections: true,
-        downloadRecords: true,
-      },
-      select: {
-        category: {
-          id: true,
-          name: true,
-        },
-        collections: {
-          id: true,
-        },
-        downloadRecords: {
-          id: true,
-        },
-      },
-    })
   }
 
   @ApiOperation({
@@ -161,6 +144,25 @@ export class WallpaperEntityController {
             }
           : {}
       ),
+      relations: {
+        category: true,
+        collections: true,
+        downloadRecords: true,
+      },
+      select: {
+        category: {
+          id: true,
+          name: true,
+        },
+        collections: {
+          id: true,
+          userId: true,
+        },
+        downloadRecords: {
+          id: true,
+          userId: true,
+        },
+      },
       order: {
         createdAt: 'DESC',
       },
@@ -206,6 +208,7 @@ export class WallpaperEntityController {
             userId,
           },
         },
+
       },
     )
     const data = await this._wallpaperSrv.entityRepo().find({
@@ -222,6 +225,25 @@ export class WallpaperEntityController {
             }
           : {}
       ),
+      relations: {
+        category: true,
+        collections: true,
+        downloadRecords: true,
+      },
+      select: {
+        category: {
+          id: true,
+          name: true,
+        },
+        collections: {
+          id: true,
+          userId: true,
+        },
+        downloadRecords: {
+          id: true,
+          userId: true,
+        },
+      },
       order: {
         createdAt: 'DESC',
       },
