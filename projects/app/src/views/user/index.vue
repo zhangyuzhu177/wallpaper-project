@@ -24,7 +24,7 @@ onShow(() => {
   if (!isLogined.value)
     userStore.userInfo = undefined
 
-  isLogined.value && useUserStore().getUserInfo()
+  useUserStore().getUserInfo()
 })
 
 /**

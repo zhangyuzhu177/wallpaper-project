@@ -14,3 +14,10 @@ export function getRecommendWallpaperApi() {
 export function getWallpapersByCategoryIdApi(categoryId: string, body: IQueryPagination) {
   return http.post<IQueryPaginatedResData<IWallpaper>>(`/wallpaper/entity/query/${categoryId}`, body)
 }
+
+/**
+ * 下载指定壁纸
+ */
+export function downloadWallpaperApi(wallpaperId: string) {
+  return http.get<string>(`/wallpaper/entity/download/${wallpaperId}`)
+}

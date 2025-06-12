@@ -1,4 +1,5 @@
 import { ErrorCode, type IBasicResponse } from 'types'
+import { getRouteWithParams } from './path'
 import type { CustomRequestOptions } from '@/interceptors/request'
 import { useUserStore } from '@/store'
 
@@ -18,7 +19,7 @@ function http<T>(options: CustomRequestOptions) {
       // #endif
       // 响应成功
       success(res) {
-        const { status } = res.data as IBasicResponse<T>
+        const { status, message } = res.data as IBasicResponse<T>
         // 状态码 2xx，参考 axios 的设计
         if (res.statusCode >= 200 && res.statusCode < 300) {
           // 2.1 提取核心数据 res.data
@@ -36,19 +37,27 @@ function http<T>(options: CustomRequestOptions) {
           else {
             const userStore = useUserStore()
             userStore.logout(true)
+
+            const pages = getCurrentPages()
+            const currentPage = pages[pages.length - 1]
+            const url = getRouteWithParams(currentPage.route, currentPage.options)
+            const redirectRoute = `/pages/login/index?redirect=${encodeURIComponent(url)}`
+
             uni.showModal({
               title: '提示',
-              content: '您还未登录，是否前往登录？',
+              content: message,
               success: (res) => {
                 if (res.confirm) {
                   uni.navigateTo({
-                    url: '/pages/login/index',
+                    url: redirectRoute,
                   })
                 }
                 else {
-                  uni.switchTab({
-                    url: '/pages/home/index',
-                  })
+                  if (pages.length === 1) {
+                    uni.switchTab({
+                      url: '/pages/home/index',
+                    })
+                  }
                 }
               },
             })

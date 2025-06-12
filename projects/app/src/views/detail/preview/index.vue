@@ -4,12 +4,14 @@ import 'dayjs/locale/zh-cn'
 import { PluginLunar } from 'dayjs-plugin-lunar'
 import { formatFileSize } from 'utils'
 import { useUserStore } from '@/store'
+import { downloadWallpaperApi } from '@/api/wallpaper'
 
 // 注册插件
 dayjs.extend(PluginLunar)
 dayjs.locale('zh-cn')
 
 const useUser = useUserStore()
+const { recommendList } = useHome()
 const { wallpapers, total } = useWallpaper()
 const { statusBarHeight, titleBarHeight } = useSystem()
 
@@ -70,9 +72,65 @@ function handleClose() {
   infoPopup.value = false
 }
 
-onLoad((options: { index: string }) => {
+/**
+ * 下载
+ */
+async function download() {
+  const { id } = wallpaperInfo.value || {}
+  if (!id)
+    return
+  const { data: url } = await downloadWallpaperApi(id)
+
+  if (!url)
+    return
+
+  uni.downloadFile({
+    url,
+    success: (res) => {
+      if (res.statusCode === 200) {
+        // #ifdef MP-WEIXIN
+        uni.saveImageToPhotosAlbum({ // 保存图片到系统相册。
+          filePath: res.tempFilePath, // 图片文件路径
+          success() {
+            uni.showToast({
+              title: '图片保存成功',
+              icon: 'none',
+            })
+          },
+          fail() {
+            uni.showToast({
+              title: '图片保存失败',
+              icon: 'none',
+            })
+          },
+        })
+        // #endif
+        // #ifndef MP-WEIXIN
+        const link = document.createElement('a')
+        link.href = url
+
+        // 触发点击下载
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+
+        // 显示成功提示
+        uni.showToast({
+          title: '图片已开始下载',
+          icon: 'none',
+        })
+        // #endif
+      }
+    },
+  })
+}
+
+onLoad((options: { index: string;type?: string }) => {
   if (options?.index)
     current.value = Number.parseInt(options.index)
+
+  if (options?.type && options.type === 'recommend')
+    wallpapers.value = recommendList.value
 
   if (!wallpapers.value?.length)
     uni.switchTab({ url: '/pages/home/index' })
@@ -127,7 +185,7 @@ onLoad((options: { index: string }) => {
             <view v-else class="i-mingcute:star-line size-6" />
             <view>收藏</view>
           </view>
-          <view class="flex flex-col items-center gap-1 px-4 py-1">
+          <view class="flex flex-col items-center gap-1 px-4 py-1" @click="download">
             <view class="i-mingcute:download-line size-6" />
             <view>下载</view>
           </view>
@@ -147,23 +205,23 @@ onLoad((options: { index: string }) => {
         <view class="flex flex-col gap-1">
           <view class="flex">
             <view>分类：</view>
-            <view v-text="wallpaperInfo.category.name" />
+            <view v-text="wallpaperInfo?.category?.name" />
           </view>
           <view class="flex">
             <view>大小：</view>
-            <view v-text="formatFileSize(wallpaperInfo.size)" />
+            <view v-text="formatFileSize(wallpaperInfo?.size)" />
           </view>
           <view class="flex">
             <view>收藏：</view>
-            <view v-text="wallpaperInfo.collections.length || 0" />
+            <view v-text="wallpaperInfo?.collections?.length || 0" />
           </view>
           <view class="flex">
             <view>下载：</view>
-            <view v-text="wallpaperInfo.downloadRecords.length || 0" />
+            <view v-text="wallpaperInfo?.downloadRecords?.length || 0" />
           </view>
           <view class="flex">
             <view>上传时间：</view>
-            <view v-text="dayjs(wallpaperInfo.createdAt).format('YYYY-MM-DD hh:mm')" />
+            <view v-text="dayjs(wallpaperInfo?.createdAt).format('YYYY-MM-DD hh:mm')" />
           </view>
         </view>
         <wd-gap safe-area-bottom height="0" />

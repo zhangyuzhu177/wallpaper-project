@@ -13,11 +13,14 @@ const total = ref(0)
 
 export function useWallpaper() {
   /**
- * 获取指定分类下的所有壁纸
- */
+   * 获取指定分类下的所有壁纸
+   */
   async function getWallpapersByCategoryId(classifyId?: string) {
     if (!classifyId)
       return
+
+    wallpapers.value = null
+    total.value = 0
 
     uni.showLoading({
       title: '加载中...',
