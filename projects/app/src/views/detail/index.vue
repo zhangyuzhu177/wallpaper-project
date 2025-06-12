@@ -4,10 +4,17 @@ interface IOptions {
   classifyId: string
 }
 
-const { wallpapers, getWallpapersByCategoryId } = useWallpaper()
+const {
+  wallpapers,
+  getWallpapersByCategoryId,
+  getCollectionWallpaperList,
+  getDownloadWallpaperList,
+} = useWallpaper()
 
 /** 标题 */
 const title = ref('')
+/** 分类id */
+const classifyId = ref('')
 
 /**
  * 跳转预览页面
@@ -18,19 +25,33 @@ function jumpPreview(index: number) {
   })
 }
 
-onLoad((options: IOptions) => {
-  title.value = options.title
-
+/**
+ * 获取数据
+ */
+function loadData() {
   switch (title.value) {
     case '我的收藏':
-      // todo: 获取我的收藏
+      getCollectionWallpaperList()
       break
     case '下载历史':
-      // todo: 获取下载历史
+      getDownloadWallpaperList()
       break
     default:
-      getWallpapersByCategoryId(options.classifyId)
+      getWallpapersByCategoryId(classifyId.value)
   }
+}
+
+/**
+ * 下拉刷新
+ */
+onPullDownRefresh(() => {
+  loadData()
+})
+
+onLoad((options: IOptions) => {
+  title.value = options.title
+  classifyId.value = options.classifyId
+  loadData()
 })
 </script>
 

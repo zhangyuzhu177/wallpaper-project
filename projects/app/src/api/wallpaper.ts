@@ -16,6 +16,20 @@ export function getWallpapersByCategoryIdApi(categoryId: string, body: IQueryPag
 }
 
 /**
+ * 获取下载壁纸列表
+ */
+export function getDownloadWallpaperApi(body: IQueryPagination, userId: string) {
+  return http.post<IQueryPaginatedResData<IWallpaper>>(`/wallpaper/entity/query/download/${userId}`, body)
+}
+
+/**
+ * 货物收藏壁纸列表
+ */
+export function getCollectionWallpaperApi(body: IQueryPagination, userId: string) {
+  return http.post<IQueryPaginatedResData<IWallpaper>>(`/wallpaper/entity/query/collection/${userId}`, body)
+}
+
+/**
  * 下载指定壁纸
  */
 export function downloadWallpaperApi(wallpaperId: string) {

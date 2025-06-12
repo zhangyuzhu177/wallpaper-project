@@ -74,7 +74,8 @@
       "type": "page",
       "layout": false,
       "style": {
-        "navigationStyle": "custom"
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": true
       }
     },
     {

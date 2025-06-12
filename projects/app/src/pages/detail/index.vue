@@ -3,6 +3,7 @@
   "layout":false,
   "style": {
     "navigationStyle": "custom",
+    "enablePullDownRefresh": true
   },
 }
 </route>
