@@ -1,6 +1,6 @@
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { Global, Module } from '@nestjs/common'
-import { Category, Collection, DownloadRecord, Wallpaper } from 'src/entities'
+import { Category, Wallpaper } from 'src/entities'
 
 import { FileModule } from '../file/file.module'
 import { SysConfigModule } from '../sys-config/sys-config.module'
@@ -17,8 +17,6 @@ import { WallpaperEntityController } from './wallpaper/wallpaper-entity.controll
     TypeOrmModule.forFeature([
       Category,
       Wallpaper,
-      Collection,
-      DownloadRecord,
     ]),
 
     FileModule,

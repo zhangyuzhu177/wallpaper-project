@@ -1,7 +1,7 @@
 import { Repository } from 'typeorm'
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { Category, Collection, DownloadRecord, Wallpaper } from 'src/entities'
+import { Category, Wallpaper } from 'src/entities'
 
 @Injectable()
 export class WallpaperService {
@@ -10,11 +10,6 @@ export class WallpaperService {
     private readonly _categoryRepo: Repository<Category>,
     @InjectRepository(Wallpaper)
     private readonly _wallpaperRepo: Repository<Wallpaper>,
-    @InjectRepository(Collection)
-    private readonly _collectionRepo: Repository<Collection>,
-    @InjectRepository(DownloadRecord)
-    private readonly _downloadRecordRepo: Repository<DownloadRecord>,
-
   ) {}
 
   public entityQb(alias = 'w') {
@@ -31,21 +26,5 @@ export class WallpaperService {
 
   public categoryRepo() {
     return this._categoryRepo
-  }
-
-  public downloadRecordQb(alias = 'dl') {
-    return this._downloadRecordRepo.createQueryBuilder(alias)
-  }
-
-  public downloadRecordRepo() {
-    return this._downloadRecordRepo
-  }
-
-  public collectionQb(alias = 'col') {
-    return this._collectionRepo.createQueryBuilder(alias)
-  }
-
-  public collectionRepo() {
-    return this._collectionRepo
   }
 }

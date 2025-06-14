@@ -13,6 +13,7 @@ import { FileService } from 'src/modules/file/file.service'
 import { RedisService } from 'src/modules/redis/redis.service'
 import { SysConfigService } from 'src/modules/sys-config/sys-config.service'
 
+import { LogService } from 'src/modules/log/log.service'
 import { WallpaperService } from '../wallpaper.service'
 import type { UpsertWallpaperBodyDto } from './dto/upsert-wallpaper.body'
 
@@ -28,6 +29,7 @@ export class WallpaperEntityService implements OnModuleInit {
   private readonly _cacheKey = 'daily_recommend'
 
   constructor(
+    private readonly _logSrv: LogService,
     private readonly _fileSrv: FileService,
     private readonly _userSrv: UserService,
     private readonly _redisSrv: RedisService,
@@ -88,7 +90,7 @@ export class WallpaperEntityService implements OnModuleInit {
   /**
    * 下载指定壁纸
    */
-  public async downloadWallpaper(id: string, user: User) {
+  public async downloadWallpaper(id: string, user: User, ip: string) {
     const wallpaper = await this._entityRepo.findOneBy({ id })
 
     if (!wallpaper)
@@ -105,7 +107,7 @@ export class WallpaperEntityService implements OnModuleInit {
     const endOfDay = new Date()
     endOfDay.setHours(23, 59, 59, 999) // 设置为当天的23:59:59
 
-    const downloadRecord = await this._wallpaperSrv.downloadRecordRepo().find({
+    const downloadRecord = await this._logSrv.downloadRecordRepo().find({
       where: {
         userId: user.id,
         createdAt: Between(startOfDay, endOfDay),
@@ -121,8 +123,9 @@ export class WallpaperEntityService implements OnModuleInit {
       const path = `wallpaper/${categoryId}/${pathBaseName(url, true)}`
       const data = await this._fileSrv.signUrl(path)
 
-      await this._wallpaperSrv.downloadRecordRepo().save(
-        this._wallpaperSrv.downloadRecordRepo().create({
+      await this._logSrv.downloadRecordRepo().save(
+        this._logSrv.downloadRecordRepo().create({
+          ip,
           user: { id: user.id },
           wallpaper: { id: wallpaper.id },
         }),
@@ -146,15 +149,15 @@ export class WallpaperEntityService implements OnModuleInit {
 
     try {
       if (status) {
-        await this._wallpaperSrv.collectionRepo().insert(
-          this._wallpaperSrv.collectionRepo().create({
+        await this._logSrv.collectionRepo().insert(
+          this._logSrv.collectionRepo().create({
             userId,
             wallpaperId: id,
           }),
         )
       }
       else {
-        await this._wallpaperSrv.collectionRepo().delete({
+        await this._logSrv.collectionRepo().delete({
           userId,
           wallpaperId: id,
         })

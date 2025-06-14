@@ -16,6 +16,10 @@ export class DownloadRecord extends CreatedAt implements IDownloadRecord {
   @PrimaryGeneratedColumn('uuid')
   id: string
 
+  @ApiProperty({ description: '登录的 ip' })
+  @Column({ nullable: true })
+  ip?: string
+
   @ApiPropertyOptional({
     description: '下载的用户唯一标识',
   })

@@ -83,6 +83,12 @@ export enum PermissionType {
   NOTICE_DELETE = 'notice:delete',
   /** 修改公告状态 */
   NOTICE_CHANGE_STATUS = 'notice:change-status',
+
+  // ------------ 日志管理 -------------
+  /** 查询下载记录 */
+  DOWNLOAD_RECORD_QUERY = 'download-record:query',
+  /** 查询收藏日志 */
+  COLLECTION_QUERY = 'collection:query',
 }
 
 /**
@@ -126,4 +132,7 @@ export const permissionDescriptions: Record<PermissionType, string> = {
   [PermissionType.NOTICE_UPDATE]: '更新公告',
   [PermissionType.NOTICE_DELETE]: '删除公告',
   [PermissionType.NOTICE_CHANGE_STATUS]: '修改公告状态',
+
+  [PermissionType.DOWNLOAD_RECORD_QUERY]: '查询下载记录',
+  [PermissionType.COLLECTION_QUERY]: '查询收藏记录',
 }

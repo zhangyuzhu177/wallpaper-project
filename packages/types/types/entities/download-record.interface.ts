@@ -2,6 +2,7 @@ import type { IUserIdOptionalDto } from '../dto/id/user.interface'
 import type { IWallpaperIdOptionalDto } from '../dto/id/wallpaper.interface'
 import type { IDownloadRecordIdDto } from '../dto/id/download-record.interface'
 
+import type { IIpOptionalDto } from '../dto/ip.interface'
 import type { IUser } from './user.interface'
 import type { IWallpaper } from './wallpaper.interface'
 import type { ICreatedAt } from './_timestamp.interface'
@@ -11,6 +12,7 @@ import type { ICreatedAt } from './_timestamp.interface'
  */
 export interface IDownloadRecord
   extends ICreatedAt,
+  IIpOptionalDto,
   IUserIdOptionalDto,
   IWallpaperIdOptionalDto {
   /** 下载记录唯一标识 */

@@ -106,7 +106,8 @@ export class WallpaperEntityController {
     @Param() { wallpaperId }: WallpaperIdDto,
     @Req() req: FastifyRequest,
   ) {
-    return this._entitySrv.downloadWallpaper(wallpaperId, req.raw.user)
+    const { ip, user } = req.raw
+    return this._entitySrv.downloadWallpaper(wallpaperId, user, ip)
   }
 
   @ApiOperation({
