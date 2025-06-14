@@ -52,7 +52,7 @@ const cols: QTableColumn<IUser>[] = [
   },
   {
     name: 'name',
-    label: '账号',
+    label: '昵称',
     field: 'name',
     sortable: true,
   },

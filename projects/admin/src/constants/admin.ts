@@ -173,4 +173,18 @@ export const ADMIN_MENU_LIST: PermissionItem[] = [
       },
     ],
   },
+  {
+    name: '日志管理',
+    to: '/log',
+    children: [
+      {
+        name: '下载记录',
+        readonly: PermissionType.DOWNLOAD_RECORD_QUERY,
+      },
+      {
+        name: '收藏记录',
+        readonly: PermissionType.COLLECTION_QUERY,
+      },
+    ],
+  },
 ]

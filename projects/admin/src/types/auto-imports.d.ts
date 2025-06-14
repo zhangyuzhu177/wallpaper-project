@@ -73,8 +73,10 @@ declare global {
   const fileUploadApi: typeof import('../../../shared/api/file')['fileUploadApi']
   const fileUploadPublicApi: typeof import('../../../shared/api/file')['fileUploadPublicApi']
   const getCaptchaImgApi: typeof import('../../../shared/api/code')['getCaptchaImgApi']
+  const getCollectionLogApi: typeof import('../../../shared/api/log')['getCollectionLogApi']
   const getCurrentInstance: typeof import('vue')['getCurrentInstance']
   const getCurrentScope: typeof import('vue')['getCurrentScope']
+  const getDownloadLogApi: typeof import('../../../shared/api/log')['getDownloadLogApi']
   const globalRouter: typeof import('../../../shared/hooks/router')['globalRouter']
   const h: typeof import('vue')['h']
   const ignorableWatch: typeof import('@vueuse/core')['ignorableWatch']
@@ -437,8 +439,10 @@ declare module 'vue' {
     readonly extendRef: UnwrapRef<typeof import('@vueuse/core')['extendRef']>
     readonly fileUploadApi: UnwrapRef<typeof import('../../../shared/api/file')['fileUploadApi']>
     readonly getCaptchaImgApi: UnwrapRef<typeof import('../../../shared/api/code')['getCaptchaImgApi']>
+    readonly getCollectionLogApi: UnwrapRef<typeof import('../../../shared/api/log')['getCollectionLogApi']>
     readonly getCurrentInstance: UnwrapRef<typeof import('vue')['getCurrentInstance']>
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
+    readonly getDownloadLogApi: UnwrapRef<typeof import('../../../shared/api/log')['getDownloadLogApi']>
     readonly globalRouter: UnwrapRef<typeof import('../../../shared/hooks/router')['globalRouter']>
     readonly h: UnwrapRef<typeof import('vue')['h']>
     readonly ignorableWatch: UnwrapRef<typeof import('@vueuse/core')['ignorableWatch']>

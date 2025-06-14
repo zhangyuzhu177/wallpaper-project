@@ -16,6 +16,8 @@ import {
 interface InitForm extends IUpdateUserBodyDto {
   /** 账号 */
   account: string
+  /** 昵称 */
+  name: string
 }
 
 interface UserDialogProps {

@@ -94,6 +94,18 @@ export function useMenu($route = useRoute()) {
           flag: role?.includes(PermissionType.ADMIN_ROLE_QUERY),
         },
       ],
+      log: [
+        {
+          value: 'download-record',
+          name: '下载记录',
+          flag: role?.includes(PermissionType.DOWNLOAD_RECORD_QUERY),
+        },
+        {
+          value: 'collection-record',
+          name: '收藏记录',
+          flag: role?.includes(PermissionType.COLLECTION_QUERY),
+        },
+      ],
     }
     return menu[$route.path.substring(1)]
   })
