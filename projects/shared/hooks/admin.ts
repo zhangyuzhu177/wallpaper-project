@@ -21,7 +21,7 @@ let getTime: number
 const cacheTime = 10 * 1000
 
 /** 加载中 */
-const loading = ref<boolean | string>(false)
+const loading = ref<boolean>(false)
 
 export function useAdmin($router?: Router | UnwrapRef<Router>) {
   if (!$router && getCurrentInstance())

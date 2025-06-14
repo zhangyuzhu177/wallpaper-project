@@ -112,6 +112,9 @@ async function login() {
 
       <ZBtn
         label="登录" size="big"
+        :params="{
+          loading,
+        }"
         :disable
         @click="login"
       />

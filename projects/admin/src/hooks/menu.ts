@@ -9,7 +9,7 @@ interface PageMenuItem {
   flag?: boolean
 }
 
-const { adminPermission } = useAdmin()
+const { isLogin, adminPermission } = useAdmin()
 
 /** 当前激活的页面菜单 */
 const active = useLocalStorage(ACTIVE_PAGE_MENU_KEY, '')
@@ -27,6 +27,11 @@ export function useMenu($route = useRoute()) {
     const role = adminPermission.value
     const menu: Record<string, PageMenuItem[]> = {
       home: [
+        {
+          value: 'home',
+          name: '首页',
+          flag: isLogin.value,
+        },
         {
           value: 'page',
           name: '页面配置',

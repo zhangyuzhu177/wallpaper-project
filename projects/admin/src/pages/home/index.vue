@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import Page from '~/views/home/page/index.vue'
+import Home from '~/views/home/home/index.vue'
+import pageConfig from '~/views/home/pageConfig/index.vue'
 import Notice from '~/views/home/notice/index.vue'
 
 const { active, pageMenu } = useMenu()
@@ -7,8 +8,9 @@ const { active, pageMenu } = useMenu()
 
 <template>
   <div v-if="pageMenu?.length">
-    <Page v-if="active === pageMenu[0].value" />
-    <Notice v-if="active === pageMenu[1].value" />
+    <Home v-if="active === pageMenu[0].value" />
+    <pageConfig v-else-if="active === pageMenu[1].value" />
+    <Notice v-else-if="active === pageMenu[2].value" />
   </div>
 </template>
 

@@ -24,6 +24,9 @@ export const ADMIN_MENU_LIST: PermissionItem[] = [
     to: '/home',
     children: [
       {
+        name: '首页',
+      },
+      {
         name: '页面配置',
         readonly: PermissionType.CONFIG_QUERY,
         children: [
