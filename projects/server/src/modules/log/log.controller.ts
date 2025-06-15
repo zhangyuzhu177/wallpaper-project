@@ -1,8 +1,8 @@
 import { ApiOperation, ApiTags } from '@nestjs/swagger'
-import { Body, Controller, Post } from '@nestjs/common'
+import { Body, Controller, Get, Post } from '@nestjs/common'
 
-import { PermissionType } from 'types'
-import { HasPermission } from 'src/guards'
+import { PermissionType, UserType } from 'types'
+import { HasPermission, IsLogin } from 'src/guards'
 import { QueryDto } from 'src/dto'
 import type { Collection, DownloadRecord } from 'src/entities'
 import { getQuery } from 'src/utils'
@@ -41,5 +41,32 @@ export class LogController {
       this._logSrv.collectionRepo(),
       body,
     )
+  }
+
+  @ApiOperation({
+    summary: '获取分类下壁纸数量占比统计',
+  })
+  @IsLogin([UserType.ADMIN])
+  @Get('category-wallpaper-count')
+  public async getCategoryWallpaperCount() {
+    return this._logSrv.getCategoryWallpaperCount()
+  }
+
+  @ApiOperation({
+    summary: '获取分类下载壁纸次数统计',
+  })
+  @IsLogin([UserType.ADMIN])
+  @Get('category-download-count')
+  public async getCategoryDownloadCount() {
+    return this._logSrv.getCategoryDownloadCount()
+  }
+
+  @ApiOperation({
+    summary: '获取30天用户下载收藏行为统计',
+  })
+  @IsLogin([UserType.ADMIN])
+  @Get('user-action-count')
+  public async getUserActionCount() {
+    return this._logSrv.getUserActionCount()
   }
 }
