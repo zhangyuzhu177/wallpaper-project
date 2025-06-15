@@ -9,8 +9,8 @@ import { useRequest } from '../hooks/request'
 
 const { $get, $post } = useRequest()
 
-export interface ICategoryWallpaperCountResData {
-  name: string
+export interface ICategoryWallCountResData {
+  label: string
   value: number
 }
 
@@ -21,7 +21,10 @@ export interface ICategoryDownloadCountResData {
 
 export interface IUserActionCountResData {
   header: string[]
-  data: number[][]
+  data: {
+    label: string
+    value: number[]
+  }[]
 }
 
 /**
@@ -41,20 +44,20 @@ export function getCollectionLogApi(body: IQueryDto<ICollection>) {
 /**
  * 获取分类下壁纸数量占比统计
  */
-export function getCategoryWallpaperCountApi() {
-  return $get<ICategoryWallpaperCountResData[]>('/log/category-wallpaper-count')
+export function getCategoryWallCountApi() {
+  return $get<ICategoryWallCountResData[]>('/log/category-wallpaper-count')
 }
 
 /**
  * 获取分类下载壁纸次数统计
  */
 export function getCategoryDownloadCountApi() {
-  return $get<ICategoryDownloadCountResData[]>('/log/category-download-count')
+  return $get<ICategoryDownloadCountResData>('/log/category-download-count')
 }
 
 /**
  * 获取30天用户下载收藏行为统计
  */
 export function getUserActionCountApi() {
-  return $get<IUserActionCountResData[]>('/log/user-action-count')
+  return $get<IUserActionCountResData>('/log/user-action-count')
 }

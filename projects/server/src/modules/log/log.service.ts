@@ -1,7 +1,8 @@
+import * as moment from 'moment'
+import { Repository } from 'typeorm'
 import { Injectable, Logger } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Collection, DailyCount, DownloadRecord } from 'src/entities'
-import { Repository } from 'typeorm'
 import { WallpaperService } from '../wallpaper/wallpaper.service'
 
 @Injectable()
@@ -31,7 +32,7 @@ export class LogService {
 
     return res.map((v) => {
       return {
-        name: v.name,
+        label: v.name,
         value: v.wallpapers.length,
       }
     })
@@ -114,10 +115,16 @@ export class LogService {
     const sortedDates = Array.from(downloadCountByDate.keys()).sort()
 
     return {
-      header: sortedDates,
+      header: sortedDates.map(v => moment(v).format('MM-DD')),
       data: [
-        sortedDates.map(date => downloadCountByDate.get(date) || 0),
-        sortedDates.map(date => collectionCountByDate.get(date) || 0),
+        {
+          label: '下载',
+          value: sortedDates.map(date => downloadCountByDate.get(date) || 0),
+        },
+        {
+          label: '收藏',
+          value: sortedDates.map(date => collectionCountByDate.get(date) || 0),
+        },
       ],
     }
   }

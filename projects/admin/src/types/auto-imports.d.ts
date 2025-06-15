@@ -14,6 +14,14 @@ declare global {
   const APP_TITLE: typeof import('../../../shared/constants/app')['APP_TITLE']
   const APP_URL: typeof import('../../../shared/constants/app')['APP_URL']
   const AUTH_TOKEN_KEY: typeof import('../../../shared/constants/storage')['AUTH_TOKEN_KEY']
+  const ECHARTS_COLOR: typeof import('../constants/echarts')['ECHARTS_COLOR']
+  const ECHARTS_DATA_ZOOM: typeof import('../constants/echarts')['ECHARTS_DATA_ZOOM']
+  const ECHARTS_GRID: typeof import('../constants/echarts')['ECHARTS_GRID']
+  const ECHARTS_LEGEND: typeof import('../constants/echarts')['ECHARTS_LEGEND']
+  const ECHARTS_PIE: typeof import('../constants/echarts')['ECHARTS_PIE']
+  const ECHARTS_TOOLTIP: typeof import('../constants/echarts')['ECHARTS_TOOLTIP']
+  const ECHARTS_X_AXIS: typeof import('../constants/echarts')['ECHARTS_X_AXIS']
+  const ECHARTS_Y_AXIS: typeof import('../constants/echarts')['ECHARTS_Y_AXIS']
   const EffectScope: typeof import('vue')['EffectScope']
   const RSA_KEY: typeof import('../../../shared/constants/encrypt')['RSA_KEY']
   const TABLE_PAGINATION: typeof import('../../../shared/constants/table')['TABLE_PAGINATION']
@@ -73,10 +81,14 @@ declare global {
   const fileUploadApi: typeof import('../../../shared/api/file')['fileUploadApi']
   const fileUploadPublicApi: typeof import('../../../shared/api/file')['fileUploadPublicApi']
   const getCaptchaImgApi: typeof import('../../../shared/api/code')['getCaptchaImgApi']
+  const getCategoryDownloadCountApi: typeof import('../../../shared/api/log')['getCategoryDownloadCountApi']
+  const getCategoryWallCountApi: typeof import('../../../shared/api/log')['getCategoryWallCountApi']
+  const getCategoryWallpaperCountApi: typeof import('../../../shared/api/log')['getCategoryWallpaperCountApi']
   const getCollectionLogApi: typeof import('../../../shared/api/log')['getCollectionLogApi']
   const getCurrentInstance: typeof import('vue')['getCurrentInstance']
   const getCurrentScope: typeof import('vue')['getCurrentScope']
   const getDownloadLogApi: typeof import('../../../shared/api/log')['getDownloadLogApi']
+  const getUserActionCountApi: typeof import('../../../shared/api/log')['getUserActionCountApi']
   const globalRouter: typeof import('../../../shared/hooks/router')['globalRouter']
   const h: typeof import('vue')['h']
   const ignorableWatch: typeof import('@vueuse/core')['ignorableWatch']
@@ -211,6 +223,7 @@ declare global {
   const useDocumentVisibility: typeof import('@vueuse/core')['useDocumentVisibility']
   const useDraggable: typeof import('@vueuse/core')['useDraggable']
   const useDropZone: typeof import('@vueuse/core')['useDropZone']
+  const useECharts: typeof import('../hooks/echarts')['useECharts']
   const useElementBounding: typeof import('@vueuse/core')['useElementBounding']
   const useElementByPoint: typeof import('@vueuse/core')['useElementByPoint']
   const useElementHover: typeof import('@vueuse/core')['useElementHover']
@@ -384,6 +397,14 @@ declare module 'vue' {
     readonly AES_KEY: UnwrapRef<typeof import('../../../shared/constants/encrypt')['AES_KEY']>
     readonly APP_TITLE: UnwrapRef<typeof import('../../../shared/constants/app')['APP_TITLE']>
     readonly APP_URL: UnwrapRef<typeof import('../../../shared/constants/app')['APP_URL']>
+    readonly ECHARTS_COLOR: UnwrapRef<typeof import('../constants/echarts')['ECHARTS_COLOR']>
+    readonly ECHARTS_DATA_ZOOM: UnwrapRef<typeof import('../constants/echarts')['ECHARTS_DATA_ZOOM']>
+    readonly ECHARTS_GRID: UnwrapRef<typeof import('../constants/echarts')['ECHARTS_GRID']>
+    readonly ECHARTS_LEGEND: UnwrapRef<typeof import('../constants/echarts')['ECHARTS_LEGEND']>
+    readonly ECHARTS_PIE: UnwrapRef<typeof import('../constants/echarts')['ECHARTS_PIE']>
+    readonly ECHARTS_TOOLTIP: UnwrapRef<typeof import('../constants/echarts')['ECHARTS_TOOLTIP']>
+    readonly ECHARTS_X_AXIS: UnwrapRef<typeof import('../constants/echarts')['ECHARTS_X_AXIS']>
+    readonly ECHARTS_Y_AXIS: UnwrapRef<typeof import('../constants/echarts')['ECHARTS_Y_AXIS']>
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
     readonly RSA_KEY: UnwrapRef<typeof import('../../../shared/constants/encrypt')['RSA_KEY']>
     readonly TABLE_PAGINATION: UnwrapRef<typeof import('../../../shared/constants/table')['TABLE_PAGINATION']>
@@ -439,10 +460,13 @@ declare module 'vue' {
     readonly extendRef: UnwrapRef<typeof import('@vueuse/core')['extendRef']>
     readonly fileUploadApi: UnwrapRef<typeof import('../../../shared/api/file')['fileUploadApi']>
     readonly getCaptchaImgApi: UnwrapRef<typeof import('../../../shared/api/code')['getCaptchaImgApi']>
+    readonly getCategoryDownloadCountApi: UnwrapRef<typeof import('../../../shared/api/log')['getCategoryDownloadCountApi']>
+    readonly getCategoryWallCountApi: UnwrapRef<typeof import('../../../shared/api/log')['getCategoryWallCountApi']>
     readonly getCollectionLogApi: UnwrapRef<typeof import('../../../shared/api/log')['getCollectionLogApi']>
     readonly getCurrentInstance: UnwrapRef<typeof import('vue')['getCurrentInstance']>
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
     readonly getDownloadLogApi: UnwrapRef<typeof import('../../../shared/api/log')['getDownloadLogApi']>
+    readonly getUserActionCountApi: UnwrapRef<typeof import('../../../shared/api/log')['getUserActionCountApi']>
     readonly globalRouter: UnwrapRef<typeof import('../../../shared/hooks/router')['globalRouter']>
     readonly h: UnwrapRef<typeof import('vue')['h']>
     readonly ignorableWatch: UnwrapRef<typeof import('@vueuse/core')['ignorableWatch']>
@@ -575,6 +599,7 @@ declare module 'vue' {
     readonly useDocumentVisibility: UnwrapRef<typeof import('@vueuse/core')['useDocumentVisibility']>
     readonly useDraggable: UnwrapRef<typeof import('@vueuse/core')['useDraggable']>
     readonly useDropZone: UnwrapRef<typeof import('@vueuse/core')['useDropZone']>
+    readonly useECharts: UnwrapRef<typeof import('../hooks/echarts')['useECharts']>
     readonly useElementBounding: UnwrapRef<typeof import('@vueuse/core')['useElementBounding']>
     readonly useElementByPoint: UnwrapRef<typeof import('@vueuse/core')['useElementByPoint']>
     readonly useElementHover: UnwrapRef<typeof import('@vueuse/core')['useElementHover']>
