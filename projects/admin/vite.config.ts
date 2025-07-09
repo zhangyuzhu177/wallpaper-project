@@ -24,7 +24,7 @@ export default ({ mode }: any) => {
     // 默认配置
     ...{
       VITE_ADMIN_PORT: '5002',
-      VITE_ADMIN_BASE: '/',
+      VITE_ADMIN_BASE: '/admin',
       VITE_API_BASE: '/api',
       VITE_PROXY_TARGET: 'http://localhost:3000/api',
     },

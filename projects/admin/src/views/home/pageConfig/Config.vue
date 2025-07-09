@@ -100,32 +100,33 @@ async function uploadFile(file: File | File[], id: string) {
           />
           <div flex="~ col gap1" mb1>
             <ZLabel required label="壁纸" />
-            <div>
-              <ZUpload
-                v-model="item.tempImage"
-                type="secondary"
-                :multiple="false"
-                w-30
-              >
-                <div
-                  v-if="!item.url"
-                  flex="~ col gap2 center"
-                  w-60 h-40 b-rd-2
-                  border="1px dashed gray-5"
-                >
-                  <div text="6 grey-5" i-ph:plus />
-                  <div text="grey-5" v-text="'上传壁纸'" />
-                </div>
-                <div
-                  v-else flex="~ col gap2 center" w-60 h-40 relative overflow-hidden b-rd-2
-                >
-                  <q-img loading="lazy" full :src="item.url" />
-                </div>
-              </ZUpload>
-              <ZImgCropper
-                v-model="item.tempImage"
-                @callback="(val) => uploadFile(val, item.id)"
+            <div flex="~ gap4">
+              <ZImg
+                v-model="item.url"
+                width="200"
+                height="120"
               />
+              <div>
+                <ZUpload
+                  v-model="item.tempImage"
+                  type="secondary"
+                  :multiple="false"
+                  w-30
+                >
+                  <div
+                    flex="~ col gap2 center"
+                    w-50 h-30 b-rd-2
+                    border="1px dashed gray-5"
+                  >
+                    <div text="6 grey-5" i-mingcute:add-line />
+                    <div text="grey-5" v-text="'上传壁纸'" />
+                  </div>
+                </ZUpload>
+                <ZImgCropper
+                  v-model="item.tempImage"
+                  @callback="(val) => uploadFile(val, item.id)"
+                />
+              </div>
             </div>
           </div>
         </div>
